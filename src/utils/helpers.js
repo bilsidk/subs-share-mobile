@@ -1,0 +1,76 @@
+import { COINS_PER_SUBSCRIBER } from './constants';
+
+export const formatCoins = (amount) => {
+  if (amount >= 1000) return `${(amount / 1000).toFixed(1)}K`;
+  return amount.toString();
+};
+
+// Slot costs per task type (must match backend config/index.js SLOT_COSTS)
+const SLOT_COSTS = {
+  subscribe:       15,
+  like:            9,
+  like_comment:    13,
+  subscribe_like:  20,
+  watch:           7,   // base for 1 min
+};
+
+const WATCH_COST_PER_EXTRA_MIN = 1;
+
+export const calcCampaignCost = (slots, taskType = 'subscribe', watchMinutes = 1) => {
+  if (!slots || slots < 1) return 0;
+  let costPerSlot = SLOT_COSTS[taskType] || 15;
+  if (taskType === 'watch') {
+    const extraMins = Math.max(0, watchMinutes - 1);
+    costPerSlot = SLOT_COSTS.watch + (extraMins * WATCH_COST_PER_EXTRA_MIN);
+  }
+  return slots * costPerSlot;
+};
+
+export const getSlotCost = (taskType, watchMinutes = 1) => {
+  if (taskType === 'watch') {
+    const extraMins = Math.max(0, watchMinutes - 1);
+    return SLOT_COSTS.watch + (extraMins * WATCH_COST_PER_EXTRA_MIN);
+  }
+  return SLOT_COSTS[taskType] || 15;
+};
+
+// Earner rewards (for display in task cards)
+export const EARNER_REWARDS = {
+  subscribe:       12,
+  like:            6,
+  like_comment:    10,
+  subscribe_like:  17,
+  watch:           4,   // base; +1 per extra min
+};
+
+
+export const formatDate = (dateStr) => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
+export const formatRelativeTime = (dateStr) => {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  return `${days}d ago`;
+};
+
+export const extractChannelId = (url) => {
+  // Handles: youtube.com/c/name, youtube.com/@handle, youtube.com/channel/UCxxxx
+  const patterns = [
+    /youtube\.com\/@([^/?]+)/,
+    /youtube\.com\/c\/([^/?]+)/,
+    /youtube\.com\/channel\/(UC[^/?]+)/,
+    /youtube\.com\/user\/([^/?]+)/,
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return url.trim();
+};

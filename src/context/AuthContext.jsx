@@ -1,0 +1,75 @@
+
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { storageService } from '../services/storageService';
+import { api } from '../services/api';
+
+const AuthContext = createContext(null);
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [youtubeConnected, setYoutubeConnected] = useState(false);
+
+  useEffect(() => {
+    const restore = async () => {
+      try {
+        const [savedToken, savedUser] = await Promise.all([
+          storageService.getToken(),
+          storageService.getUser(),
+        ]);
+        if (savedToken && savedUser) {
+          setToken(savedToken);
+          setUser(savedUser);
+          const fresh = await api.getMe();
+          setUser(fresh);
+          await storageService.saveUser(fresh);
+        }
+      } catch {
+        // Saved token was rejected/unusable — clear storage AND state so the
+        // app falls back to Login instead of a broken signed-in state.
+        await storageService.clear();
+        setToken(null);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    restore();
+  }, []);
+
+  const signIn = async ({ idToken, serverAuthCode, accessToken }) => {
+    const res = await api.googleSignIn({ idToken, serverAuthCode, accessToken });
+    await storageService.saveToken(res.token);
+    await storageService.saveUser(res.user);
+    setToken(res.token);
+    setUser(res.user);
+    setYoutubeConnected(!!res.youtube_connected);
+  };
+
+ const signOut = async () => {
+  await storageService.clear();
+  setToken(null);
+  setUser(null);
+  setYoutubeConnected(false);
+};
+
+  const refreshUser = async () => {
+    const fresh = await api.getMe();
+    setUser(fresh);
+    await storageService.saveUser(fresh);
+    return fresh;
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, token, loading, youtubeConnected, signIn, signOut, refreshUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error('useAuth must be used inside AuthProvider');
+  return ctx;
+};
