@@ -14,7 +14,8 @@ export default {
     "coins": "coins",
     "free": "Free",
     "unlimited": "Unlimited",
-    "privacyPolicy": "Privacy Policy"
+    "privacyPolicy": "Privacy Policy",
+    "contactSupport": "Contact Support"
   },
   "tabs": {
     "home": "Home",

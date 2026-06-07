@@ -13,7 +13,7 @@ import { colors, spacing, radius } from '../theme';
 import { StatCard, LoadingSpinner } from '../components';
 import { formatDate, formatRelativeTime } from '../utils/helpers';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { GOOGLE_CLIENT_ID, PRIVACY_POLICY_URL } from '../utils/constants';
+import { GOOGLE_CLIENT_ID, PRIVACY_POLICY_URL, SUPPORT_EMAIL } from '../utils/constants';
 import { useTranslation } from '../hooks/useTranslation';
 
 // Must match LoginScreen's config — configure() replaces (not merges) the
@@ -80,6 +80,13 @@ const ProfileScreen = () => {
         },
       },
     ]);
+  };
+
+  const handleContactSupport = () => {
+    const subject = encodeURIComponent('Subs Share Support');
+    const body = encodeURIComponent(`\n\n\n---\nFrom: ${user?.name || ''} (ID: ${user?.id ?? 'unknown'})`);
+    Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`)
+      .catch(() => Alert.alert(t('common.error'), SUPPORT_EMAIL));
   };
 
   if (loading) return <LoadingSpinner message={t('common.loading')} />;
@@ -149,6 +156,10 @@ const ProfileScreen = () => {
 
         <TouchableOpacity style={styles.languageBtn} onPress={() => Linking.openURL(PRIVACY_POLICY_URL).catch(() => {})}>
           <Text style={styles.languageBtnText}>🔒 {t('common.privacyPolicy')}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.languageBtn} onPress={handleContactSupport}>
+          <Text style={styles.languageBtnText}>✉️ {t('common.contactSupport')}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.signOutBtn} onPress={handleSignOut}>
