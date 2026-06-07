@@ -19,7 +19,7 @@ export default {
   },
   "tabs": {
     "home": "Beranda",
-    "earn": "Hasilkan",
+    "earn": "Tugas",
     "boost": "Tingkatkan",
     "profile": "Profil",
     "admin": "Admin"
@@ -28,14 +28,14 @@ export default {
     "tagline": "Tumbuh bersama"
   },
   "login": {
-    "title": "Subs Share",
-    "tagline": "Berlangganan untuk menghasilkan.\nBelanjakan untuk berkembang.",
-    "feature1": "Hasilkan koin dengan berlangganan saluran",
-    "feature2": "Diverifikasi oleh YouTube — tidak ada tugas palsu",
-    "feature3": "Belanjakan koin untuk mendapatkan pelanggan nyata",
+    "title": "Creator Hub",
+    "tagline": "Dukung kreator.\nTumbuh bersama.",
+    "feature1": "Selesaikan tugas untuk mendapatkan hadiah",
+    "feature2": "Diverifikasi oleh YouTube — tugas autentik",
+    "feature3": "Gunakan hadiah untuk mengembangkan saluran Anda",
     "welcomeBonus": "🎁 Mulai dengan 50 koin gratis!",
     "continueWithGoogle": "Lanjutkan dengan Google",
-    "terms": "Kami meminta akses YouTube hanya-baca untuk memverifikasi langganan dan suka Anda.",
+    "terms": "Kami meminta akses YouTube hanya-baca untuk memverifikasi tindakan Anda.",
     "signInFailed": "Gagal masuk",
     "noToken": "Tidak ada token dari Google",
     "tryAgain": "Silakan coba lagi"
@@ -43,24 +43,24 @@ export default {
   "home": {
     "greeting": "Halo 👋",
     "balance": "SALDO ANDA",
-    "coinHint": "10 koin = 1 pelanggan",
+    "coinHint": "Selesaikan lebih banyak tugas, dapatkan lebih banyak hadiah",
     "campaigns": "Kampanye",
-    "pendingSubs": "Pelanggan tertunda",
+    "pendingSubs": "Tertunda",
     "completed": "Selesai",
     "quickActions": "Tindakan cepat",
-    "earnCoins": "Hasilkan koin",
-    "getSubs": "Dapatkan pelanggan",
+    "earnCoins": "Tugas",
+    "getSubs": "Tumbuh",
     "myChannel": "Saluran saya",
     "activeCampaign": "kampanye aktif",
     "activeCampaigns": "kampanye aktif",
-    "subsPending": "pelanggan tertunda",
+    "subsPending": "tertunda",
     "recentActivity": "Aktivitas terkini",
     "noTransactions": "Belum ada transaksi"
   },
   "earn": {
-    "title": "Hasilkan Koin",
-    "subtitle": "Tugas · Terverifikasi · Klaim koin",
-    "banner": "🔒 Langganan dan suka diverifikasi oleh YouTube.",
+    "title": "Hadiah",
+    "subtitle": "Selesaikan tugas · Terverifikasi · Klaim hadiah",
+    "banner": "🔒 Semua tindakan diverifikasi oleh API YouTube. Berpartisipasi dengan itikad baik membantu seluruh komunitas tumbuh.",
     "tierFeatured": "⭐ Unggulan",
     "tierPremium": "💎 Premium",
     "tierCommunity": "📋 Komunitas",
@@ -77,9 +77,9 @@ export default {
     "tapToVerify": "Ketuk di bawah — kami akan memverifikasi dengan YouTube.",
     "secondsRemaining": "dtk tersisa",
     "commentBonus": "💬 Berkomentar? Anda akan otomatis mendapat +4 koin!",
-    "warningModal": "⚠️ Menghapus {{action}} setelah klaim akan mengakibatkan koin dikembalikan.",
-    "subscription": "langganan",
-    "like": "suka",
+    "warningModal": "⚠️ Membatalkan {{action}} setelah timer berakhir dapat memengaruhi hadiah Anda.",
+    "subscription": "tindakan",
+    "like": "tindakan",
     "coinsEarned": "🎉 Koin berhasil diperoleh!",
     "balance": "Saldo",
     "commentBonusEarned": "💬 Bonus komentar",
@@ -87,7 +87,7 @@ export default {
     "notDetectedYet": "Belum terdeteksi",
     "reconnectNeeded": "Perlu hubungkan ulang",
     "reconnectMessage": "Silakan keluar dan masuk kembali untuk memberi akses YouTube.",
-    "tryAgainMessage": "Verifikasi sibuk. Tunggu sebentar lalu coba klaim lagi.",
+    "tryAgainMessage": "Verifikasi sibuk. Tunggu sebentar lalu ketuk Klaim lagi.",
     "accountSuspended": "Akun ditangguhkan",
     "slotTaken": "Slot diambil",
     "slotTakenMessage": "Seseorang baru saja mengambil slot terakhir. Coba tugas lain!",
@@ -97,10 +97,10 @@ export default {
     "campaignCancelledMessage": "Kampanye ini dibatalkan. Coba tugas lain."
   },
   "taskTypes": {
-    "subscribe": "Berlangganan",
+    "subscribe": "Ikuti",
     "like": "Suka video",
     "like_comment": "Suka + Komentar",
-    "subscribe_like": "Berlangganan + Suka",
+    "subscribe_like": "Ikuti + Suka",
     "watch": "Tonton video",
     "verifiedByApi": "Diverifikasi oleh API YouTube",
     "likeVerified": "Suka diverifikasi API · Komentar = +4 bonus",
@@ -120,7 +120,7 @@ export default {
     "changedMsg": "Bahasa aplikasi telah diperbarui."
   },
   "boost": {
-    "title": "Dapatkan Pelanggan",
+    "title": "Promosikan",
     "myCampaigns": "📋 Kampanye Saya",
     "step1": "1. Pilih jenis tugas",
     "step2channel": "2. Saluran Anda",
@@ -135,12 +135,12 @@ export default {
     "channelAdded": "✅ Saluran ditambahkan!",
     "channelAddedMsg": "Saluran YouTube Anda terdaftar.",
     "requiredWatchTime": "Waktu tonton yang diperlukan (menit)",
-    "watchNote": "⚠️ Video harus minimal {{minutes}} menit.",
+    "watchNote": "⚠️ Video harus minimal {{minutes}} menit — divalidasi saat dikirim.",
     "videoPlaceholder": "youtube.com/watch?v=...",
     "customAmount": "Atau masukkan jumlah kustom",
     "cost": "Biaya",
     "balance": "Saldo",
-    "needMoreCoins": "⚠️ Butuh {{amount}} koin lagi!",
+    "needMoreCoins": "⚠️ Butuh {{amount}} koin lagi — selesaikan tugas dari tab Tugas!",
     "addChannelFirst": "⬆️ Tambahkan saluran di atas untuk melanjutkan",
     "launching": "Meluncurkan...",
     "launch": "🚀 Luncurkan kampanye",
@@ -151,13 +151,13 @@ export default {
     "campaignLive": "🚀 Kampanye aktif!",
     "slotsOpened": "{{slots}} slot dibuka!",
     "noChannel": "Tidak ada saluran",
-    "noChannelMsg": "Jenis tugas ini memerlukan saluran YouTube Anda.",
+    "noChannelMsg": "Jenis tugas ini memerlukan saluran YouTube Anda. Tambahkan dulu.",
     "invalid": "Tidak valid",
     "invalidSlots": "Masukkan jumlah yang valid",
     "missingVideo": "Video kurang",
     "missingVideoMsg": "Masukkan URL video YouTube",
     "insufficientCoins": "Koin tidak cukup",
-    "insufficientMsg": "Butuh {{cost}} koin, punya {{balance}}.",
+    "insufficientMsg": "Butuh {{cost}} koin, punya {{balance}}.\nSelesaikan lebih banyak tugas dari tab Tugas!",
     "ownerFree": "Gratis (akun pemilik)",
     "campaignError": "Kesalahan kampanye"
   },
@@ -195,57 +195,57 @@ export default {
     "pause": "⏸ Jeda",
     "resume": "▶ Lanjutkan",
     "cancel": "🗑 Batalkan",
-    "pauseTitle": "⏸ Jeda",
-    "pauseMsg": "Jeda \"{{name}}\"?\n{{slots}} slot tersimpan.",
-    "resumeTitle": "▶ Lanjutkan",
-    "resumeMsg": "Lanjutkan \"{{name}}\"?",
-    "cancelTitle": "🗑 Batalkan",
-    "cancelMsg": "Batalkan \"{{name}}\"?",
-    "cancelRefund": "\n\n💰 {{coins}} koin",
-    "cancelNoRefund": "\n\nTidak ada pengembalian.",
-    "cancelCompleted": "\n\n⚠️ {{count}} slot tidak dikembalikan",
-    "keepCampaign": "Pertahankan",
-    "cancelConfirm": "Batalkan +{{coins}}🪙",
+    "pauseTitle": "⏸ Jeda Kampanye",
+    "pauseMsg": "Jeda \"{{name}}\"?\n\nTidak ada tindakan baru yang akan diterima. {{slots}} slot tersisa Anda disimpan — Anda dapat melanjutkan kapan saja.",
+    "resumeTitle": "▶ Lanjutkan Kampanye",
+    "resumeMsg": "Lanjutkan \"{{name}}\"?\n\n{{slots}} slot akan dibuka kembali.",
+    "cancelTitle": "🗑 Batalkan Kampanye",
+    "cancelMsg": "Batalkan \"{{name}}\"? Ini tidak dapat dibatalkan.",
+    "cancelRefund": "\n\n💰 {{coins}} koin untuk slot yang tidak terisi",
+    "cancelNoRefund": "\n\nTidak ada pengembalian — kampanye ini gratis.",
+    "cancelCompleted": "\n\n⚠️ {{count}} slot selesai TIDAK dikembalikan",
+    "keepCampaign": "Pertahankan Kampanye",
+    "cancelConfirm": "Batalkan & Dapatkan {{coins}}🪙",
     "cancelConfirmFree": "Batalkan",
-    "cancelled": "✅ Dibatalkan",
-    "refunded": "{{coins}} koin. Saldo: {{balance}}",
+    "cancelled": "✅ Kampanye Dibatalkan",
+    "refunded": "{{coins}} koin telah dikembalikan ke saldo Anda.\nSaldo baru: {{balance}} koin",
     "noCampaigns": "Belum ada kampanye",
-    "noCampaignsSubtitle": "Buat di Dapatkan Pelanggan"
+    "noCampaignsSubtitle": "Buat kampanye pertama Anda dari tab Promosikan"
   },
   "warnings": {
     "beforeSubscribe": {
-      "title": "⚠️ Sebelum berlangganan",
-      "message": "Berlangganan di YouTube lalu kembali.",
+      "title": "⚠️ Konfirmasi",
+      "message": "Buka saluran di YouTube dan ikuti, lalu kembali ke sini.\n\n• Tindakan Anda diverifikasi oleh API YouTube\n• Harap jaga tindakan Anda tetap aktif untuk mendukung kreator\n\nTerlibatlah secara autentik — ini membantu kreator nyata untuk tumbuh.",
       "confirm": "Mengerti — Buka YouTube"
     },
     "beforeLike": {
-      "title": "⚠️ Sebelum menyukai",
-      "message": "Sukai video di YouTube lalu kembali.",
+      "title": "⚠️ Konfirmasi",
+      "message": "Buka video di YouTube dan sukai, lalu kembali ke sini.\n\n• Tindakan Anda diverifikasi oleh YouTube\n• Harap jaga tindakan Anda tetap aktif untuk mendukung kreator\n\nTerlibatlah secara autentik — ini membantu kreator nyata untuk tumbuh.",
       "confirm": "Mengerti — Buka YouTube"
     },
     "beforeLikeComment": {
-      "title": "⚠️ Suka + Komentar",
-      "message": "1. 👍 Sukai (wajib)\n2. 💬 Komentar (+4 bonus)",
+      "title": "⚠️ Tugas Suka + Komentar",
+      "message": "Untuk mendapatkan hadiah maksimal:\n\n1. 👍 Sukai video (wajib — diverifikasi oleh YouTube)\n2. 💬 Tinggalkan komentar asli (opsional — dapatkan bonus +4 koin)\n\nSuka saja cukup untuk klaim — komentar mendapatkan bonus.",
       "confirm": "Mengerti — Buka YouTube"
     },
     "beforeSubscribeLike": {
-      "title": "⚠️ Langganan + Suka",
-      "message": "1. 🔔 Berlangganan\n2. 👍 Sukai",
+      "title": "⚠️ Konfirmasi",
+      "message": "Anda perlu melakukan kedua tindakan di YouTube:\n\n1. 🔔 Ikuti saluran\n2. 👍 Sukai video\n\nKeduanya diverifikasi oleh API YouTube.\n\nTerlibatlah secara autentik — ini membantu kreator nyata untuk tumbuh.",
       "confirm": "Mengerti — Buka YouTube"
     },
     "beforeWatch": {
-      "title": "⚠️ Menonton",
-      "message": "Tonton video selama waktu yang diperlukan.",
+      "title": "⚠️ Tugas Menonton",
+      "message": "Buka video dan tonton selama waktu yang diperlukan.\n\n• Jaga aplikasi YouTube tetap terbuka saat timer berjalan\n• Kembali ke sini setelah selesai untuk mengklaim hadiah Anda\n• Tugas menonton diperiksa secara acak untuk permainan yang adil",
       "confirm": "Mengerti — Buka YouTube"
     },
     "taskReminder": {
-      "subscribe": "Pertahankan langganan.",
-      "like": "Pertahankan suka.",
-      "like_comment": "Pertahankan suka. Komentar bonus.",
-      "subscribe_like": "Pertahankan langganan dan suka.",
-      "watch": "Tonton durasi penuh."
+      "subscribe": "Jaga tindakan Anda tetap aktif untuk mendukung kreator.",
+      "like": "Jaga suka Anda tetap aktif untuk mendukung kreator.",
+      "like_comment": "Jaga suka Anda tetap aktif. Komentar mendapatkan bonus.",
+      "subscribe_like": "Jaga kedua tindakan tetap aktif untuk mendukung kreator.",
+      "watch": "Tonton waktu penuh yang diperlukan sebelum mengklaim."
     },
-    "campaignFairUse": "📋 Pelanggan diverifikasi YouTube."
+    "campaignFairUse": "📋 Semua tindakan diverifikasi oleh API YouTube untuk memastikan keaslian."
   },
   "tx": {
     "welcomeBonus": "🎁 Bonus selamat datang",
@@ -255,7 +255,7 @@ export default {
     "taskCompletedComment": "{{type}} — suka ✅ + komentar ✅ (+{{bonus}} bonus)",
     "campaignCancelled": "Kampanye dibatalkan — {{slots}} slot dikembalikan ({{refund}} koin)",
     "campaignCancelledFree": "Kampanye dibatalkan",
-    "coinsReclaimed": "{{type}} — koin dikembalikan (berhenti berlangganan)"
+    "coinsReclaimed": "{{type}} — koin dikembalikan"
   },
   "onboarding": {
     "skip": "Lewati",
@@ -263,19 +263,19 @@ export default {
     "getStarted": "🚀 Mulai — Gratis",
     "slide1": {
       "title": "Tumbuh bersama",
-      "subtitle": "Cara adil untuk mengembangkan saluran YouTube Anda. Pelanggan nyata, keterlibatan nyata, diverifikasi YouTube."
+      "subtitle": "Cara adil untuk mengembangkan saluran YouTube Anda. Keterlibatan nyata, diverifikasi oleh API YouTube."
     },
     "slide2": {
-      "title": "Selesaikan tugas, dapatkan koin",
-      "subtitle": "Berlangganan saluran, sukai video. Setiap tindakan diverifikasi dan diberi hadiah koin."
+      "title": "Selesaikan tugas, dapatkan hadiah",
+      "subtitle": "Dukung kreator lain dengan terlibat dalam konten mereka. Setiap tindakan diverifikasi dan dihadiahi koin secara instan."
     },
     "slide3": {
-      "title": "Belanjakan koin, dapatkan pelanggan",
-      "subtitle": "Luncurkan kampanye untuk saluran Anda. Pengguna nyata berlangganan, diverifikasi oleh YouTube."
+      "title": "Kembangkan Saluran Anda",
+      "subtitle": "Luncurkan kampanye untuk saluran Anda. Anggota komunitas terlibat kembali, diverifikasi oleh API YouTube."
     },
     "slide4": {
       "title": "50 koin gratis!",
-      "subtitle": "Masuk dengan Google untuk bonus selamat datang. Tanpa kartu. Pertumbuhan nyata."
+      "subtitle": "Masuk dengan Google untuk mendapatkan bonus selamat datang. Tanpa kartu kredit. Tanpa biaya tersembunyi. Hanya tumbuh bersama."
     }
   }
 };

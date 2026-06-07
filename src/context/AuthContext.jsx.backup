@@ -14,20 +14,20 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const restore = async () => {
       try {
-        const [savedToken, savedUser, savedYt] = await Promise.all([
+        const [savedToken, savedUser] = await Promise.all([
           storageService.getToken(),
           storageService.getUser(),
-          storageService.getYoutubeConnected(),
         ]);
         if (savedToken && savedUser) {
           setToken(savedToken);
           setUser(savedUser);
-          setYoutubeConnected(savedYt);
           const fresh = await api.getMe();
           setUser(fresh);
           await storageService.saveUser(fresh);
         }
       } catch {
+        // Saved token was rejected/unusable — clear storage AND state so the
+        // app falls back to Login instead of a broken signed-in state.
         await storageService.clear();
         setToken(null);
         setUser(null);
@@ -61,11 +61,6 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setYoutubeConnected(false);
   };
-
-  // Persist youtubeConnected whenever it changes
-  useEffect(() => {
-    storageService.saveYoutubeConnected(youtubeConnected).catch(() => {});
-  }, [youtubeConnected]);
 
   const refreshUser = async () => {
     const fresh = await api.getMe();

@@ -19,7 +19,7 @@ export default {
   },
   "tabs": {
     "home": "ホーム",
-    "earn": "稼ぐ",
+    "earn": "タスク",
     "boost": "ブースト",
     "profile": "プロフィール",
     "admin": "管理"
@@ -28,14 +28,14 @@ export default {
     "tagline": "一緒に成長しよう"
   },
   "login": {
-    "title": "Subs Share",
-    "tagline": "登録して稼ごう。\n使って成長しよう。",
-    "feature1": "チャンネル登録でコインを獲得",
-    "feature2": "YouTubeで確認済み — 偽タスクなし",
-    "feature3": "コインを使って本物のチャンネル登録者を獲得",
+    "title": "Creator Hub",
+    "tagline": "クリエイターをサポート。\n一緒に成長。",
+    "feature1": "タスクを完了して報酬を獲得",
+    "feature2": "YouTubeで確認済み — 本物のタスク",
+    "feature3": "報酬を使ってチャンネルを成長させる",
     "welcomeBonus": "🎁 50コイン無料でスタート！",
     "continueWithGoogle": "Googleで続ける",
-    "terms": "登録とイイネの確認のため、読み取り専用のYouTubeアクセスをリクエストします。",
+    "terms": "あなたのアクションを確認するため、読み取り専用のYouTubeアクセスをリクエストします。",
     "signInFailed": "サインイン失敗",
     "noToken": "Googleからトークンを受信できませんでした",
     "tryAgain": "もう一度お試しください"
@@ -43,29 +43,29 @@ export default {
   "home": {
     "greeting": "こんにちは 👋",
     "balance": "あなたの残高",
-    "coinHint": "10コイン = 1登録者",
+    "coinHint": "もっとタスクを完了して、もっと報酬を獲得",
     "campaigns": "キャンペーン",
-    "pendingSubs": "保留中の登録者",
+    "pendingSubs": "保留中",
     "completed": "完了",
     "quickActions": "クイックアクション",
-    "earnCoins": "コインを稼ぐ",
-    "getSubs": "登録者を獲得",
+    "earnCoins": "タスク",
+    "getSubs": "成長",
     "myChannel": "自分のチャンネル",
     "activeCampaign": "つの進行中キャンペーン",
     "activeCampaigns": "つの進行中キャンペーン",
-    "subsPending": "人の登録者が保留中",
+    "subsPending": "保留中",
     "recentActivity": "最近のアクティビティ",
     "noTransactions": "まだ取引がありません"
   },
   "earn": {
-    "title": "コインを稼ぐ",
-    "subtitle": "タスク完了 · 確認 · コインを受け取る",
-    "banner": "🔒 登録とイイネはYouTubeで確認されます。",
+    "title": "報酬",
+    "subtitle": "タスクを完了 · 確認 · 報酬を受け取る",
+    "banner": "🔒 すべてのアクションはYouTube APIで確認されます。誠実な参加がコミュニティ全体の成長を助けます。",
     "tierFeatured": "⭐ おすすめ",
     "tierPremium": "💎 プレミアム",
     "tierCommunity": "📋 コミュニティ",
     "noTasks": "まだタスクがありません",
-    "noTasksSubtitle": "また後で確認してください",
+    "noTasksSubtitle": "また後で確認してください — 新しいキャンペーンが定期的に追加されます",
     "alreadyDone": "✓ 完了",
     "slotsLeft": "枠残り",
     "verifying": "YouTubeで確認中...",
@@ -77,9 +77,9 @@ export default {
     "tapToVerify": "下をタップ — YouTubeで確認します。",
     "secondsRemaining": "秒残り",
     "commentBonus": "💬 コメントしましたか？自動的に+4コインが付与されます！",
-    "warningModal": "⚠️ 受け取り後に{{action}}を取り消すとコインが回収されます。",
-    "subscription": "登録",
-    "like": "イイネ",
+    "warningModal": "⚠️ タイマー終了後に{{action}}を取り消すと、報酬に影響する可能性があります。",
+    "subscription": "アクション",
+    "like": "アクション",
     "coinsEarned": "🎉 コインを獲得！",
     "balance": "残高",
     "commentBonusEarned": "💬 コメントボーナス",
@@ -87,20 +87,20 @@ export default {
     "notDetectedYet": "まだ検出されていません",
     "reconnectNeeded": "再接続が必要です",
     "reconnectMessage": "YouTubeアクセスを許可するためにサインアウトして再サインインしてください。",
-    "tryAgainMessage": "確認が混み合っています。少し待ってから再度請求してください。",
+    "tryAgainMessage": "確認が混み合っています。少し待ってからもう一度受け取りをタップしてください。",
     "accountSuspended": "アカウントが停止されました",
     "slotTaken": "枠が取られました",
     "slotTakenMessage": "誰かが最後の枠を取りました。別のタスクを試してください！",
     "campaignPaused": "キャンペーンが一時停止中",
-    "campaignPausedMessage": "このキャンペーンはオーナーにより一時停止されています。",
+    "campaignPausedMessage": "このキャンペーンはオーナーにより一時停止されています。別のタスクを試してください。",
     "campaignCancelled": "キャンペーンがキャンセルされました",
-    "campaignCancelledMessage": "このキャンペーンはキャンセルされました。"
+    "campaignCancelledMessage": "このキャンペーンはキャンセルされました。別のタスクを試してください。"
   },
   "taskTypes": {
-    "subscribe": "チャンネル登録",
+    "subscribe": "フォロー",
     "like": "動画にイイネ",
     "like_comment": "イイネ＋コメント",
-    "subscribe_like": "登録＋イイネ",
+    "subscribe_like": "フォロー＋イイネ",
     "watch": "動画を視聴",
     "verifiedByApi": "YouTube APIで確認済み",
     "likeVerified": "イイネはAPIで確認 · コメント = +4ボーナス",
@@ -120,7 +120,7 @@ export default {
     "changedMsg": "アプリの言語が更新されました。"
   },
   "boost": {
-    "title": "登録者を獲得",
+    "title": "プロモート",
     "myCampaigns": "📋 マイキャンペーン",
     "step1": "1. タスクの種類を選択",
     "step2channel": "2. あなたのチャンネル",
@@ -135,12 +135,12 @@ export default {
     "channelAdded": "✅ チャンネル追加済み！",
     "channelAddedMsg": "YouTubeチャンネルが登録されました。",
     "requiredWatchTime": "必要視聴時間（分）",
-    "watchNote": "⚠️ 動画は最低{{minutes}}分必要です。",
+    "watchNote": "⚠️ 動画は最低{{minutes}}分必要です — 送信時に検証されます。",
     "videoPlaceholder": "youtube.com/watch?v=...",
     "customAmount": "またはカスタム数量を入力",
     "cost": "コスト",
     "balance": "残高",
-    "needMoreCoins": "⚠️ あと{{amount}}コイン必要！",
+    "needMoreCoins": "⚠️ あと{{amount}}コイン必要 — タスクタブからタスクを完了してください！",
     "addChannelFirst": "⬆️ 続けるには上でチャンネルを追加してください",
     "launching": "起動中...",
     "launch": "🚀 キャンペーン開始",
@@ -151,13 +151,13 @@ export default {
     "campaignLive": "🚀 キャンペーン開始！",
     "slotsOpened": "{{slots}}スロット開放！",
     "noChannel": "チャンネルなし",
-    "noChannelMsg": "このタスクタイプにはYouTubeチャンネルが必要です。",
+    "noChannelMsg": "このタスクタイプにはYouTubeチャンネルが必要です。先に追加してください。",
     "invalid": "無効",
     "invalidSlots": "有効な数を入力してください",
     "missingVideo": "動画なし",
     "missingVideoMsg": "YouTube動画URLを入力してください",
     "insufficientCoins": "コイン不足",
-    "insufficientMsg": "{{cost}}コイン必要、{{balance}}あります。",
+    "insufficientMsg": "{{cost}}コイン必要、{{balance}}あります。\nタスクタブからもっとタスクを完了してください！",
     "ownerFree": "無料（オーナーアカウント）",
     "campaignError": "キャンペーンエラー"
   },
@@ -195,57 +195,57 @@ export default {
     "pause": "⏸ 停止",
     "resume": "▶ 再開",
     "cancel": "🗑 キャンセル",
-    "pauseTitle": "⏸ 停止",
-    "pauseMsg": "\"{{name}}\"を停止?\n{{slots}}枠保持。",
-    "resumeTitle": "▶ 再開",
-    "resumeMsg": "\"{{name}}\"を再開?",
-    "cancelTitle": "🗑 キャンセル",
-    "cancelMsg": "\"{{name}}\"をキャンセル?",
-    "cancelRefund": "\n\n💰 {{coins}}コイン",
-    "cancelNoRefund": "\n\n返金なし。",
-    "cancelCompleted": "\n\n⚠️ {{count}}枠返金なし",
-    "keepCampaign": "保持",
-    "cancelConfirm": "キャンセル+{{coins}}🪙",
+    "pauseTitle": "⏸ キャンペーン停止",
+    "pauseMsg": "\"{{name}}\"を停止しますか？\n\n新しいアクションは受け付けられません。{{slots}}の残り枠は保持されます — いつでも再開できます。",
+    "resumeTitle": "▶ キャンペーン再開",
+    "resumeMsg": "\"{{name}}\"を再開しますか？\n\n{{slots}}枠が再度オープンします。",
+    "cancelTitle": "🗑 キャンペーンキャンセル",
+    "cancelMsg": "\"{{name}}\"をキャンセルしますか？これは元に戻せません。",
+    "cancelRefund": "\n\n💰 未充足枠の{{coins}}コイン",
+    "cancelNoRefund": "\n\n返金なし — このキャンペーンは無料でした。",
+    "cancelCompleted": "\n\n⚠️ {{count}}完了枠は返金されません",
+    "keepCampaign": "キャンペーンを保持",
+    "cancelConfirm": "キャンセルして{{coins}}🪙受け取る",
     "cancelConfirmFree": "キャンセル",
-    "cancelled": "✅ キャンセル済み",
-    "refunded": "{{coins}}コイン返金。残高: {{balance}}",
+    "cancelled": "✅ キャンペーンキャンセル済み",
+    "refunded": "{{coins}}コインが残高に返金されました。\n新しい残高: {{balance}}コイン",
     "noCampaigns": "キャンペーンなし",
-    "noCampaignsSubtitle": "登録者を獲得から作成"
+    "noCampaignsSubtitle": "プロモートタブから最初のキャンペーンを作成"
   },
   "warnings": {
     "beforeSubscribe": {
-      "title": "⚠️ 登録前に",
-      "message": "YouTubeで登録して戻ってください。",
+      "title": "⚠️ 確認",
+      "message": "YouTubeでチャンネルを開いてフォローし、その後戻ってきてください。\n\n• あなたのアクションはYouTube APIで確認されます\n• クリエイターをサポートするため、アクションをアクティブに保ってください\n\n誠実に参加してください — 本当のクリエイターの成長を助けます。",
       "confirm": "わかりました — YouTube開く"
     },
     "beforeLike": {
-      "title": "⚠️ イイネ前に",
-      "message": "YouTubeでイイネして戻ってください。",
+      "title": "⚠️ 確認",
+      "message": "YouTubeで動画を開いてイイネし、その後戻ってきてください。\n\n• あなたのアクションはYouTubeで確認されます\n• クリエイターをサポートするため、アクションをアクティブに保ってください\n\n誠実に参加してください — 本当のクリエイターの成長を助けます。",
       "confirm": "わかりました — YouTube開く"
     },
     "beforeLikeComment": {
-      "title": "⚠️ イイネ+コメント",
-      "message": "1. 👍 イイネ（必須）\n2. 💬 コメント（+4ボーナス）",
+      "title": "⚠️ イイネ＋コメントタスク",
+      "message": "最大報酬を得るには:\n\n1. 👍 動画にイイネ（必須 — YouTubeで確認）\n2. 💬 本物のコメントを残す（任意 — +4ボーナスコイン獲得）\n\nイイネだけでも受け取り可能 — コメントでボーナス獲得。",
       "confirm": "わかりました — YouTube開く"
     },
     "beforeSubscribeLike": {
-      "title": "⚠️ 登録+イイネ",
-      "message": "1. 🔔 登録\n2. 👍 イイネ",
+      "title": "⚠️ 確認",
+      "message": "YouTubeで両方のアクションを行う必要があります:\n\n1. 🔔 チャンネルをフォロー\n2. 👍 動画にイイネ\n\n両方ともYouTube APIで確認されます。\n\n誠実に参加してください — 本当のクリエイターの成長を助けます。",
       "confirm": "わかりました — YouTube開く"
     },
     "beforeWatch": {
-      "title": "⚠️ 視聴",
-      "message": "必要な時間動画を視聴してください。",
+      "title": "⚠️ 視聴タスク",
+      "message": "動画を開いて必要な時間視聴してください。\n\n• タイマー中はYouTubeアプリを開いたままにしてください\n• 終わったら戻ってきて報酬を受け取ってください\n• 視聴タスクは公平なプレイのため抜き打ち確認されます",
       "confirm": "わかりました — YouTube開く"
     },
     "taskReminder": {
-      "subscribe": "登録を維持してください。",
-      "like": "イイネを維持してください。",
-      "like_comment": "イイネ維持。コメント=ボーナス。",
-      "subscribe_like": "登録とイイネを維持。",
-      "watch": "全時間視聴してください。"
+      "subscribe": "クリエイターをサポートするため、アクションをアクティブに保ってください。",
+      "like": "クリエイターをサポートするため、イイネをアクティブに保ってください。",
+      "like_comment": "イイネをアクティブに保ってください。コメントでボーナス獲得。",
+      "subscribe_like": "クリエイターをサポートするため、両方のアクションをアクティブに保ってください。",
+      "watch": "受け取る前に必要な全時間を視聴してください。"
     },
-    "campaignFairUse": "📋 YouTubeで確認された登録者。"
+    "campaignFairUse": "📋 すべてのアクションは真正性を確保するためYouTube APIで確認されます。"
   },
   "tx": {
     "welcomeBonus": "🎁 ウェルカムボーナス",
@@ -255,7 +255,7 @@ export default {
     "taskCompletedComment": "{{type}} — イイネ✅ + コメント✅ (+{{bonus}}ボーナス)",
     "campaignCancelled": "キャンペーン中止 — {{slots}}枠返金（{{refund}}コイン）",
     "campaignCancelledFree": "キャンペーン中止",
-    "coinsReclaimed": "{{type}} — コイン回収（登録解除）"
+    "coinsReclaimed": "{{type}} — コイン回収"
   },
   "onboarding": {
     "skip": "スキップ",
@@ -263,19 +263,19 @@ export default {
     "getStarted": "🚀 無料で始める",
     "slide1": {
       "title": "一緒に成長しよう",
-      "subtitle": "YouTubeチャンネルを成長させる公平な方法。本物の登録者、本物のエンゲージメント、YouTubeで確認済み。"
+      "subtitle": "YouTubeチャンネルを成長させる公平な方法。本当のエンゲージメント、YouTube APIで確認済み。"
     },
     "slide2": {
-      "title": "タスクを完了してコインを獲得",
-      "subtitle": "チャンネルを登録、動画をイイネ。すべてのアクションが確認され、即座にコインで報酬が得られます。"
+      "title": "タスクを完了して報酬を獲得",
+      "subtitle": "他のクリエイターのコンテンツに関与してサポートしましょう。すべてのアクションが確認され、即座にコインで報酬が得られます。"
     },
     "slide3": {
-      "title": "コインを使って登録者を獲得",
-      "subtitle": "チャンネルのキャンペーンを開始。本物のユーザーが登録し、YouTube APIで確認済み。"
+      "title": "チャンネルを成長させよう",
+      "subtitle": "あなたのチャンネルのキャンペーンを開始。コミュニティメンバーが関与し返します、YouTube APIで確認済み。"
     },
     "slide4": {
       "title": "50コイン無料！",
-      "subtitle": "Googleでサインインしてウェルカムボーナスを受け取り。カード不要。本物の成長。"
+      "subtitle": "Googleでサインインしてウェルカムボーナスを受け取り。クレジットカード不要。隠れた料金なし。ただ一緒に成長しましょう。"
     }
   }
 };

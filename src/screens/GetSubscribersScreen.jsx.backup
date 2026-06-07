@@ -1,6 +1,6 @@
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { calcCampaignCost, extractChannelId } from '../utils/helpers';
-import React, { useState, useCallback, useMemo } from 'react';
+import { calcCampaignCost } from '../utils/helpers';
+import React, { useState, useCallback } from 'react';
 import {
   View, Text, StyleSheet, TextInput, TouchableOpacity,
   SafeAreaView, ScrollView, Alert, KeyboardAvoidingView, Platform,
@@ -19,8 +19,8 @@ const REQUIRES_CHANNEL = ['subscribe', 'subscribe_like'];
 const GetSubscribersScreen = () => {
   const { user, refreshUser } = useAuth();
   const { t } = useTranslation();
-  const WARNINGS = useMemo(() => getWarnings(t), [t]);
-  const TASK_DESCRIPTIONS = useMemo(() => getTaskDescriptions(t), [t]);
+  const WARNINGS = getWarnings(t);
+  const TASK_DESCRIPTIONS = getTaskDescriptions(t);
   const navigation = useNavigation();
   const [channels, setChannels] = useState([]);
   const [selectedChannelId, setSelectedChannelId] = useState(null);
@@ -61,7 +61,7 @@ const GetSubscribersScreen = () => {
     setAddingChannel(true);
     try {
       const ch = await api.addChannel({
-        youtube_channel_id: extractChannelId(channelUrl),
+        youtube_channel_id: channelUrl.includes('@') ? channelUrl.split('@')[1]?.split('/')[0] : channelUrl.trim(),
         channel_name: channelName.trim(),
         channel_url: channelUrl.trim(),
       });

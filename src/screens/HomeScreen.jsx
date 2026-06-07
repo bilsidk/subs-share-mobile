@@ -31,8 +31,7 @@ const HomeScreen = ({ navigation }) => {
       setChannels(chRes);
       setTransactions(txRes.transactions.slice(0, 5));
       setMyTasks(taskRes.filter(t => t.status === 'active'));
-    } catch (err) {
-      console.error('Home load error:', err);
+    } catch (_) { /* ignore */
     } finally {
       setLoading(false);
       setRefreshing(false);

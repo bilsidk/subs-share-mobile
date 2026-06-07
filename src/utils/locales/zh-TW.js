@@ -19,7 +19,7 @@ export default {
   },
   "tabs": {
     "home": "首頁",
-    "earn": "賺取",
+    "earn": "任務",
     "boost": "推廣",
     "profile": "我的",
     "admin": "管理"
@@ -28,14 +28,14 @@ export default {
     "tagline": "共同成長"
   },
   "login": {
-    "title": "Subs Share",
-    "tagline": "訂閱賺取金幣。\n花費金幣成長。",
-    "feature1": "透過訂閱頻道賺取金幣",
-    "feature2": "經YouTube驗證——無虛假任務",
-    "feature3": "花費金幣獲取真實訂閱者",
+    "title": "Creator Hub",
+    "tagline": "支持創作者。\n共同成長。",
+    "feature1": "完成任務獲取獎勵",
+    "feature2": "經YouTube驗證——真實任務",
+    "feature3": "使用獎勵來發展您的頻道",
     "welcomeBonus": "🎁 免費獲得50枚金幣！",
     "continueWithGoogle": "使用Google繼續",
-    "terms": "我們請求唯讀YouTube存取權限以驗證您的訂閱和按讚。",
+    "terms": "我們請求唯讀YouTube存取權限以驗證您的操作。",
     "signInFailed": "登入失敗",
     "noToken": "未收到Google令牌",
     "tryAgain": "請重試"
@@ -43,29 +43,29 @@ export default {
   "home": {
     "greeting": "你好 👋",
     "balance": "您的餘額",
-    "coinHint": "10金幣 = 1訂閱者",
+    "coinHint": "完成更多任務，賺取更多獎勵",
     "campaigns": "活動",
-    "pendingSubs": "待處理訂閱者",
+    "pendingSubs": "待處理",
     "completed": "已完成",
     "quickActions": "快捷操作",
-    "earnCoins": "賺取金幣",
-    "getSubs": "獲取訂閱者",
+    "earnCoins": "任務",
+    "getSubs": "成長",
     "myChannel": "我的頻道",
     "activeCampaign": "個活動進行中",
     "activeCampaigns": "個活動進行中",
-    "subsPending": "訂閱者等待中",
+    "subsPending": "等待中",
     "recentActivity": "最近活動",
     "noTransactions": "暫無交易"
   },
   "earn": {
-    "title": "賺取金幣",
-    "subtitle": "完成任務 · 驗證 · 領取金幣",
-    "banner": "🔒 訂閱和按讚由YouTube驗證。",
+    "title": "獎勵",
+    "subtitle": "完成任務 · 驗證 · 領取獎勵",
+    "banner": "🔒 所有操作均由YouTube API驗證。善意參與有助於整個社群的成長。",
     "tierFeatured": "⭐ 精選",
     "tierPremium": "💎 高級",
     "tierCommunity": "📋 社群",
     "noTasks": "暫無任務",
-    "noTasksSubtitle": "請稍後查看",
+    "noTasksSubtitle": "請稍後查看——新活動定期添加",
     "alreadyDone": "✓ 已完成",
     "slotsLeft": "個名額剩餘",
     "verifying": "YouTube驗證中...",
@@ -77,9 +77,9 @@ export default {
     "tapToVerify": "點擊下方——我們將透過YouTube驗證。",
     "secondsRemaining": "秒剩餘",
     "commentBonus": "💬 已留言？您將自動獲得+4金幣！",
-    "warningModal": "⚠️ 領取後撤銷{{action}}將導致金幣被追回。",
-    "subscription": "訂閱",
-    "like": "按讚",
+    "warningModal": "⚠️ 計時器結束後撤銷{{action}}可能會影響您的獎勵。",
+    "subscription": "操作",
+    "like": "操作",
     "coinsEarned": "🎉 金幣已獲得！",
     "balance": "餘額",
     "commentBonusEarned": "💬 留言獎勵",
@@ -92,15 +92,15 @@ export default {
     "slotTaken": "名額已被佔用",
     "slotTakenMessage": "有人剛佔了最後一個名額。請嘗試其他任務！",
     "campaignPaused": "活動已暫停",
-    "campaignPausedMessage": "此活動已被暫停。",
+    "campaignPausedMessage": "此活動已被暫停。請嘗試其他任務。",
     "campaignCancelled": "活動已取消",
-    "campaignCancelledMessage": "此活動已取消。"
+    "campaignCancelledMessage": "此活動已取消。請嘗試其他任務。"
   },
   "taskTypes": {
-    "subscribe": "訂閱",
+    "subscribe": "關注",
     "like": "按讚影片",
     "like_comment": "按讚+留言",
-    "subscribe_like": "訂閱+按讚",
+    "subscribe_like": "關注+按讚",
     "watch": "觀看影片",
     "verifiedByApi": "經YouTube API驗證",
     "likeVerified": "按讚由API驗證 · 留言 = +4獎勵",
@@ -120,7 +120,7 @@ export default {
     "changedMsg": "應用程式語言已更新。"
   },
   "boost": {
-    "title": "獲取訂閱者",
+    "title": "推廣",
     "myCampaigns": "📋 我的活動",
     "step1": "1. 選擇任務類型",
     "step2channel": "2. 您的頻道",
@@ -135,12 +135,12 @@ export default {
     "channelAdded": "✅ 頻道已新增！",
     "channelAddedMsg": "您的YouTube頻道已註冊。",
     "requiredWatchTime": "所需觀看時長（分鐘）",
-    "watchNote": "⚠️ 影片至少需要{{minutes}}分鐘。",
+    "watchNote": "⚠️ 影片至少需要{{minutes}}分鐘——提交時驗證。",
     "videoPlaceholder": "youtube.com/watch?v=...",
     "customAmount": "或輸入自訂數量",
     "cost": "費用",
     "balance": "餘額",
-    "needMoreCoins": "⚠️ 還需要{{amount}}金幣！",
+    "needMoreCoins": "⚠️ 還需要{{amount}}金幣——從任務標籤頁完成任務！",
     "addChannelFirst": "⬆️ 請先在上方新增您的頻道",
     "launching": "啟動中...",
     "launch": "🚀 啟動活動",
@@ -151,13 +151,13 @@ export default {
     "campaignLive": "🚀 活動已上線！",
     "slotsOpened": "已開放{{slots}}個名額！",
     "noChannel": "沒有頻道",
-    "noChannelMsg": "此任務類型需要您的YouTube頻道。",
+    "noChannelMsg": "此任務類型需要您的YouTube頻道。請先新增。",
     "invalid": "無效",
     "invalidSlots": "請輸入有效數量",
     "missingVideo": "缺少影片",
     "missingVideoMsg": "請輸入YouTube影片URL",
     "insufficientCoins": "金幣不足",
-    "insufficientMsg": "需要{{cost}}金幣，您有{{balance}}。",
+    "insufficientMsg": "需要{{cost}}金幣，您有{{balance}}。\n從任務標籤頁完成更多任務！",
     "ownerFree": "免費（所有者帳戶）",
     "campaignError": "活動錯誤"
   },
@@ -195,57 +195,57 @@ export default {
     "pause": "⏸ 暫停",
     "resume": "▶ 恢復",
     "cancel": "🗑 取消",
-    "pauseTitle": "⏸ 暫停",
-    "pauseMsg": "暫停\"{{name}}\"?\n{{slots}}名額保留。",
-    "resumeTitle": "▶ 恢復",
-    "resumeMsg": "恢復\"{{name}}\"?",
-    "cancelTitle": "🗑 取消",
-    "cancelMsg": "取消\"{{name}}\"?",
-    "cancelRefund": "\n\n💰 {{coins}}金幣",
-    "cancelNoRefund": "\n\n無退款。",
-    "cancelCompleted": "\n\n⚠️ {{count}}名額不退款",
-    "keepCampaign": "保留",
-    "cancelConfirm": "取消+{{coins}}🪙",
+    "pauseTitle": "⏸ 暫停活動",
+    "pauseMsg": "暫停\"{{name}}\"?\n\n不再接受新操作。您的{{slots}}個剩餘名額將被保留——您可以隨時恢復。",
+    "resumeTitle": "▶ 恢復活動",
+    "resumeMsg": "恢復\"{{name}}\"?\n\n{{slots}}個名額將再次開放。",
+    "cancelTitle": "🗑 取消活動",
+    "cancelMsg": "取消\"{{name}}\"? 此操作無法復原。",
+    "cancelRefund": "\n\n💰 未填補名額退還{{coins}}金幣",
+    "cancelNoRefund": "\n\n無退款——此活動是免費的。",
+    "cancelCompleted": "\n\n⚠️ 已完成{{count}}個名額不予退款",
+    "keepCampaign": "保留活動",
+    "cancelConfirm": "取消並獲得{{coins}}🪙",
     "cancelConfirmFree": "取消",
-    "cancelled": "✅ 已取消",
-    "refunded": "{{coins}}金幣。餘額: {{balance}}",
+    "cancelled": "✅ 活動已取消",
+    "refunded": "{{coins}}金幣已退還到您的餘額。\n新餘額：{{balance}}金幣",
     "noCampaigns": "暫無活動",
-    "noCampaignsSubtitle": "從獲取訂閱者建立"
+    "noCampaignsSubtitle": "從推廣標籤頁建立您的第一個活動"
   },
   "warnings": {
     "beforeSubscribe": {
-      "title": "⚠️ 訂閱前",
-      "message": "在YouTube訂閱後返回。",
+      "title": "⚠️ 確認",
+      "message": "在YouTube上開啟頻道並關注，然後返回此處。\n\n• 您的操作由YouTube API驗證\n• 請保持您的操作活躍以支持創作者\n\n真誠參與——幫助真正的創作者成長。",
       "confirm": "明白 — 開啟YouTube"
     },
     "beforeLike": {
-      "title": "⚠️ 按讚前",
-      "message": "在YouTube按讚後返回。",
+      "title": "⚠️ 確認",
+      "message": "在YouTube上開啟影片並按讚，然後返回此處。\n\n• 您的操作由YouTube驗證\n• 請保持您的操作活躍以支持創作者\n\n真誠參與——幫助真正的創作者成長。",
       "confirm": "明白 — 開啟YouTube"
     },
     "beforeLikeComment": {
-      "title": "⚠️ 按讚+留言",
-      "message": "1. 👍 按讚（必須）\n2. 💬 留言（+4獎勵）",
+      "title": "⚠️ 按讚+留言任務",
+      "message": "要獲得最大獎勵：\n\n1. 👍 按讚影片（必須——由YouTube驗證）\n2. 💬 留下真誠留言（可選——獲得+4獎勵金幣）\n\n僅按讚即可領取——留言可獲得額外獎勵。",
       "confirm": "明白 — 開啟YouTube"
     },
     "beforeSubscribeLike": {
-      "title": "⚠️ 訂閱+按讚",
-      "message": "1. 🔔 訂閱\n2. 👍 按讚",
+      "title": "⚠️ 確認",
+      "message": "您需要在YouTube上完成兩項操作：\n\n1. 🔔 關注頻道\n2. 👍 按讚影片\n\n兩項均由YouTube API驗證。\n\n真誠參與——幫助真正的創作者成長。",
       "confirm": "明白 — 開啟YouTube"
     },
     "beforeWatch": {
-      "title": "⚠️ 觀看",
-      "message": "觀看影片所需時間。",
+      "title": "⚠️ 觀看任務",
+      "message": "開啟影片並觀看所需時長。\n\n• 計時器運行時保持YouTube應用程式開啟\n• 完成後返回此處領取您的獎勵\n• 觀看任務會被抽查以確保公平",
       "confirm": "明白 — 開啟YouTube"
     },
     "taskReminder": {
-      "subscribe": "保持訂閱。",
-      "like": "保持按讚。",
-      "like_comment": "保持按讚。留言=獎勵。",
-      "subscribe_like": "保持訂閱和按讚。",
-      "watch": "觀看完整時間。"
+      "subscribe": "保持操作活躍以支持創作者。",
+      "like": "保持按讚活躍以支持創作者。",
+      "like_comment": "保持按讚活躍。留言可獲得額外獎勵。",
+      "subscribe_like": "保持兩項操作活躍以支持創作者。",
+      "watch": "在領取前觀看完整所需時長。"
     },
-    "campaignFairUse": "📋 訂閱者由YouTube驗證。"
+    "campaignFairUse": "📋 所有操作均由YouTube API驗證以確保真實性。"
   },
   "tx": {
     "welcomeBonus": "🎁 歡迎獎勵",
@@ -255,7 +255,7 @@ export default {
     "taskCompletedComment": "{{type}} — 按讚✅ + 留言✅ (+{{bonus}}獎勵)",
     "campaignCancelled": "活動取消 — 退還{{slots}}名額（{{refund}}金幣）",
     "campaignCancelledFree": "活動取消",
-    "coinsReclaimed": "{{type}} — 金幣追回（取消訂閱）"
+    "coinsReclaimed": "{{type}} — 金幣已回收"
   },
   "onboarding": {
     "skip": "跳過",
@@ -263,19 +263,19 @@ export default {
     "getStarted": "🚀 免費開始",
     "slide1": {
       "title": "共同成長",
-      "subtitle": "發展YouTube頻道的公平方式。真實訂閱者，真實互動，經YouTube驗證。"
+      "subtitle": "發展YouTube頻道的公平方式。真實互動，經YouTube API驗證。"
     },
     "slide2": {
-      "title": "完成任務，賺取金幣",
-      "subtitle": "訂閱頻道，按讚影片。每個動作都經過驗證並立即獲得金幣獎勵。"
+      "title": "完成任務，獲得獎勵",
+      "subtitle": "透過與其他創作者的內容互動來支持他們。每個操作都經過驗證並立即獲得金幣獎勵。"
     },
     "slide3": {
-      "title": "花費金幣，獲得訂閱者",
-      "subtitle": "為您的頻道發起活動。真實用戶訂閱，經YouTube API驗證。"
+      "title": "發展您的頻道",
+      "subtitle": "為您的頻道發起活動。社群成員會回互互動，經YouTube API驗證。"
     },
     "slide4": {
       "title": "免費獲得50枚金幣！",
-      "subtitle": "使用Google登入獲取歡迎獎勵。無需信用卡。真實增長。"
+      "subtitle": "使用Google登入獲取歡迎獎勵。無需信用卡。無隱藏費用。共同成長。"
     }
   }
 };

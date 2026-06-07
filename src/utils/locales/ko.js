@@ -19,7 +19,7 @@ export default {
   },
   "tabs": {
     "home": "홈",
-    "earn": "적립",
+    "earn": "작업",
     "boost": "부스트",
     "profile": "프로필",
     "admin": "관리자"
@@ -28,14 +28,14 @@ export default {
     "tagline": "함께 성장하기"
   },
   "login": {
-    "title": "Subs Share",
-    "tagline": "구독하여 적립하세요.\n사용하여 성장하세요.",
-    "feature1": "채널 구독으로 코인 적립",
-    "feature2": "YouTube 인증 — 가짜 작업 없음",
-    "feature3": "코인으로 실제 구독자 획득",
+    "title": "Creator Hub",
+    "tagline": "크리에이터를 지원하세요.\n함께 성장하세요.",
+    "feature1": "작업을 완료하여 보상 획득",
+    "feature2": "YouTube 인증 — 진짜 작업",
+    "feature3": "보상을 사용하여 채널 성장",
     "welcomeBonus": "🎁 50 코인으로 시작하세요!",
     "continueWithGoogle": "Google로 계속",
-    "terms": "구독 및 좋아요 확인을 위해 읽기 전용 YouTube 액세스를 요청합니다.",
+    "terms": "귀하의 작업을 확인하기 위해 읽기 전용 YouTube 액세스를 요청합니다.",
     "signInFailed": "로그인 실패",
     "noToken": "Google에서 토큰을 받지 못했습니다",
     "tryAgain": "다시 시도해 주세요"
@@ -43,29 +43,29 @@ export default {
   "home": {
     "greeting": "안녕하세요 👋",
     "balance": "내 잔액",
-    "coinHint": "10코인 = 구독자 1명",
+    "coinHint": "더 많은 작업 완료, 더 많은 보상 획득",
     "campaigns": "캠페인",
-    "pendingSubs": "대기 중인 구독자",
+    "pendingSubs": "대기 중",
     "completed": "완료됨",
     "quickActions": "빠른 작업",
-    "earnCoins": "코인 적립",
-    "getSubs": "구독자 얻기",
+    "earnCoins": "작업",
+    "getSubs": "성장",
     "myChannel": "내 채널",
     "activeCampaign": "개 진행 중인 캠페인",
     "activeCampaigns": "개 진행 중인 캠페인",
-    "subsPending": "명의 구독자 대기 중",
+    "subsPending": "대기 중",
     "recentActivity": "최근 활동",
     "noTransactions": "아직 거래 내역이 없습니다"
   },
   "earn": {
-    "title": "코인 적립하기",
-    "subtitle": "작업 완료 · 인증 · 코인 받기",
-    "banner": "🔒 구독 및 좋아요는 YouTube에서 인증됩니다.",
+    "title": "보상",
+    "subtitle": "작업 완료 · 인증 · 보상 받기",
+    "banner": "🔒 모든 작업은 YouTube API를 통해 인증됩니다. 선의로 참여하면 전체 커뮤니티가 성장하는 데 도움이 됩니다.",
     "tierFeatured": "⭐ 추천",
     "tierPremium": "💎 프리미엄",
     "tierCommunity": "📋 커뮤니티",
     "noTasks": "아직 작업이 없습니다",
-    "noTasksSubtitle": "나중에 확인하세요",
+    "noTasksSubtitle": "나중에 확인하세요 — 새 캠페인이 정기적으로 추가됩니다",
     "alreadyDone": "✓ 완료",
     "slotsLeft": "개 자리 남음",
     "verifying": "YouTube로 인증 중...",
@@ -77,9 +77,9 @@ export default {
     "tapToVerify": "아래를 탭하세요 — YouTube로 인증합니다.",
     "secondsRemaining": "초 남음",
     "commentBonus": "💬 댓글을 달았나요? 자동으로 +4 코인을 받게 됩니다!",
-    "warningModal": "⚠️ 수령 후 {{action}}을 취소하면 코인이 회수됩니다.",
-    "subscription": "구독",
-    "like": "좋아요",
+    "warningModal": "⚠️ 타이머 종료 후 {{action}}을 취소하면 보상에 영향을 줄 수 있습니다.",
+    "subscription": "작업",
+    "like": "작업",
     "coinsEarned": "🎉 코인 적립 완료!",
     "balance": "잔액",
     "commentBonusEarned": "💬 댓글 보너스",
@@ -87,20 +87,20 @@ export default {
     "notDetectedYet": "아직 감지되지 않았습니다",
     "reconnectNeeded": "재연결 필요",
     "reconnectMessage": "YouTube 액세스 권한을 부여하려면 로그아웃 후 다시 로그인하세요.",
-    "tryAgainMessage": "인증이 사용 중입니다. 잠시 후 다시 받기를 탭하세요.",
+    "tryAgainMessage": "인증이 사용 중입니다. 잠시 후 받기를 다시 탭하세요.",
     "accountSuspended": "계정 정지됨",
     "slotTaken": "자리가 찼습니다",
     "slotTakenMessage": "누군가 마지막 자리를 가져갔습니다. 다른 작업을 시도하세요!",
     "campaignPaused": "캠페인 일시 정지됨",
-    "campaignPausedMessage": "이 캠페인은 소유자가 일시 정지했습니다.",
+    "campaignPausedMessage": "이 캠페인은 소유자가 일시 정지했습니다. 다른 작업을 시도하세요.",
     "campaignCancelled": "캠페인 취소됨",
-    "campaignCancelledMessage": "이 캠페인은 취소되었습니다."
+    "campaignCancelledMessage": "이 캠페인은 취소되었습니다. 다른 작업을 시도하세요."
   },
   "taskTypes": {
-    "subscribe": "구독하기",
+    "subscribe": "팔로우",
     "like": "동영상 좋아요",
     "like_comment": "좋아요+댓글",
-    "subscribe_like": "구독+좋아요",
+    "subscribe_like": "팔로우+좋아요",
     "watch": "동영상 시청",
     "verifiedByApi": "YouTube API로 인증됨",
     "likeVerified": "좋아요 API 인증 · 댓글 = +4 보너스",
@@ -120,7 +120,7 @@ export default {
     "changedMsg": "앱 언어가 업데이트되었습니다."
   },
   "boost": {
-    "title": "구독자 얻기",
+    "title": "프로모션",
     "myCampaigns": "📋 내 캠페인",
     "step1": "1. 작업 유형 선택",
     "step2channel": "2. 내 채널",
@@ -135,12 +135,12 @@ export default {
     "channelAdded": "✅ 채널 추가됨!",
     "channelAddedMsg": "YouTube 채널이 등록되었습니다.",
     "requiredWatchTime": "필요 시청 시간 (분)",
-    "watchNote": "⚠️ 동영상은 최소 {{minutes}}분이어야 합니다.",
+    "watchNote": "⚠️ 동영상은 최소 {{minutes}}분이어야 합니다 — 제출 시 검증됩니다.",
     "videoPlaceholder": "youtube.com/watch?v=...",
     "customAmount": "또는 사용자 지정 수량 입력",
     "cost": "비용",
     "balance": "잔액",
-    "needMoreCoins": "⚠️ {{amount}}개 코인이 더 필요합니다!",
+    "needMoreCoins": "⚠️ {{amount}}개 코인이 더 필요합니다 — 작업 탭에서 작업을 완료하세요!",
     "addChannelFirst": "⬆️ 계속하려면 위에서 채널을 추가하세요",
     "launching": "시작 중...",
     "launch": "🚀 캠페인 시작",
@@ -151,13 +151,13 @@ export default {
     "campaignLive": "🚀 캠페인 시작!",
     "slotsOpened": "{{slots}}개 슬롯 열림!",
     "noChannel": "채널 없음",
-    "noChannelMsg": "이 작업 유형에는 YouTube 채널이 필요합니다.",
+    "noChannelMsg": "이 작업 유형에는 YouTube 채널이 필요합니다. 먼저 추가하세요.",
     "invalid": "유효하지 않음",
     "invalidSlots": "유효한 숫자를 입력하세요",
     "missingVideo": "동영상 없음",
     "missingVideoMsg": "YouTube 동영상 URL을 입력하세요",
     "insufficientCoins": "코인 부족",
-    "insufficientMsg": "{{cost}}개 코인 필요, {{balance}}개 있습니다.",
+    "insufficientMsg": "{{cost}}개 코인 필요, {{balance}}개 있습니다.\n작업 탭에서 더 많은 작업을 완료하세요!",
     "ownerFree": "무료 (소유자 계정)",
     "campaignError": "캠페인 오류"
   },
@@ -195,57 +195,57 @@ export default {
     "pause": "⏸ 일시정지",
     "resume": "▶ 재개",
     "cancel": "🗑 취소",
-    "pauseTitle": "⏸ 일시정지",
-    "pauseMsg": "\"{{name}}\" 일시정지?\n{{slots}}개 슬롯 보존.",
-    "resumeTitle": "▶ 재개",
-    "resumeMsg": "\"{{name}}\" 재개?",
-    "cancelTitle": "🗑 취소",
-    "cancelMsg": "\"{{name}}\" 취소?",
-    "cancelRefund": "\n\n💰 {{coins}} 코인",
-    "cancelNoRefund": "\n\n환불 없음.",
-    "cancelCompleted": "\n\n⚠️ {{count}}개 슬롯 환불 안됨",
-    "keepCampaign": "유지",
-    "cancelConfirm": "취소+{{coins}}🪙",
+    "pauseTitle": "⏸ 캠페인 일시정지",
+    "pauseMsg": "\"{{name}}\"을(를) 일시정지할까요?\n\n새로운 작업이 수락되지 않습니다. {{slots}}개의 남은 슬롯이 유지됩니다 — 언제든지 재개할 수 있습니다.",
+    "resumeTitle": "▶ 캠페인 재개",
+    "resumeMsg": "\"{{name}}\"을(를) 재개할까요?\n\n{{slots}}개 슬롯이 다시 열립니다.",
+    "cancelTitle": "🗑 캠페인 취소",
+    "cancelMsg": "\"{{name}}\"을(를) 취소할까요? 되돌릴 수 없습니다.",
+    "cancelRefund": "\n\n💰 채워지지 않은 슬롯에 대한 {{coins}}코인 환불",
+    "cancelNoRefund": "\n\n환불 없음 — 이 캠페인은 무료였습니다.",
+    "cancelCompleted": "\n\n⚠️ 완료된 {{count}}개 슬롯은 환불되지 않습니다",
+    "keepCampaign": "캠페인 유지",
+    "cancelConfirm": "취소 및 {{coins}}🪙 받기",
     "cancelConfirmFree": "취소",
-    "cancelled": "✅ 취소됨",
-    "refunded": "{{coins}} 코인 환불. 잔액: {{balance}}",
+    "cancelled": "✅ 캠페인 취소됨",
+    "refunded": "{{coins}}코인이 잔액으로 반환되었습니다.\n새 잔액: {{balance}}코인",
     "noCampaigns": "캠페인 없음",
-    "noCampaignsSubtitle": "구독자 얻기에서 만들기"
+    "noCampaignsSubtitle": "프로모션 탭에서 첫 캠페인 만들기"
   },
   "warnings": {
     "beforeSubscribe": {
-      "title": "⚠️ 구독 전에",
-      "message": "YouTube에서 구독 후 돌아오세요.",
+      "title": "⚠️ 확인",
+      "message": "YouTube에서 채널을 열고 팔로우한 후, 여기로 돌아오세요.\n\n• 귀하의 작업은 YouTube API를 통해 인증됩니다\n• 크리에이터를 지원하기 위해 작업을 활성 상태로 유지해 주세요\n\n진정하게 참여하세요 — 진짜 크리에이터의 성장을 돕습니다.",
       "confirm": "알겠습니다 — YouTube 열기"
     },
     "beforeLike": {
-      "title": "⚠️ 좋아요 전에",
-      "message": "YouTube에서 좋아요 후 돌아오세요.",
+      "title": "⚠️ 확인",
+      "message": "YouTube에서 동영상을 열고 좋아요를 누른 후, 여기로 돌아오세요.\n\n• 귀하의 작업은 YouTube를 통해 인증됩니다\n• 크리에이터를 지원하기 위해 작업을 활성 상태로 유지해 주세요\n\n진정하게 참여하세요 — 진짜 크리에이터의 성장을 돕습니다.",
       "confirm": "알겠습니다 — YouTube 열기"
     },
     "beforeLikeComment": {
-      "title": "⚠️ 좋아요+댓글",
-      "message": "1. 👍 좋아요（필수）\n2. 💬 댓글（+4 보너스）",
+      "title": "⚠️ 좋아요+댓글 작업",
+      "message": "최대 보상을 받으려면:\n\n1. 👍 동영상 좋아요 (필수 — YouTube에서 인증)\n2. 💬 진정한 댓글 남기기 (선택 사항 — +4 보너스 코인 획득)\n\n좋아요만으로도 수령 가능 — 댓글은 보너스를 획득합니다.",
       "confirm": "알겠습니다 — YouTube 열기"
     },
     "beforeSubscribeLike": {
-      "title": "⚠️ 구독+좋아요",
-      "message": "1. 🔔 구독\n2. 👍 좋아요",
+      "title": "⚠️ 확인",
+      "message": "YouTube에서 두 작업을 모두 수행해야 합니다:\n\n1. 🔔 채널 팔로우\n2. 👍 동영상 좋아요\n\n둘 다 YouTube API를 통해 인증됩니다.\n\n진정하게 참여하세요 — 진짜 크리에이터의 성장을 돕습니다.",
       "confirm": "알겠습니다 — YouTube 열기"
     },
     "beforeWatch": {
-      "title": "⚠️ 시청",
-      "message": "필요한 시간 동안 동영상을 시청하세요.",
+      "title": "⚠️ 시청 작업",
+      "message": "동영상을 열고 필요한 시간 동안 시청하세요.\n\n• 타이머가 실행되는 동안 YouTube 앱을 열어 두세요\n• 완료되면 여기로 돌아와 보상을 수령하세요\n• 시청 작업은 공정한 플레이를 위해 확인됩니다",
       "confirm": "알겠습니다 — YouTube 열기"
     },
     "taskReminder": {
-      "subscribe": "구독을 유지하세요.",
-      "like": "좋아요를 유지하세요.",
-      "like_comment": "좋아요 유지. 댓글=보너스.",
-      "subscribe_like": "구독과 좋아요 유지.",
-      "watch": "전체 시간 시청하세요."
+      "subscribe": "크리에이터를 지원하기 위해 작업을 활성 상태로 유지하세요.",
+      "like": "크리에이터를 지원하기 위해 좋아요를 활성 상태로 유지하세요.",
+      "like_comment": "좋아요를 활성 상태로 유지하세요. 댓글은 보너스를 획득합니다.",
+      "subscribe_like": "크리에이터를 지원하기 위해 두 작업을 모두 활성 상태로 유지하세요.",
+      "watch": "수령하기 전에 필요한 전체 시간을 시청하세요."
     },
-    "campaignFairUse": "📋 YouTube에서 인증된 구독자."
+    "campaignFairUse": "📋 모든 작업은 진위를 확인하기 위해 YouTube API를 통해 인증됩니다."
   },
   "tx": {
     "welcomeBonus": "🎁 환영 보너스",
@@ -255,7 +255,7 @@ export default {
     "taskCompletedComment": "{{type}} — 좋아요✅ + 댓글✅ (+{{bonus}} 보너스)",
     "campaignCancelled": "캠페인 취소 — {{slots}}개 슬롯 환불 ({{refund}} 코인)",
     "campaignCancelledFree": "캠페인 취소",
-    "coinsReclaimed": "{{type}} — 코인 회수 (구독 취소)"
+    "coinsReclaimed": "{{type}} — 코인 회수"
   },
   "onboarding": {
     "skip": "건너뛰기",
@@ -263,19 +263,19 @@ export default {
     "getStarted": "🚀 무료로 시작하기",
     "slide1": {
       "title": "함께 성장하기",
-      "subtitle": "YouTube 채널을 키우는 공정한 방법. 진짜 구독자, 진짜 참여, YouTube 인증."
+      "subtitle": "YouTube 채널을 키우는 공정한 방법. 진짜 참여, YouTube API 인증."
     },
     "slide2": {
-      "title": "작업 완료하고 코인 획득",
-      "subtitle": "채널 구독, 동영상 좋아요. 모든 행동이 확인되고 즉시 코인으로 보상됩니다."
+      "title": "작업 완료, 보상 획득",
+      "subtitle": "다른 크리에이터의 콘텐츠에 참여하여 지원하세요. 모든 작업이 확인되고 즉시 코인으로 보상됩니다."
     },
     "slide3": {
-      "title": "코인 사용하고 구독자 얻기",
-      "subtitle": "채널 캠페인을 시작하세요. 진짜 사용자가 구독하고 YouTube가 확인합니다."
+      "title": "채널 성장시키기",
+      "subtitle": "채널을 위한 캠페인을 시작하세요. 커뮤니티 구성원이 다시 참여하고, YouTube API가 인증합니다."
     },
     "slide4": {
       "title": "50 코인 무료!",
-      "subtitle": "Google로 로그인하여 환영 보너스를 받으세요. 카드 불필요. 진짜 성장."
+      "subtitle": "Google로 로그인하여 환영 보너스를 받으세요. 신용카드 불필요. 숨은 수수료 없음. 함께 성장하세요."
     }
   }
 };

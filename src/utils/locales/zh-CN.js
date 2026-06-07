@@ -19,7 +19,7 @@ export default {
   },
   "tabs": {
     "home": "首页",
-    "earn": "赚取",
+    "earn": "任务",
     "boost": "推广",
     "profile": "我的",
     "admin": "管理"
@@ -28,14 +28,14 @@ export default {
     "tagline": "共同成长"
   },
   "login": {
-    "title": "Subs Share",
-    "tagline": "订阅赚取金币。\n花费金币增长。",
-    "feature1": "通过订阅频道赚取金币",
-    "feature2": "经YouTube验证——无虚假任务",
-    "feature3": "花费金币获取真实订阅者",
+    "title": "Creator Hub",
+    "tagline": "支持创作者。\n共同成长。",
+    "feature1": "完成任务获取奖励",
+    "feature2": "经YouTube验证——真实任务",
+    "feature3": "使用奖励来发展您的频道",
     "welcomeBonus": "🎁 免费获得50枚金币！",
     "continueWithGoogle": "使用Google继续",
-    "terms": "我们请求只读YouTube访问权限以验证您的订阅和点赞。",
+    "terms": "我们请求只读YouTube访问权限以验证您的操作。",
     "signInFailed": "登录失败",
     "noToken": "未收到Google令牌",
     "tryAgain": "请重试"
@@ -43,24 +43,24 @@ export default {
   "home": {
     "greeting": "你好 👋",
     "balance": "您的余额",
-    "coinHint": "10金币 = 1订阅者",
+    "coinHint": "完成更多任务，赚取更多奖励",
     "campaigns": "活动",
-    "pendingSubs": "待处理订阅者",
+    "pendingSubs": "待处理",
     "completed": "已完成",
     "quickActions": "快捷操作",
-    "earnCoins": "赚取金币",
-    "getSubs": "获取订阅者",
+    "earnCoins": "任务",
+    "getSubs": "成长",
     "myChannel": "我的频道",
     "activeCampaign": "个活动进行中",
     "activeCampaigns": "个活动进行中",
-    "subsPending": "订阅者等待中",
+    "subsPending": "等待中",
     "recentActivity": "最近活动",
     "noTransactions": "暂无交易"
   },
   "earn": {
-    "title": "赚取金币",
-    "subtitle": "完成任务 · 验证 · 领取金币",
-    "banner": "🔒 订阅和点赞由YouTube验证。撤销后将追回金币并可能被封禁。",
+    "title": "奖励",
+    "subtitle": "完成任务 · 验证 · 领取奖励",
+    "banner": "🔒 所有操作均由YouTube API验证。善意参与有助于整个社区的成长。",
     "tierFeatured": "⭐ 精选",
     "tierPremium": "💎 高级",
     "tierCommunity": "📋 社区",
@@ -77,9 +77,9 @@ export default {
     "tapToVerify": "点击下方——我们将通过YouTube验证。",
     "secondsRemaining": "秒剩余",
     "commentBonus": "💬 已评论？您将自动获得+4金币！",
-    "warningModal": "⚠️ 领取后撤销{{action}}将导致金币被追回。",
-    "subscription": "订阅",
-    "like": "点赞",
+    "warningModal": "⚠️ 计时器结束后撤销{{action}}可能会影响您的奖励。",
+    "subscription": "操作",
+    "like": "操作",
     "coinsEarned": "🎉 金币已获得！",
     "balance": "余额",
     "commentBonusEarned": "💬 评论奖励",
@@ -97,10 +97,10 @@ export default {
     "campaignCancelledMessage": "此活动已取消。请尝试其他任务。"
   },
   "taskTypes": {
-    "subscribe": "订阅",
+    "subscribe": "关注",
     "like": "点赞视频",
     "like_comment": "点赞+评论",
-    "subscribe_like": "订阅+点赞",
+    "subscribe_like": "关注+点赞",
     "watch": "观看视频",
     "verifiedByApi": "经YouTube API验证",
     "likeVerified": "点赞由API验证 · 评论 = +4奖励",
@@ -120,7 +120,7 @@ export default {
     "changedMsg": "应用语言已更新。"
   },
   "boost": {
-    "title": "获取订阅者",
+    "title": "推广",
     "myCampaigns": "📋 我的活动",
     "step1": "1. 选择任务类型",
     "step2channel": "2. 您的频道",
@@ -135,12 +135,12 @@ export default {
     "channelAdded": "✅ 频道已添加！",
     "channelAddedMsg": "您的YouTube频道已注册。",
     "requiredWatchTime": "所需观看时长（分钟）",
-    "watchNote": "⚠️ 视频至少需要{{minutes}}分钟。",
+    "watchNote": "⚠️ 视频至少需要{{minutes}}分钟——提交时验证。",
     "videoPlaceholder": "youtube.com/watch?v=...",
     "customAmount": "或输入自定义数量",
     "cost": "费用",
     "balance": "余额",
-    "needMoreCoins": "⚠️ 还需要{{amount}}金币！",
+    "needMoreCoins": "⚠️ 还需要{{amount}}金币——从任务标签页完成任务！",
     "addChannelFirst": "⬆️ 请先在上方添加您的频道",
     "launching": "启动中...",
     "launch": "🚀 启动活动",
@@ -151,13 +151,13 @@ export default {
     "campaignLive": "🚀 活动已上线！",
     "slotsOpened": "已开放{{slots}}个名额！",
     "noChannel": "没有频道",
-    "noChannelMsg": "此任务类型需要您的YouTube频道。",
+    "noChannelMsg": "此任务类型需要您的YouTube频道。请先添加。",
     "invalid": "无效",
     "invalidSlots": "请输入有效数量",
     "missingVideo": "缺少视频",
     "missingVideoMsg": "请输入YouTube视频URL",
     "insufficientCoins": "金币不足",
-    "insufficientMsg": "需要{{cost}}金币，您有{{balance}}。",
+    "insufficientMsg": "需要{{cost}}金币，您有{{balance}}。\n从任务标签页完成更多任务！",
     "ownerFree": "免费（所有者账户）",
     "campaignError": "活动错误"
   },
@@ -195,57 +195,57 @@ export default {
     "pause": "⏸ 暂停",
     "resume": "▶ 恢复",
     "cancel": "🗑 取消",
-    "pauseTitle": "⏸ 暂停",
-    "pauseMsg": "暂停\"{{name}}\"?\n{{slots}}名额保留。",
-    "resumeTitle": "▶ 恢复",
-    "resumeMsg": "恢复\"{{name}}\"?",
-    "cancelTitle": "🗑 取消",
-    "cancelMsg": "取消\"{{name}}\"?",
-    "cancelRefund": "\n\n💰 {{coins}}金币",
-    "cancelNoRefund": "\n\n无退款。",
-    "cancelCompleted": "\n\n⚠️ {{count}}名额不退款",
-    "keepCampaign": "保留",
-    "cancelConfirm": "取消+{{coins}}🪙",
+    "pauseTitle": "⏸ 暂停活动",
+    "pauseMsg": "暂停\"{{name}}\"?\n\n不再接受新操作。您的{{slots}}个剩余名额将被保留——您可以随时恢复。",
+    "resumeTitle": "▶ 恢复活动",
+    "resumeMsg": "恢复\"{{name}}\"?\n\n{{slots}}个名额将再次开放。",
+    "cancelTitle": "🗑 取消活动",
+    "cancelMsg": "取消\"{{name}}\"? 此操作无法撤销。",
+    "cancelRefund": "\n\n💰 未填补名额退还{{coins}}金币",
+    "cancelNoRefund": "\n\n无退款——此活动是免费的。",
+    "cancelCompleted": "\n\n⚠️ 已完成{{count}}个名额不予退款",
+    "keepCampaign": "保留活动",
+    "cancelConfirm": "取消并获得{{coins}}🪙",
     "cancelConfirmFree": "取消",
-    "cancelled": "✅ 已取消",
-    "refunded": "{{coins}}金币。余额: {{balance}}",
+    "cancelled": "✅ 活动已取消",
+    "refunded": "{{coins}}金币已退还到您的余额。\n新余额：{{balance}}金币",
     "noCampaigns": "暂无活动",
-    "noCampaignsSubtitle": "从获取订阅者创建"
+    "noCampaignsSubtitle": "从推广标签页创建您的第一个活动"
   },
   "warnings": {
     "beforeSubscribe": {
-      "title": "⚠️ 订阅前",
-      "message": "在YouTube订阅后返回。",
+      "title": "⚠️ 确认",
+      "message": "在YouTube上打开频道并关注，然后返回此处。\n\n• 您的操作由YouTube API验证\n• 请保持您的操作活跃以支持创作者\n\n真诚参与——帮助真正的创作者成长。",
       "confirm": "明白 — 打开YouTube"
     },
     "beforeLike": {
-      "title": "⚠️ 点赞前",
-      "message": "在YouTube点赞后返回。",
+      "title": "⚠️ 确认",
+      "message": "在YouTube上打开视频并点赞，然后返回此处。\n\n• 您的操作由YouTube验证\n• 请保持您的操作活跃以支持创作者\n\n真诚参与——帮助真正的创作者成长。",
       "confirm": "明白 — 打开YouTube"
     },
     "beforeLikeComment": {
-      "title": "⚠️ 点赞+评论",
-      "message": "1. 👍 点赞（必须）\n2. 💬 评论（+4奖励）",
+      "title": "⚠️ 点赞+评论任务",
+      "message": "要获得最大奖励：\n\n1. 👍 点赞视频（必须——由YouTube验证）\n2. 💬 留下真诚评论（可选——获得+4奖励金币）\n\n仅点赞即可领取——评论可获得额外奖励。",
       "confirm": "明白 — 打开YouTube"
     },
     "beforeSubscribeLike": {
-      "title": "⚠️ 订阅+点赞",
-      "message": "1. 🔔 订阅\n2. 👍 点赞",
+      "title": "⚠️ 确认",
+      "message": "您需要在YouTube上完成两项操作：\n\n1. 🔔 关注频道\n2. 👍 点赞视频\n\n两项均由YouTube API验证。\n\n真诚参与——帮助真正的创作者成长。",
       "confirm": "明白 — 打开YouTube"
     },
     "beforeWatch": {
-      "title": "⚠️ 观看",
-      "message": "观看视频所需时间。",
+      "title": "⚠️ 观看任务",
+      "message": "打开视频并观看所需时长。\n\n• 计时器运行时保持YouTube应用打开\n• 完成后返回此处领取您的奖励\n• 观看任务会被抽查以确保公平",
       "confirm": "明白 — 打开YouTube"
     },
     "taskReminder": {
-      "subscribe": "保持订阅。",
-      "like": "保持点赞。",
-      "like_comment": "保持点赞。评论=奖励。",
-      "subscribe_like": "保持订阅和点赞。",
-      "watch": "观看完整时间。"
+      "subscribe": "保持操作活跃以支持创作者。",
+      "like": "保持点赞活跃以支持创作者。",
+      "like_comment": "保持点赞活跃。评论可获得额外奖励。",
+      "subscribe_like": "保持两项操作活跃以支持创作者。",
+      "watch": "在领取前观看完整所需时长。"
     },
-    "campaignFairUse": "📋 订阅者由YouTube验证。"
+    "campaignFairUse": "📋 所有操作均由YouTube API验证以确保真实性。"
   },
   "tx": {
     "welcomeBonus": "🎁 欢迎奖励",
@@ -255,7 +255,7 @@ export default {
     "taskCompletedComment": "{{type}} — 点赞✅ + 评论✅ (+{{bonus}}奖励)",
     "campaignCancelled": "活动取消 — 退还{{slots}}名额（{{refund}}金币）",
     "campaignCancelledFree": "活动取消",
-    "coinsReclaimed": "{{type}} — 金币追回（取消订阅）"
+    "coinsReclaimed": "{{type}} — 金币已回收"
   },
   "onboarding": {
     "skip": "跳过",
@@ -263,19 +263,19 @@ export default {
     "getStarted": "🚀 免费开始",
     "slide1": {
       "title": "共同成长",
-      "subtitle": "发展YouTube频道的公平方式。真实订阅者，真实互动，经YouTube验证。"
+      "subtitle": "发展YouTube频道的公平方式。真实互动，经YouTube API验证。"
     },
     "slide2": {
-      "title": "完成任务，赚取金币",
-      "subtitle": "订阅频道，点赞视频。每个动作都经过验证并立即获得金币奖励。"
+      "title": "完成任务，获得奖励",
+      "subtitle": "通过与其他创作者的内容互动来支持他们。每个操作都经过验证并立即获得金币奖励。"
     },
     "slide3": {
-      "title": "花费金币，获得订阅者",
-      "subtitle": "为您的频道发起活动。真实用户订阅，经YouTube API验证。"
+      "title": "发展您的频道",
+      "subtitle": "为您的频道发起活动。社区成员会回互互动，经YouTube API验证。"
     },
     "slide4": {
       "title": "免费获得50枚金币！",
-      "subtitle": "使用Google登录获取欢迎奖励。无需信用卡。真实增长。"
+      "subtitle": "使用Google登录获取欢迎奖励。无需信用卡。无隐藏费用。共同成长。"
     }
   }
 };

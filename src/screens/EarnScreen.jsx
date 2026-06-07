@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import {
   View, Text, StyleSheet, SectionList, TouchableOpacity,
   SafeAreaView, Alert, Linking, Modal, Animated, AppState,
@@ -44,13 +44,13 @@ const EarnScreen = () => {
   const progressAnim = useRef(new Animated.Value(0)).current;
   const animRef = useRef(null);
 
-  // Build translated warnings and task descriptions
-  const WARNINGS = getWarnings(t);
-  const TASK_DESCRIPTIONS = getTaskDescriptions(t);
+  // Memoized so they aren't rebuilt every second during the countdown timer
+  const WARNINGS = useMemo(() => getWarnings(t), [t]);
+  const TASK_DESCRIPTIONS = useMemo(() => getTaskDescriptions(t), [t]);
 
   const loadTasks = async () => {
     try { setTasks(await api.getAvailableTasks()); }
-    catch (e) { console.error(e); }
+    catch (_) { /* ignore */ }
     finally { setLoading(false); setRefreshing(false); }
   };
 

@@ -48,7 +48,7 @@ export default {
     "pendingSubs": "Pending",
     "completed": "Completed",
     "quickActions": "Quick Actions",
-    "earnCoins": "Tasks",
+    "earnCoins": "Do Tasks",
     "getSubs": "Grow",
     "myChannel": "My Channel",
     "activeCampaign": "active campaign",

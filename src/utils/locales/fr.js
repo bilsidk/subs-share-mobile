@@ -19,7 +19,7 @@ export default {
   },
   "tabs": {
     "home": "Accueil",
-    "earn": "Gagner",
+    "earn": "Tâches",
     "boost": "Booster",
     "profile": "Profil",
     "admin": "Admin"
@@ -28,14 +28,14 @@ export default {
     "tagline": "Grandir ensemble"
   },
   "login": {
-    "title": "Subs Share",
-    "tagline": "S'abonner pour gagner.\nDépenser pour grandir.",
-    "feature1": "Gagnez des pièces en vous abonnant aux chaînes",
-    "feature2": "Vérifié par YouTube — pas de fausses tâches",
-    "feature3": "Dépensez des pièces pour obtenir de vrais abonnés",
+    "title": "Creator Hub",
+    "tagline": "Soutenez les créateurs.\nGrandissez ensemble.",
+    "feature1": "Effectuez des tâches pour gagner des récompenses",
+    "feature2": "Vérifié par YouTube — des tâches authentiques",
+    "feature3": "Utilisez vos récompenses pour développer votre chaîne",
     "welcomeBonus": "🎁 Commencez avec 50 pièces gratuites!",
     "continueWithGoogle": "Continuer avec Google",
-    "terms": "Nous demandons un accès YouTube en lecture seule pour vérifier vos abonnements et mentions J'aime.",
+    "terms": "Nous demandons un accès YouTube en lecture seule pour vérifier vos actions.",
     "signInFailed": "Échec de la connexion",
     "noToken": "Aucun token reçu de Google",
     "tryAgain": "Veuillez réessayer"
@@ -43,24 +43,24 @@ export default {
   "home": {
     "greeting": "Bonjour 👋",
     "balance": "VOTRE SOLDE",
-    "coinHint": "10 pièces = 1 abonné",
+    "coinHint": "Effectuez plus de tâches, gagnez plus de récompenses",
     "campaigns": "Campagnes",
-    "pendingSubs": "Abonnés en attente",
+    "pendingSubs": "En attente",
     "completed": "Complété",
     "quickActions": "Actions rapides",
-    "earnCoins": "Gagner des pièces",
-    "getSubs": "Obtenir des abonnés",
+    "earnCoins": "Tâches",
+    "getSubs": "Grandir",
     "myChannel": "Ma chaîne",
     "activeCampaign": "campagne active",
     "activeCampaigns": "campagnes actives",
-    "subsPending": "abonnés en attente",
+    "subsPending": "en attente",
     "recentActivity": "Activité récente",
     "noTransactions": "Aucune transaction"
   },
   "earn": {
-    "title": "Gagner des pièces",
-    "subtitle": "Tâches · Vérification · Réclamer",
-    "banner": "🔒 Les abonnements et mentions J'aime sont vérifiés par YouTube.",
+    "title": "Récompenses",
+    "subtitle": "Tâches · Vérification · Réclamer des récompenses",
+    "banner": "🔒 Toutes les actions sont vérifiées par l'API YouTube. Participer de bonne foi aide toute la communauté à grandir.",
     "tierFeatured": "⭐ En vedette",
     "tierPremium": "💎 Premium",
     "tierCommunity": "📋 Communauté",
@@ -77,30 +77,30 @@ export default {
     "tapToVerify": "Appuyez — nous vérifierons avec YouTube.",
     "secondsRemaining": "s restantes",
     "commentBonus": "💬 Commenté? Vous obtiendrez automatiquement +4 pièces!",
-    "warningModal": "⚠️ Supprimer votre {{action}} après réclamation entraîne la reprise des pièces.",
-    "subscription": "abonnement",
-    "like": "mention J'aime",
+    "warningModal": "⚠️ Annuler votre {{action}} après la fin du minuteur peut affecter vos récompenses.",
+    "subscription": "action",
+    "like": "action",
     "coinsEarned": "🎉 Pièces gagnées!",
     "balance": "Solde",
     "commentBonusEarned": "💬 Bonus commentaire",
     "noCommentDetected": "(Aucun commentaire détecté — récompense mention J'aime uniquement)",
     "notDetectedYet": "Pas encore détecté",
     "reconnectNeeded": "Reconnexion requise",
-    "reconnectMessage": "Veuillez vous déconnecter et vous reconnecter.",
-    "tryAgainMessage": "Vérification occupée. Attendez et réessayez.",
+    "reconnectMessage": "Veuillez vous déconnecter et vous reconnecter pour accorder l'accès YouTube.",
+    "tryAgainMessage": "Vérification occupée. Attendez un moment puis appuyez à nouveau sur Réclamer.",
     "accountSuspended": "Compte suspendu",
     "slotTaken": "Place prise",
-    "slotTakenMessage": "Quelqu'un vient de prendre la dernière place.",
+    "slotTakenMessage": "Quelqu'un vient de prendre la dernière place. Essayez une autre tâche!",
     "campaignPaused": "Campagne en pause",
-    "campaignPausedMessage": "Cette campagne est en pause. Essayez une autre tâche.",
+    "campaignPausedMessage": "Cette campagne a été mise en pause par le propriétaire. Essayez une autre tâche.",
     "campaignCancelled": "Campagne annulée",
     "campaignCancelledMessage": "Cette campagne a été annulée. Essayez une autre tâche."
   },
   "taskTypes": {
-    "subscribe": "Abonnement",
+    "subscribe": "Suivre",
     "like": "J'aimer une vidéo",
     "like_comment": "J'aimer + Commenter",
-    "subscribe_like": "S'abonner + J'aimer",
+    "subscribe_like": "Suivre + J'aimer",
     "watch": "Regarder une vidéo",
     "verifiedByApi": "Vérifié par l'API YouTube",
     "likeVerified": "J'aime vérifié par API · Commentaire = +4 bonus",
@@ -120,7 +120,7 @@ export default {
     "changedMsg": "La langue de l'application a été mise à jour."
   },
   "boost": {
-    "title": "Obtenir des abonnés",
+    "title": "Promouvoir",
     "myCampaigns": "📋 Mes campagnes",
     "step1": "1. Choisir le type de tâche",
     "step2channel": "2. Votre chaîne",
@@ -140,7 +140,7 @@ export default {
     "customAmount": "Ou entrer un montant personnalisé",
     "cost": "Coût",
     "balance": "Solde",
-    "needMoreCoins": "⚠️ Besoin de {{amount}} pièces de plus — gagnez-les depuis l'onglet Gagner !",
+    "needMoreCoins": "⚠️ Besoin de {{amount}} pièces de plus — effectuez des tâches depuis l'onglet Tâches!",
     "addChannelFirst": "⬆️ Ajoutez votre chaîne ci-dessus pour continuer",
     "launching": "Lancement...",
     "launch": "🚀 Lancer la campagne",
@@ -157,7 +157,7 @@ export default {
     "missingVideo": "Vidéo manquante",
     "missingVideoMsg": "Entrez une URL de vidéo YouTube",
     "insufficientCoins": "Pièces insuffisantes",
-    "insufficientMsg": "Besoin de {{cost}} pièces, vous en avez {{balance}}.\nGagnez-en plus depuis l'onglet Gagner !",
+    "insufficientMsg": "Besoin de {{cost}} pièces, vous en avez {{balance}}.\nEffectuez plus de tâches depuis l'onglet Tâches!",
     "ownerFree": "Gratuit (compte propriétaire)",
     "campaignError": "Erreur de campagne"
   },
@@ -195,57 +195,57 @@ export default {
     "pause": "⏸ Pause",
     "resume": "▶ Reprendre",
     "cancel": "🗑 Annuler",
-    "pauseTitle": "⏸ Pause",
-    "pauseMsg": "Pause \"{{name}}\"?\n{{slots}} places conservées.",
+    "pauseTitle": "⏸ Mettre en pause",
+    "pauseMsg": "Mettre en pause \"{{name}}\"?\n\nAucune nouvelle action ne sera acceptée. Vos {{slots}} places restantes sont conservées — vous pouvez reprendre à tout moment.",
     "resumeTitle": "▶ Reprendre",
-    "resumeMsg": "Reprendre \"{{name}}\"?\n{{slots}} places disponibles.",
+    "resumeMsg": "Reprendre \"{{name}}\"?\n\n{{slots}} places seront rouvertes.",
     "cancelTitle": "🗑 Annuler",
-    "cancelMsg": "Annuler \"{{name}}\"?",
-    "cancelRefund": "\n\n💰 {{coins}} pièces remboursées",
-    "cancelNoRefund": "\n\nPas de remboursement.",
-    "cancelCompleted": "\n\n⚠️ {{count}} places terminées non remboursées",
+    "cancelMsg": "Annuler \"{{name}}\"? Cette action est irréversible.",
+    "cancelRefund": "\n\n💰 {{coins}} pièces remboursées pour les places non remplies",
+    "cancelNoRefund": "\n\nPas de remboursement — cette campagne était gratuite.",
+    "cancelCompleted": "\n\n⚠️ {{count}} places terminées ne sont PAS remboursées",
     "keepCampaign": "Garder",
-    "cancelConfirm": "Annuler +{{coins}}🪙",
+    "cancelConfirm": "Annuler et obtenir {{coins}}🪙",
     "cancelConfirmFree": "Annuler",
-    "cancelled": "✅ Annulée",
-    "refunded": "{{coins}} pièces. Solde: {{balance}}",
+    "cancelled": "✅ Campagne annulée",
+    "refunded": "{{coins}} pièces ont été retournées sur votre solde.\nNouveau solde: {{balance}} pièces",
     "noCampaigns": "Aucune campagne",
-    "noCampaignsSubtitle": "Créez depuis Obtenir des abonnés"
+    "noCampaignsSubtitle": "Créez votre première campagne depuis l'onglet Promouvoir"
   },
   "warnings": {
     "beforeSubscribe": {
-      "title": "⚠️ Avant de vous abonner",
-      "message": "Abonnez-vous sur YouTube puis revenez.\n\n• Vérifié par YouTube\n• Le désabonnement entraîne la récupération des pièces",
+      "title": "⚠️ Confirmation",
+      "message": "Ouvrez la chaîne sur YouTube et suivez-la, puis revenez ici.\n\n• Votre action est vérifiée par l'API YouTube\n• Veuillez garder votre action active pour soutenir les créateurs\n\nEngagez-vous authentiquement — cela aide de vrais créateurs à grandir.",
       "confirm": "Je comprends — Ouvrir YouTube"
     },
     "beforeLike": {
-      "title": "⚠️ Avant de liker",
-      "message": "Aimez la vidéo sur YouTube puis revenez.\n\n• Vérifié par YouTube",
+      "title": "⚠️ Confirmation",
+      "message": "Ouvrez la vidéo sur YouTube et likez-la, puis revenez ici.\n\n• Votre action est vérifiée par YouTube\n• Veuillez garder votre action active pour soutenir les créateurs\n\nEngagez-vous authentiquement — cela aide de vrais créateurs à grandir.",
       "confirm": "Je comprends — Ouvrir YouTube"
     },
     "beforeLikeComment": {
-      "title": "⚠️ Like + Commentaire",
-      "message": "1. 👍 Likez (requis)\n2. 💬 Commentez (+4 bonus)",
+      "title": "⚠️ Tâche Like + Commentaire",
+      "message": "Pour obtenir la récompense maximale:\n\n1. 👍 Likez la vidéo (requis — vérifié par YouTube)\n2. 💬 Laissez un commentaire authentique (optionnel — gagne +4 pièces bonus)\n\nLe like seul suffit pour réclamer — le commentaire rapporte un bonus.",
       "confirm": "Je comprends — Ouvrir YouTube"
     },
     "beforeSubscribeLike": {
-      "title": "⚠️ Abonnement + Like",
-      "message": "1. 🔔 Abonnez-vous\n2. 👍 Likez la vidéo",
+      "title": "⚠️ Confirmation",
+      "message": "Vous devez effectuer les deux actions sur YouTube:\n\n1. 🔔 Suivez la chaîne\n2. 👍 Likez la vidéo\n\nLes deux sont vérifiées par l'API YouTube.\n\nEngagez-vous authentiquement — cela aide de vrais créateurs à grandir.",
       "confirm": "Je comprends — Ouvrir YouTube"
     },
     "beforeWatch": {
-      "title": "⚠️ Visionnage",
-      "message": "Regardez la vidéo pendant la durée requise.",
+      "title": "⚠️ Tâche de visionnage",
+      "message": "Ouvrez la vidéo et regardez-la pendant la durée requise.\n\n• Gardez l'application YouTube ouverte pendant le minuteur\n• Revenez ici une fois terminé pour réclamer votre récompense\n• Les tâches de visionnage sont vérifiées ponctuellement pour le fair-play",
       "confirm": "Je comprends — Ouvrir YouTube"
     },
     "taskReminder": {
-      "subscribe": "Gardez votre abonnement.",
-      "like": "Gardez votre like.",
-      "like_comment": "Gardez votre like. Commentaire = bonus.",
-      "subscribe_like": "Gardez abonnement et like.",
-      "watch": "Regardez la durée complète."
+      "subscribe": "Gardez votre action active pour soutenir le créateur.",
+      "like": "Gardez votre like actif pour soutenir le créateur.",
+      "like_comment": "Gardez votre like actif. Commenter rapporte un bonus.",
+      "subscribe_like": "Gardez les deux actions actives pour soutenir le créateur.",
+      "watch": "Regardez la durée complète requise avant de réclamer."
     },
-    "campaignFairUse": "📋 Abonnés vérifiés par YouTube. Les désabonnements sont détectés automatiquement."
+    "campaignFairUse": "📋 Toutes les actions sont vérifiées par l'API YouTube pour garantir l'authenticité."
   },
   "tx": {
     "welcomeBonus": "🎁 Bonus de bienvenue",
@@ -255,7 +255,7 @@ export default {
     "taskCompletedComment": "{{type}} — like ✅ + commentaire ✅ (+{{bonus}} bonus)",
     "campaignCancelled": "Campagne annulée — {{slots}} places remboursées ({{refund}} pièces)",
     "campaignCancelledFree": "Campagne annulée",
-    "coinsReclaimed": "{{type}} — pièces récupérées (désabonnement)"
+    "coinsReclaimed": "{{type}} — pièces récupérées"
   },
   "onboarding": {
     "skip": "Passer",
@@ -263,19 +263,19 @@ export default {
     "getStarted": "🚀 Commencer — C'est gratuit",
     "slide1": {
       "title": "Grandir ensemble",
-      "subtitle": "La façon équitable de développer votre chaîne YouTube. Vrais abonnés, vrai engagement, vérifié par YouTube."
+      "subtitle": "La façon équitable de développer votre chaîne YouTube. Un engagement réel, vérifié par l'API YouTube."
     },
     "slide2": {
-      "title": "Tâches, gagnez des pièces",
-      "subtitle": "Abonnez-vous aux chaînes, likez des vidéos. Chaque action est vérifiée et récompensée en pièces."
+      "title": "Effectuez des tâches, gagnez des récompenses",
+      "subtitle": "Soutenez d'autres créateurs en interagissant avec leur contenu. Chaque action est vérifiée et récompensée en pièces instantanément."
     },
     "slide3": {
-      "title": "Dépensez, obtenez des abonnés",
-      "subtitle": "Lancez une campagne pour votre chaîne. De vrais utilisateurs s'abonnent, vérifiés par YouTube."
+      "title": "Développez votre chaîne",
+      "subtitle": "Lancez une campagne pour votre chaîne. Les membres de la communauté interagissent en retour, vérifié par l'API YouTube."
     },
     "slide4": {
-      "title": "50 pièces gratuites !",
-      "subtitle": "Connectez-vous avec Google pour obtenir votre bonus. Sans carte bancaire. Croissance réelle."
+      "title": "50 pièces gratuites!",
+      "subtitle": "Connectez-vous avec Google pour obtenir votre bonus de bienvenue. Pas de carte bancaire. Pas de frais cachés. Grandissez ensemble."
     }
   }
 };

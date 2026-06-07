@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar, View } from 'react-native';
 import { AuthProvider } from './src/context/AuthContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
-import { ErrorBoundary } from './src/components';
 import { initI18n } from './src/utils/i18n';
 import * as Sentry from '@sentry/react-native';
 
@@ -19,13 +18,11 @@ export default Sentry.wrap(function App() {
   }, []);
   if (!i18nReady) return <View style={{ flex: 1, backgroundColor: '#0A0A0F' }} />;
   return (
-    <ErrorBoundary>
-      <AuthProvider>
-        <NavigationContainer>
-          <StatusBar barStyle="light-content" backgroundColor="#0A0A0F" />
-          <AppNavigator />
-        </NavigationContainer>
-      </AuthProvider>
-    </ErrorBoundary>
+    <AuthProvider>
+      <NavigationContainer>
+        <StatusBar barStyle="light-content" backgroundColor="#0A0A0F" />
+        <AppNavigator />
+      </NavigationContainer>
+    </AuthProvider>
   );
 });

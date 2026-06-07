@@ -91,6 +91,7 @@ const LoginScreen = () => {
               </>
             )}
           </TouchableOpacity>
+          <Text style={styles.youtubeNote}>{t('login.youtubeNote')}</Text>
           <Text style={styles.terms}>{t('login.terms')}</Text>
           <TouchableOpacity onPress={() => Linking.openURL(PRIVACY_POLICY_URL).catch(() => {})}>
             <Text style={styles.privacyLink}>{t('common.privacyPolicy')}</Text>
@@ -102,6 +103,7 @@ const LoginScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  youtubeNote: { fontSize: 12, color: '#555570', textAlign: 'center', marginTop: 12, lineHeight: 18, paddingHorizontal: 24 },
   safe: { flex: 1, backgroundColor: colors.bg },
   container: { flex: 1, paddingHorizontal: spacing.xl, justifyContent: 'space-between', paddingVertical: spacing.xl },
   hero: { alignItems: 'center', gap: spacing.md, paddingTop: spacing.xl },

@@ -12,8 +12,18 @@ import { colors, spacing, radius } from '../theme';
 import { StatCard, LoadingSpinner } from '../components';
 import { formatDate, formatRelativeTime } from '../utils/helpers';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { PRIVACY_POLICY_URL, SUPPORT_EMAIL } from '../utils/constants';
+import { GOOGLE_CLIENT_ID, PRIVACY_POLICY_URL, SUPPORT_EMAIL } from '../utils/constants';
 import { useTranslation } from '../hooks/useTranslation';
+
+// Must match LoginScreen's config — configure() replaces (not merges) the
+// global config, so omitting these here would drop the YouTube scope/offline access.
+GoogleSignin.configure({
+  webClientId: GOOGLE_CLIENT_ID,
+  offlineAccess: true,
+  scopes: ['https://www.googleapis.com/auth/youtube.readonly'],
+  forceCodeForRefreshToken: true,
+  accountName: '',
+});
 
 const ProfileScreen = () => {
   const { user, refreshUser, signOut } = useAuth();

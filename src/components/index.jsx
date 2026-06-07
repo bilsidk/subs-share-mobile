@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, spacing, radius } from '../theme';
 
 // ── Coin Badge ──────────────────────────────────────────────
@@ -38,6 +38,35 @@ export const StatCard = ({ label, value, emoji, accent }) => (
     <Text style={styles.statLabel}>{label}</Text>
   </View>
 );
+
+// ── Error Boundary ───────────────────────────────────────────
+export class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error('ErrorBoundary', error, errorInfo);
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorEmoji}>💥</Text>
+          <Text style={styles.errorTitle}>Something went wrong</Text>
+          <Text style={styles.errorMessage}>{this.state.error.message}</Text>
+          <TouchableOpacity style={styles.errorBtn} onPress={() => this.setState({ error: null })}>
+            <Text style={styles.errorBtnText}>Try Again</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const styles = StyleSheet.create({
   // CoinBadge
@@ -96,4 +125,18 @@ const styles = StyleSheet.create({
   statEmoji: { fontSize: 24 },
   statValue: { fontSize: 22, fontWeight: '800', color: colors.textPrimary },
   statLabel: { fontSize: 11, color: colors.textMuted, fontWeight: '500', textTransform: 'uppercase', letterSpacing: 0.5 },
+
+  // ErrorBoundary
+  errorContainer: {
+    flex: 1, justifyContent: 'center', alignItems: 'center',
+    backgroundColor: colors.bg, padding: spacing.lg, gap: spacing.md,
+  },
+  errorEmoji: { fontSize: 48 },
+  errorTitle: { fontSize: 20, fontWeight: '800', color: colors.textPrimary, textAlign: 'center' },
+  errorMessage: { fontSize: 14, color: colors.textSecondary, textAlign: 'center', maxWidth: 300 },
+  errorBtn: {
+    backgroundColor: colors.primary, paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.sm, borderRadius: radius.md, marginTop: spacing.sm,
+  },
+  errorBtnText: { fontSize: 15, fontWeight: '700', color: '#FFFFFF' },
 });

@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors, spacing, radius } from '../theme';
 import { useTranslation } from '../hooks/useTranslation';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const ONBOARDING_KEY = '@subsshare_onboarded';
 
 const slides = (t) => [
@@ -45,8 +45,6 @@ const slides = (t) => [
     isLast: true,
   },
 ];
-
-export const ONBOARDING_KEY_EXPORT = ONBOARDING_KEY;
 
 const OnboardingScreen = ({ onDone }) => {
   const { t } = useTranslation();

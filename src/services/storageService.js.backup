@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const KEYS = {
   TOKEN: '@subsshare_token',
   USER: '@subsshare_user',
-  YOUTUBE_CONNECTED: '@subsshare_youtube_connected',
 };
 
 export const storageService = {
@@ -24,18 +23,8 @@ export const storageService = {
     return raw ? JSON.parse(raw) : null;
   },
 
-  async saveYoutubeConnected(val) {
-    await AsyncStorage.setItem(KEYS.YOUTUBE_CONNECTED, val ? 'true' : 'false');
-  },
-
-  async getYoutubeConnected() {
-    const raw = await AsyncStorage.getItem(KEYS.YOUTUBE_CONNECTED);
-    return raw === 'true';
-  },
-
  async clear() {
   await AsyncStorage.removeItem(KEYS.TOKEN);
   await AsyncStorage.removeItem(KEYS.USER);
-  await AsyncStorage.removeItem(KEYS.YOUTUBE_CONNECTED);
 },
 };

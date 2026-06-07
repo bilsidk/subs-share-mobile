@@ -19,7 +19,7 @@ export default {
   },
   "tabs": {
     "home": "Ana Sayfa",
-    "earn": "Kazan",
+    "earn": "Görevler",
     "boost": "Güçlendir",
     "profile": "Profil",
     "admin": "Yönetici"
@@ -28,14 +28,14 @@ export default {
     "tagline": "Birlikte büyüyün"
   },
   "login": {
-    "title": "Subs Share",
-    "tagline": "Kazanmak için abone ol.\nBüyümek için harca.",
-    "feature1": "Kanallara abone olarak jeton kazanın",
-    "feature2": "YouTube tarafından doğrulandı — sahte görev yok",
-    "feature3": "Gerçek abone almak için jeton harcayın",
+    "title": "Creator Hub",
+    "tagline": "İçerik üreticilerini destekleyin.\nBirlikte büyüyün.",
+    "feature1": "Görevleri tamamlayarak ödüller kazanın",
+    "feature2": "YouTube tarafından doğrulandı — gerçek görevler",
+    "feature3": "Kanalınızı büyütmek için ödülleri kullanın",
     "welcomeBonus": "🎁 50 ücretsiz jetonla başlayın!",
     "continueWithGoogle": "Google ile devam et",
-    "terms": "Aboneliklerinizi ve beğenilerinizi doğrulamak için salt okunur YouTube erişimi talep ediyoruz.",
+    "terms": "Eylemlerinizi doğrulamak için salt okunur YouTube erişimi talep ediyoruz.",
     "signInFailed": "Giriş başarısız",
     "noToken": "Google'dan token alınamadı",
     "tryAgain": "Lütfen tekrar deneyin"
@@ -43,24 +43,24 @@ export default {
   "home": {
     "greeting": "İyi günler 👋",
     "balance": "BAKİYENİZ",
-    "coinHint": "10 jeton = 1 abone",
+    "coinHint": "Daha fazla görev tamamla, daha fazla ödül kazan",
     "campaigns": "Kampanyalar",
-    "pendingSubs": "Bekleyen aboneler",
+    "pendingSubs": "Beklemede",
     "completed": "Tamamlandı",
     "quickActions": "Hızlı işlemler",
-    "earnCoins": "Jeton kazan",
-    "getSubs": "Abone al",
+    "earnCoins": "Görevler",
+    "getSubs": "Büyüme",
     "myChannel": "Kanalım",
     "activeCampaign": "aktif kampanya",
     "activeCampaigns": "aktif kampanya",
-    "subsPending": "bekleyen abone",
+    "subsPending": "beklemede",
     "recentActivity": "Son aktivite",
     "noTransactions": "Henüz işlem yok"
   },
   "earn": {
-    "title": "Jeton Kazan",
-    "subtitle": "Görevler · Doğrulama · Jetonları talep et",
-    "banner": "🔒 Abonelikler ve beğeniler YouTube tarafından doğrulanır.",
+    "title": "Ödüller",
+    "subtitle": "Görevler · Doğrulama · Ödülleri al",
+    "banner": "🔒 Tüm eylemler YouTube API tarafından doğrulanır. İyi niyetle katılım tüm topluluğun büyümesine yardımcı olur.",
     "tierFeatured": "⭐ Öne Çıkan",
     "tierPremium": "💎 Premium",
     "tierCommunity": "📋 Topluluk",
@@ -77,30 +77,30 @@ export default {
     "tapToVerify": "Aşağıya dokunun — YouTube ile doğrulayacağız.",
     "secondsRemaining": "sn kaldı",
     "commentBonus": "💬 Yorum yaptınız mı? Otomatik olarak +4 jeton alacaksınız!",
-    "warningModal": "⚠️ Talep ettikten sonra {{action}} kaldırmak jeton iadesine yol açar.",
-    "subscription": "aboneliğinizi",
-    "like": "beğeninizi",
+    "warningModal": "⚠️ Zamanlayıcı bittikten sonra {{action}} işleminizi geri almak ödüllerinizi etkileyebilir.",
+    "subscription": "eylem",
+    "like": "eylem",
     "coinsEarned": "🎉 Jetonlar kazanıldı!",
     "balance": "Bakiye",
     "commentBonusEarned": "💬 Yorum bonusu",
     "noCommentDetected": "(Yorum bulunamadı — yalnızca beğeni ödülü)",
     "notDetectedYet": "Henüz tespit edilemedi",
     "reconnectNeeded": "Yeniden bağlantı gerekli",
-    "reconnectMessage": "YouTube erişimi vermek için lütfen çıkış yapıp tekrar girin.",
-    "tryAgainMessage": "Doğrulama meşgul. Bekleyin ve tekrar deneyin.",
+    "reconnectMessage": "YouTube erişimi vermek için lütfen çıkış yapıp tekrar giriş yapın.",
+    "tryAgainMessage": "Doğrulama meşgul. Biraz bekleyin ve Tekrar Talep Et'e dokunun.",
     "accountSuspended": "Hesap askıya alındı",
     "slotTaken": "Yer alındı",
     "slotTakenMessage": "Biri son yeri aldı. Başka bir görev deneyin!",
     "campaignPaused": "Kampanya duraklatıldı",
-    "campaignPausedMessage": "Bu kampanya sahip tarafından duraklatıldı.",
+    "campaignPausedMessage": "Bu kampanya sahibi tarafından duraklatıldı. Başka bir görev deneyin.",
     "campaignCancelled": "Kampanya iptal edildi",
-    "campaignCancelledMessage": "Bu kampanya iptal edildi."
+    "campaignCancelledMessage": "Bu kampanya iptal edildi. Başka bir görev deneyin."
   },
   "taskTypes": {
-    "subscribe": "Abone ol",
+    "subscribe": "Takip Et",
     "like": "Videoyu beğen",
     "like_comment": "Beğen + Yorum yap",
-    "subscribe_like": "Abone ol + Beğen",
+    "subscribe_like": "Takip Et + Beğen",
     "watch": "Video izle",
     "verifiedByApi": "YouTube API ile doğrulandı",
     "likeVerified": "Beğeni API ile doğrulandı · Yorum = +4 bonus",
@@ -120,7 +120,7 @@ export default {
     "changedMsg": "Uygulama dili güncellendi."
   },
   "boost": {
-    "title": "Abone Edinin",
+    "title": "Tanıtım",
     "myCampaigns": "📋 Kampanyalarım",
     "step1": "1. Görev türünü seçin",
     "step2channel": "2. Kanalınız",
@@ -135,12 +135,12 @@ export default {
     "channelAdded": "✅ Kanal eklendi!",
     "channelAddedMsg": "YouTube kanalınız kayıt edildi.",
     "requiredWatchTime": "Gerekli izleme süresi (dakika)",
-    "watchNote": "⚠️ Video en az {{minutes}} dk olmalı.",
+    "watchNote": "⚠️ Video en az {{minutes}} dk olmalı — gönderim sırasında doğrulanır.",
     "videoPlaceholder": "youtube.com/watch?v=...",
     "customAmount": "Veya özel miktar girin",
     "cost": "Maliyet",
     "balance": "Bakiye",
-    "needMoreCoins": "⚠️ {{amount}} jeton daha lazım!",
+    "needMoreCoins": "⚠️ {{amount}} jeton daha lazım — Görevler sekmesinden görev tamamlayın!",
     "addChannelFirst": "⬆️ Devam etmek için yukarıya kanal ekleyin",
     "launching": "Başlatılıyor...",
     "launch": "🚀 Kampanyayı başlat",
@@ -151,20 +151,20 @@ export default {
     "campaignLive": "🚀 Kampanya yayında!",
     "slotsOpened": "{{slots}} yer açıldı!",
     "noChannel": "Kanal yok",
-    "noChannelMsg": "Bu görev türü YouTube kanalınızı gerektirir.",
+    "noChannelMsg": "Bu görev türü YouTube kanalınızı gerektirir. Önce ekleyin.",
     "invalid": "Geçersiz",
     "invalidSlots": "Geçerli bir sayı girin",
     "missingVideo": "Video eksik",
     "missingVideoMsg": "Bir YouTube video URL'si girin",
     "insufficientCoins": "Yetersiz jeton",
-    "insufficientMsg": "{{cost}} jeton gerekli, {{balance}} var.",
+    "insufficientMsg": "{{cost}} jeton gerekli, {{balance}} var.\nGörevler sekmesinden daha fazla görev tamamlayın!",
     "ownerFree": "Ücretsiz (sahip hesabı)",
     "campaignError": "Kampanya hatası"
   },
   "profile": {
     "deleteAccount": "Hesabı sil",
     "deleteTitle": "Hesap kalıcı olarak silinsin mi?",
-    "deleteMsg": "Bu işlem hesabınızı, kanallarınızı, kampanyalarınızı, paralarınızı ve geçmişinizi kalıcı olarak siler. Bu işlem geri alınamaz.",
+    "deleteMsg": "Bu işlem hesabınızı, kanallarınızı, kampanyalarınızı, jettonlarınızı ve geçmişinizi kalıcı olarak siler. Bu işlem geri alınamaz.",
     "deleteConfirm": "Kalıcı olarak sil",
     "deleting": "Siliniyor…",
     "deleteError": "Hesabınız silinemedi. Lütfen tekrar deneyin.",
@@ -195,57 +195,57 @@ export default {
     "pause": "⏸ Duraklat",
     "resume": "▶ Devam",
     "cancel": "🗑 İptal",
-    "pauseTitle": "⏸ Duraklat",
-    "pauseMsg": "\"{{name}}\" duraklat?\n{{slots}} yer korunur.",
-    "resumeTitle": "▶ Devam",
-    "resumeMsg": "\"{{name}}\" devam et?",
-    "cancelTitle": "🗑 İptal",
-    "cancelMsg": "\"{{name}}\" iptal et?",
-    "cancelRefund": "\n\n💰 {{coins}} jeton",
-    "cancelNoRefund": "\n\nİade yok.",
-    "cancelCompleted": "\n\n⚠️ {{count}} yer iade edilmez",
-    "keepCampaign": "Tut",
-    "cancelConfirm": "İptal +{{coins}}🪙",
-    "cancelConfirmFree": "İptal",
-    "cancelled": "✅ İptal edildi",
-    "refunded": "{{coins}} jeton. Bakiye: {{balance}}",
+    "pauseTitle": "⏸ Kampanyayı Duraklat",
+    "pauseMsg": "\"{{name}}\" duraklatılsın mı?\n\nYeni eylem kabul edilmeyecek. {{slots}} kalan yeriniz korunur — istediğiniz zaman devam edebilirsiniz.",
+    "resumeTitle": "▶ Kampanyayı Devam Ettir",
+    "resumeMsg": "\"{{name}}\" devam ettirilsin mi?\n\n{{slots}} yer yeniden açılacak.",
+    "cancelTitle": "🗑 Kampanyayı İptal Et",
+    "cancelMsg": "\"{{name}}\" iptal edilsin mi? Bu geri alınamaz.",
+    "cancelRefund": "\n\n💰 Doldurulmayan yerler için {{coins}} jeton iadesi",
+    "cancelNoRefund": "\n\nİade yok — bu kampanya ücretsizdi.",
+    "cancelCompleted": "\n\n⚠️ Tamamlanan {{count}} yer İADE EDİLMEZ",
+    "keepCampaign": "Kampanyayı Tut",
+    "cancelConfirm": "İptal Et ve {{coins}}🪙 Al",
+    "cancelConfirmFree": "İptal Et",
+    "cancelled": "✅ Kampanya İptal Edildi",
+    "refunded": "{{coins}} jeton bakiyenize iade edildi.\nYeni bakiye: {{balance}} jeton",
     "noCampaigns": "Kampanya yok",
-    "noCampaignsSubtitle": "Abone Al sekmesinden oluştur"
+    "noCampaignsSubtitle": "Tanıtım sekmesinden ilk kampanyanızı oluşturun"
   },
   "warnings": {
     "beforeSubscribe": {
-      "title": "⚠️ Abone olmadan önce",
-      "message": "YouTube'da abone olun ve geri dönün.",
+      "title": "⚠️ Onay",
+      "message": "YouTube'da kanalı açın ve takip edin, ardından buraya geri dönün.\n\n• Eyleminiz YouTube API tarafından doğrulanır\n• İçerik üreticilerini desteklemek için eyleminizi aktif tutun\n\nOtantik bir şekilde etkileşim kurun — gerçek içerik üreticilerinin büyümesine yardımcı olur.",
       "confirm": "Anlıyorum — YouTube'u Aç"
     },
     "beforeLike": {
-      "title": "⚠️ Beğenmeden önce",
-      "message": "YouTube'da beğenin ve geri dönün.",
+      "title": "⚠️ Onay",
+      "message": "YouTube'da videoyu açın ve beğenin, ardından buraya geri dönün.\n\n• Eyleminiz YouTube tarafından doğrulanır\n• İçerik üreticilerini desteklemek için eyleminizi aktif tutun\n\nOtantik bir şekilde etkileşim kurun — gerçek içerik üreticilerinin büyümesine yardımcı olur.",
       "confirm": "Anlıyorum — YouTube'u Aç"
     },
     "beforeLikeComment": {
-      "title": "⚠️ Beğen + Yorum",
-      "message": "1. 👍 Beğen (zorunlu)\n2. 💬 Yorum (+4 bonus)",
+      "title": "⚠️ Beğen + Yorum Görevi",
+      "message": "Maksimum ödülü kazanmak için:\n\n1. 👍 Videoyu beğenin (zorunlu — YouTube tarafından doğrulanır)\n2. 💬 Gerçek bir yorum bırakın (isteğe bağlı — +4 bonus jeton kazanır)\n\nSadece beğeni talep etmek için yeterlidir — yorum bonus kazandırır.",
       "confirm": "Anlıyorum — YouTube'u Aç"
     },
     "beforeSubscribeLike": {
-      "title": "⚠️ Abone + Beğen",
-      "message": "1. 🔔 Abone ol\n2. 👍 Beğen",
+      "title": "⚠️ Onay",
+      "message": "YouTube'da her iki eylemi de yapmanız gerekir:\n\n1. 🔔 Kanalı takip edin\n2. 👍 Videoyu beğenin\n\nHer ikisi de YouTube API tarafından doğrulanır.\n\nOtantik bir şekilde etkileşim kurun — gerçek içerik üreticilerinin büyümesine yardımcı olur.",
       "confirm": "Anlıyorum — YouTube'u Aç"
     },
     "beforeWatch": {
-      "title": "⚠️ İzleme",
-      "message": "Gerekli süre videoyu izleyin.",
+      "title": "⚠️ İzleme Görevi",
+      "message": "Videoyu açın ve gerekli süre boyunca izleyin.\n\n• Zamanlayıcı çalışırken YouTube uygulamasını açık tutun\n• Bittiğinde ödülünüzü talep etmek için buraya geri dönün\n• İzleme görevleri adil oyun için rastgele kontrol edilir",
       "confirm": "Anlıyorum — YouTube'u Aç"
     },
     "taskReminder": {
-      "subscribe": "Aboneliği koru.",
-      "like": "Beğeniyi koru.",
-      "like_comment": "Beğeni koru. Yorum bonus.",
-      "subscribe_like": "Abonelik ve beğeniyi koru.",
-      "watch": "Tam süreyi izle."
+      "subscribe": "İçerik üreticisini desteklemek için eyleminizi aktif tutun.",
+      "like": "İçerik üreticisini desteklemek için beğeninizi aktif tutun.",
+      "like_comment": "Beğeninizi aktif tutun. Yorum bonus kazandırır.",
+      "subscribe_like": "İçerik üreticisini desteklemek için her iki eylemi de aktif tutun.",
+      "watch": "Talep etmeden önce gereken tam süreyi izleyin."
     },
-    "campaignFairUse": "📋 Aboneler YouTube tarafından doğrulanır."
+    "campaignFairUse": "📋 Tüm eylemler, orijinalliği sağlamak için YouTube API tarafından doğrulanır."
   },
   "tx": {
     "welcomeBonus": "🎁 Hoş geldin bonusu",
@@ -255,7 +255,7 @@ export default {
     "taskCompletedComment": "{{type}} — beğeni ✅ + yorum ✅ (+{{bonus}} bonus)",
     "campaignCancelled": "Kampanya iptal edildi — {{slots}} yer iade edildi ({{refund}} jeton)",
     "campaignCancelledFree": "Kampanya iptal edildi",
-    "coinsReclaimed": "{{type}} — jetonlar geri alındı (abonelikten çıkıldı)"
+    "coinsReclaimed": "{{type}} — jeton geri alındı"
   },
   "onboarding": {
     "skip": "Atla",
@@ -263,19 +263,19 @@ export default {
     "getStarted": "🚀 Başla — Ücretsiz",
     "slide1": {
       "title": "Birlikte büyüyün",
-      "subtitle": "YouTube kanalınızı büyütmenin adil yolu. Gerçek aboneler, gerçek etkileşim, YouTube doğrulamalı."
+      "subtitle": "YouTube kanalınızı büyütmenin adil yolu. Gerçek etkileşim, YouTube API ile doğrulanmış."
     },
     "slide2": {
-      "title": "Görevleri tamamla, jeton kazan",
-      "subtitle": "Kanallara abone ol, videoları beğen. Her eylem doğrulanır ve anında jetonla ödüllendirilir."
+      "title": "Görevleri tamamlayın, ödüller kazanın",
+      "subtitle": "Diğer içerik üreticilerinin içerikleriyle etkileşime girerek onları destekleyin. Her eylem doğrulanır ve anında jetonla ödüllendirilir."
     },
     "slide3": {
-      "title": "Jeton harca, abone kazan",
-      "subtitle": "Kanalın için kampanya başlat. Gerçek kullanıcılar abone olur, YouTube API ile doğrulanır."
+      "title": "Kanalınızı büyütün",
+      "subtitle": "Kanalınız için bir kampanya başlatın. Topluluk üyeleri karşılık verir, YouTube API ile doğrulanır."
     },
     "slide4": {
       "title": "50 ücretsiz jeton!",
-      "subtitle": "Google ile giriş yap ve hoş geldin bonusunu al. Kart gerekmez. Gerçek büyüme."
+      "subtitle": "Hoş geldin bonusunuzu almak için Google ile giriş yapın. Kredi kartı gerekmez. Gizli ücret yok. Sadece birlikte büyüyün."
     }
   }
 };

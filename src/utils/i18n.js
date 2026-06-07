@@ -68,8 +68,7 @@ function detectDeviceLanguage() {
         return ['TW', 'HK', 'MO'].includes(region) ? 'zh-TW' : 'zh-CN';
       }
     }
-  } catch (e) {
-    console.warn('Could not detect device language:', e.message);
+  } catch (_) { /* ignore */
   }
   return DEFAULT_LANG;
 }
@@ -84,8 +83,7 @@ export async function initI18n() {
     const lang = saved && translations[saved] ? saved : detectDeviceLanguage();
     await setLanguage(lang, false); // false = don't persist (already persisted or auto)
     if (!saved) await AsyncStorage.setItem(STORAGE_KEY, lang); // persist auto-detected
-  } catch (e) {
-    console.warn('i18n init error:', e.message);
+  } catch (_) { /* ignore */
   }
 }
 

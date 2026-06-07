@@ -25,7 +25,7 @@ const SplashScreen = () => {
             resizeMode="contain"
           />
         </View>
-        <Text style={styles.title}>Creator Hub</Text>
+        <Text style={styles.title}>Subs Share</Text>
         <Text style={styles.subtitle}>{t('splash.tagline')}</Text>
       </Animated.View>
     </View>
