@@ -1,5 +1,7 @@
 export default {
   "common": {
+    "privacyPolicy": "Gizlilik Politikası",
+    "contactSupport": "Destekle iletişime geç",
     "loading": "Yükleniyor...",
     "error": "Hata",
     "cancel": "İptal",

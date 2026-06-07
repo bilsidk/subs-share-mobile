@@ -1,5 +1,7 @@
 export default {
   "common": {
+    "privacyPolicy": "개인정보 처리방침",
+    "contactSupport": "고객지원 문의",
     "loading": "로딩 중...",
     "error": "오류",
     "cancel": "취소",

@@ -1,5 +1,7 @@
 export default {
   "common": {
+    "privacyPolicy": "プライバシーポリシー",
+    "contactSupport": "サポートに問い合わせる",
     "loading": "読み込み中...",
     "error": "エラー",
     "cancel": "キャンセル",

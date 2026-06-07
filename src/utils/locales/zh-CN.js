@@ -1,5 +1,7 @@
 export default {
   "common": {
+    "privacyPolicy": "隐私政策",
+    "contactSupport": "联系客服",
     "loading": "加载中...",
     "error": "错误",
     "cancel": "取消",

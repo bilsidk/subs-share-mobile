@@ -1,5 +1,7 @@
 export default {
   "common": {
+    "privacyPolicy": "سياسة الخصوصية",
+    "contactSupport": "تواصل مع الدعم",
     "loading": "جار التحميل...",
     "error": "خطأ",
     "cancel": "إلغاء",

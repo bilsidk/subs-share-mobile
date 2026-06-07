@@ -1,5 +1,7 @@
 export default {
   "common": {
+    "privacyPolicy": "Политика конфиденциальности",
+    "contactSupport": "Связаться с поддержкой",
     "loading": "Загрузка...",
     "error": "Ошибка",
     "cancel": "Отмена",

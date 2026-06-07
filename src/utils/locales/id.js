@@ -1,5 +1,7 @@
 export default {
   "common": {
+    "privacyPolicy": "Kebijakan Privasi",
+    "contactSupport": "Hubungi Dukungan",
     "loading": "Memuat...",
     "error": "Kesalahan",
     "cancel": "Batal",

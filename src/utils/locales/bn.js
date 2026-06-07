@@ -1,5 +1,7 @@
 export default {
   "common": {
+    "privacyPolicy": "গোপনীয়তা নীতি",
+    "contactSupport": "সহায়তায় যোগাযোগ করুন",
     "loading": "লোড হচ্ছে...",
     "error": "ত্রুটি",
     "cancel": "বাতিল",
