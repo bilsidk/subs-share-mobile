@@ -2,6 +2,7 @@ export default {
   "common": {
     "privacyPolicy": "개인정보 처리방침",
     "contactSupport": "고객지원 문의",
+    "termsOfService": "서비스 약관",
     "loading": "로딩 중...",
     "error": "오류",
     "cancel": "취소",
@@ -120,7 +121,7 @@ export default {
     "changedMsg": "앱 언어가 업데이트되었습니다."
   },
   "boost": {
-    "title": "프로모션",
+    "title": "부스트",
     "myCampaigns": "📋 내 캠페인",
     "step1": "1. 작업 유형 선택",
     "step2channel": "2. 내 채널",

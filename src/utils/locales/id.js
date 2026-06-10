@@ -2,6 +2,7 @@ export default {
   "common": {
     "privacyPolicy": "Kebijakan Privasi",
     "contactSupport": "Hubungi Dukungan",
+    "termsOfService": "Syarat Layanan",
     "loading": "Memuat...",
     "error": "Kesalahan",
     "cancel": "Batal",
@@ -120,7 +121,7 @@ export default {
     "changedMsg": "Bahasa aplikasi telah diperbarui."
   },
   "boost": {
-    "title": "Promosikan",
+    "title": "Tingkatkan",
     "myCampaigns": "📋 Kampanye Saya",
     "step1": "1. Pilih jenis tugas",
     "step2channel": "2. Saluran Anda",

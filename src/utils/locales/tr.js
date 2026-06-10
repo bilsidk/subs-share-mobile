@@ -2,6 +2,7 @@ export default {
   "common": {
     "privacyPolicy": "Gizlilik Politikası",
     "contactSupport": "Destekle iletişime geç",
+    "termsOfService": "Hizmet Şartları",
     "loading": "Yükleniyor...",
     "error": "Hata",
     "cancel": "İptal",
@@ -120,7 +121,7 @@ export default {
     "changedMsg": "Uygulama dili güncellendi."
   },
   "boost": {
-    "title": "Tanıtım",
+    "title": "Güçlendir",
     "myCampaigns": "📋 Kampanyalarım",
     "step1": "1. Görev türünü seçin",
     "step2channel": "2. Kanalınız",

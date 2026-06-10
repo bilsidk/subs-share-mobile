@@ -12,7 +12,7 @@ import { colors, spacing, radius } from '../theme';
 import { StatCard, LoadingSpinner } from '../components';
 import { formatDate, formatRelativeTime } from '../utils/helpers';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { PRIVACY_POLICY_URL, SUPPORT_EMAIL } from '../utils/constants';
+import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL, SUPPORT_EMAIL } from '../utils/constants';
 import { useTranslation } from '../hooks/useTranslation';
 
 const ProfileScreen = () => {
@@ -145,6 +145,10 @@ const ProfileScreen = () => {
 
         <TouchableOpacity style={styles.languageBtn} onPress={() => Linking.openURL(PRIVACY_POLICY_URL).catch(() => {})}>
           <Text style={styles.languageBtnText}>🔒 {t('common.privacyPolicy')}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.languageBtn} onPress={() => Linking.openURL(TERMS_OF_SERVICE_URL).catch(() => {})}>
+          <Text style={styles.languageBtnText}>📄 {t('common.termsOfService')}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.languageBtn} onPress={handleContactSupport}>

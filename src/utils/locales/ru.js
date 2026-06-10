@@ -2,6 +2,7 @@ export default {
   "common": {
     "privacyPolicy": "Политика конфиденциальности",
     "contactSupport": "Связаться с поддержкой",
+    "termsOfService": "Условия использования",
     "loading": "Загрузка...",
     "error": "Ошибка",
     "cancel": "Отмена",
@@ -120,7 +121,7 @@ export default {
     "changedMsg": "Язык приложения был обновлён."
   },
   "boost": {
-    "title": "Продвижение",
+    "title": "Буст",
     "myCampaigns": "📋 Мои кампании",
     "step1": "1. Выбор типа задания",
     "step2channel": "2. Ваш канал",

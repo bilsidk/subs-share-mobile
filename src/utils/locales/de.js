@@ -2,6 +2,7 @@ export default {
   "common": {
     "privacyPolicy": "Datenschutzrichtlinie",
     "contactSupport": "Support kontaktieren",
+    "termsOfService": "Nutzungsbedingungen",
     "loading": "Laden...",
     "error": "Fehler",
     "cancel": "Abbrechen",
@@ -120,7 +121,7 @@ export default {
     "changedMsg": "Die App-Sprache wurde aktualisiert."
   },
   "boost": {
-    "title": "Promoten",
+    "title": "Boost",
     "myCampaigns": "📋 Meine Kampagnen",
     "step1": "1. Aufgabentyp wählen",
     "step2channel": "2. Dein Kanal",

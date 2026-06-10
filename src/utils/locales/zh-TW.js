@@ -2,6 +2,7 @@ export default {
   "common": {
     "privacyPolicy": "隱私政策",
     "contactSupport": "聯絡客服",
+    "termsOfService": "服務條款",
     "loading": "載入中...",
     "error": "錯誤",
     "cancel": "取消",

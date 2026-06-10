@@ -2,6 +2,7 @@ export default {
   "common": {
     "privacyPolicy": "سياسة الخصوصية",
     "contactSupport": "تواصل مع الدعم",
+    "termsOfService": "شروط الخدمة",
     "loading": "جار التحميل...",
     "error": "خطأ",
     "cancel": "إلغاء",
@@ -132,7 +133,7 @@ export default {
     "campaignFairUse": "📋 جميع الإجراءات يتم التحقق منها بواسطة YouTube API لضمان المصداقية."
   },
   "boost": {
-    "title": "ترويج",
+    "title": "تعزيز",
     "myCampaigns": "📋 حملاتي",
     "step1": "1. اختر نوع المهمة",
     "step2channel": "2. قناتك",

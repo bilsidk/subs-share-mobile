@@ -2,6 +2,7 @@ export default {
   "common": {
     "privacyPolicy": "プライバシーポリシー",
     "contactSupport": "サポートに問い合わせる",
+    "termsOfService": "利用規約",
     "loading": "読み込み中...",
     "error": "エラー",
     "cancel": "キャンセル",
@@ -120,7 +121,7 @@ export default {
     "changedMsg": "アプリの言語が更新されました。"
   },
   "boost": {
-    "title": "プロモート",
+    "title": "ブースト",
     "myCampaigns": "📋 マイキャンペーン",
     "step1": "1. タスクの種類を選択",
     "step2channel": "2. あなたのチャンネル",

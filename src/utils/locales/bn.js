@@ -2,6 +2,7 @@ export default {
   "common": {
     "privacyPolicy": "গোপনীয়তা নীতি",
     "contactSupport": "সহায়তায় যোগাযোগ করুন",
+    "termsOfService": "সেবার শর্তাবলী",
     "loading": "লোড হচ্ছে...",
     "error": "ত্রুটি",
     "cancel": "বাতিল",
@@ -120,7 +121,7 @@ export default {
     "changedMsg": "অ্যাপের ভাষা আপডেট করা হয়েছে।"
   },
   "boost": {
-    "title": "প্রচার",
+    "title": "বুস্ট",
     "myCampaigns": "📋 আমার প্রচারণা",
     "step1": "1. কাজের ধরন বেছে নিন",
     "step2channel": "2. আপনার চ্যানেল",

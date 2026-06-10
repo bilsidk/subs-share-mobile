@@ -15,7 +15,8 @@ export default {
     "free": "Free",
     "unlimited": "Unlimited",
     "privacyPolicy": "Privacy Policy",
-    "contactSupport": "Contact Support"
+    "contactSupport": "Contact Support",
+    "termsOfService": "Terms of Service"
   },
   "tabs": {
     "home": "Home",
@@ -132,7 +133,7 @@ export default {
     "campaignFairUse": "📋 All actions are verified by the YouTube API to ensure authenticity."
   },
   "boost": {
-    "title": "Promote",
+    "title": "Grow",
     "myCampaigns": "📋 My Campaigns",
     "step1": "1. Choose Task Type",
     "step2channel": "2. Your Channel",
