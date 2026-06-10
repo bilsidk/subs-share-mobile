@@ -22,7 +22,6 @@ import OnboardingScreen from '../screens/OnboardingScreen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const OWNER_EMAIL = 'bilsidk@gmail.com';
 const ONBOARDING_KEY = '@subsshare_onboarded';
 
 const TabIcon = ({ label, emoji, focused }) => {
@@ -113,7 +112,7 @@ export const AppNavigator = () => {
     );
   }
 
-  const isOwner = user?.email?.toLowerCase() === OWNER_EMAIL || user?.role === 'owner';
+  const isOwner = user?.role === 'owner';
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
