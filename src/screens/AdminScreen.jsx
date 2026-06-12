@@ -164,7 +164,7 @@ const AdminScreen = () => {
 
         {settings && (
           <Section title="💸 Campaign Economy">
-            <SettingRow label="Coins Per Slot" value={settings.coins_per_slot} onSave={(v) => updateSetting('coins_per_slot', v)} hint="How much campaign owners pay per subscriber slot" />
+            <SettingRow label="House Margin" value={settings.house_margin ?? 3} onSave={(v) => updateSetting('house_margin', v)} hint="Extra coins added on top of earner reward — owner pays reward + margin" />
             <SettingRow label="Max Active Campaigns" value={settings.max_campaigns_per_user} onSave={(v) => updateSetting('max_campaigns_per_user', v)} hint="Max simultaneous campaigns per regular user" />
             <SettingRow label="Completion Delay (seconds)" value={settings.completion_delay_seconds} onSave={(v) => updateSetting('completion_delay_seconds', v)} hint="How long users must wait before claiming" />
           </Section>
