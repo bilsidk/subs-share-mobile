@@ -84,3 +84,13 @@ yarn-error.log
 
 # Backup files
 *.backup
+
+# Local assets / AI tools (not part of the app build)
+.ai/
+.claude/
+delete-account.html
+feature-graphic.html
+feature-graphic.jpg
+feature-graphic.png
+screenshots/
+terms.html
