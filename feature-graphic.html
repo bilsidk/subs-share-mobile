@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1024px; height: 500px; overflow: hidden; background: #0d0d1a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
+  .bg {
+    width: 1024px; height: 500px; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #0d0d1a 0%, #1a1035 50%, #0d0d1a 100%);
+  }
+
+  /* Glow blobs */
+  .blob1 { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(108,99,255,0.25) 0%, transparent 70%); top: -100px; left: -80px; }
+  .blob2 { position: absolute; width: 350px; height: 350px; border-radius: 50%; background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%); bottom: -80px; right: 200px; }
+  .blob3 { position: absolute; width: 250px; height: 250px; border-radius: 50%; background: radial-gradient(circle, rgba(255,209,102,0.15) 0%, transparent 70%); top: 50px; right: 100px; }
+
+  /* Grid lines subtle */
+  .grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(108,99,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(108,99,255,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .content {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 100%; padding: 0 60px;
+  }
+
+  /* Left: branding */
+  .left { display: flex; flex-direction: column; gap: 16px; max-width: 500px; }
+
+  .logo-row { display: flex; align-items: center; gap: 18px; margin-bottom: 4px; }
+  .logo-img { width: 72px; height: 72px; border-radius: 18px; box-shadow: 0 0 30px rgba(108,99,255,0.5); }
+  .app-name { font-size: 42px; font-weight: 900; color: #fff; letter-spacing: -1px; }
+
+  .tagline {
+    font-size: 22px; font-weight: 700;
+    background: linear-gradient(90deg, #6C63FF, #60a5fa);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+
+  .sub { font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.5; max-width: 420px; }
+
+  .pills { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .pill {
+    background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.35);
+    color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 600;
+    padding: 6px 14px; border-radius: 100px;
+  }
+  .pill.gold { background: rgba(255,209,102,0.12); border-color: rgba(255,209,102,0.3); color: #ffd166; }
+
+  /* Right: mock phone card */
+  .right { flex-shrink: 0; }
+
+  .card {
+    width: 260px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(108,99,255,0.25);
+    border-radius: 24px;
+    padding: 24px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(108,99,255,0.15);
+  }
+
+  .card-title { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+
+  .task-item {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 12px 14px; margin-bottom: 10px;
+  }
+  .task-icon { font-size: 22px; }
+  .task-info { flex: 1; }
+  .task-name { font-size: 13px; font-weight: 600; color: #fff; }
+  .task-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+  .task-coin { font-size: 14px; font-weight: 800; color: #ffd166; }
+
+  .balance-row {
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.2);
+    border-radius: 14px; padding: 12px 16px; margin-top: 14px;
+  }
+  .balance-label { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 600; }
+  .balance-val { font-size: 22px; font-weight: 900; color: #ffd166; }
+
+  /* verified badge */
+  .verified {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(6,214,160,0.1); border: 1px solid rgba(6,214,160,0.25);
+    color: #06d6a0; font-size: 11px; font-weight: 700;
+    padding: 4px 10px; border-radius: 100px; margin-top: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="bg">
+  <div class="blob1"></div>
+  <div class="blob2"></div>
+  <div class="blob3"></div>
+  <div class="grid"></div>
+
+  <div class="content">
+    <div class="left">
+      <div class="logo-row">
+        <img class="logo-img" src="android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
+        <span class="app-name">SubsShare</span>
+      </div>
+      <div class="tagline">Grow your YouTube channel<br>with real creators</div>
+      <div class="sub">Complete tasks, earn coins, launch campaigns.<br>Every action verified by the YouTube API.</div>
+      <div class="pills">
+        <span class="pill">🔔 Subscribe</span>
+        <span class="pill">👍 Like</span>
+        <span class="pill">▶ Watch</span>
+        <span class="pill gold">🪙 Earn coins</span>
+      </div>
+      <div class="verified">✓ YouTube API verified · 15 languages</div>
+    </div>
+
+    <div class="right">
+      <div class="card">
+        <div class="card-title">Available Tasks</div>
+
+        <div class="task-item">
+          <span class="task-icon">🔔</span>
+          <div class="task-info">
+            <div class="task-name">Subscribe to channel</div>
+            <div class="task-sub">Verified by YouTube API</div>
+          </div>
+          <span class="task-coin">+8🪙</span>
+        </div>
+
+        <div class="task-item">
+          <span class="task-icon">👍</span>
+          <div class="task-info">
+            <div class="task-name">Like + Comment</div>
+            <div class="task-sub">Bonus +4 for comment</div>
+          </div>
+          <span class="task-coin">+10🪙</span>
+        </div>
+
+        <div class="task-item">
+          <span class="task-icon">▶</span>
+          <div class="task-info">
+            <div class="task-name">Watch video</div>
+            <div class="task-sub">Timer-based · 3 min</div>
+          </div>
+          <span class="task-coin">+6🪙</span>
+        </div>
+
+        <div class="balance-row">
+          <span class="balance-label">🪙 YOUR BALANCE</span>
+          <span class="balance-val">142</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

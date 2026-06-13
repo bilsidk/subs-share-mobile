@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "feature-graphic",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-l", "3777", "."],
+      "port": 3777
+    },
+    {
+      "name": "subsshare-web",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "serve", "-l", "3456", "D:/react/subs/SubsShare-Backend/web"],
+      "port": 3456
+    }
+  ]
+}
