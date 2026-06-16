@@ -10,20 +10,17 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [youtubeConnected, setYoutubeConnected] = useState(false);
 
   useEffect(() => {
     const restore = async () => {
       try {
-        const [savedToken, savedUser, savedYt] = await Promise.all([
+        const [savedToken, savedUser] = await Promise.all([
           storageService.getToken(),
           storageService.getUser(),
-          storageService.getYoutubeConnected(),
         ]);
         if (savedToken && savedUser) {
           setToken(savedToken);
           setUser(savedUser);
-          setYoutubeConnected(savedYt);
           const fresh = await api.getMe();
           setUser(fresh);
           await storageService.saveUser(fresh);
@@ -47,13 +44,11 @@ export const AuthProvider = ({ children }) => {
       await storageService.saveUser(res.user);
       setToken(res.token);
       setUser(res.user);
-      setYoutubeConnected(!!res.youtube_connected);
       retryPricing();
     } catch (err) {
       await storageService.clear().catch(() => {});
       setToken(null);
       setUser(null);
-      setYoutubeConnected(false);
       throw err;
     }
   };
@@ -62,7 +57,6 @@ export const AuthProvider = ({ children }) => {
     await storageService.clear();
     setToken(null);
     setUser(null);
-    setYoutubeConnected(false);
   };
 
   // Listen for 401 session expiry from api.js — clear auth state silently
@@ -70,15 +64,9 @@ export const AuthProvider = ({ children }) => {
     const unsub = onSessionExpired(() => {
       setToken(null);
       setUser(null);
-      setYoutubeConnected(false);
     });
     return unsub;
   }, []);
-
-  // Persist youtubeConnected whenever it changes
-  useEffect(() => {
-    storageService.saveYoutubeConnected(youtubeConnected).catch(() => {});
-  }, [youtubeConnected]);
 
   const refreshUser = async () => {
     const fresh = await api.getMe();
@@ -88,7 +76,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, youtubeConnected, signIn, signOut, refreshUser }}>
+    <AuthContext.Provider value={{ user, token, loading, signIn, signOut, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );
