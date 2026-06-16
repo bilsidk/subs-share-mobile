@@ -41,15 +41,6 @@ export const storageService = {
     return raw ? JSON.parse(raw) : null;
   },
 
-  async saveYoutubeConnected(val) {
-    await AsyncStorage.setItem(KEYS.YOUTUBE_CONNECTED, val ? 'true' : 'false');
-  },
-
-  async getYoutubeConnected() {
-    const raw = await AsyncStorage.getItem(KEYS.YOUTUBE_CONNECTED);
-    return raw === 'true';
-  },
-
   async clear() {
     await AsyncStorage.multiRemove(Object.values(KEYS));
     try {
