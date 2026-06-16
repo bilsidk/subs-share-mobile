@@ -1,35 +1,58 @@
+let _pricing = null;
+let _pricingFailed = false;
+
+export async function loadPricing() {
+  try {
+    const { api } = await import('../services/api');
+    _pricing = await api.getPricing();
+    _pricingFailed = false;
+  } catch (e) {
+    _pricingFailed = true;
+    console.warn('[Pricing] Failed to load dynamic pricing, using fallback:', e.message);
+  }
+}
+
+export async function retryPricing() {
+  if (!_pricingFailed) return;
+  await loadPricing();
+}
+
 export const formatCoins = (amount) => {
   if (amount >= 1000) return `${(amount / 1000).toFixed(1)}K`;
   return amount.toString();
 };
 
-// Slot costs per task type (must match backend config/index.js SLOT_COSTS)
-const SLOT_COSTS = {
-  subscribe:       15,
-  like:            9,
-  like_comment:    13,
-  subscribe_like:  20,
-  watch:           7,   // base for 1 min
+const FALLBACK_COSTS = {
+  subscribe: 15, like: 9, like_comment: 13, subscribe_like: 20, watch: 7,
 };
+const FALLBACK_WATCH_EXTRA = 1;
 
-const WATCH_COST_PER_EXTRA_MIN = 1;
+function _getCosts() {
+  return _pricing?.slot_costs ?? FALLBACK_COSTS;
+}
+
+function _getWatchExtra() {
+  return _pricing?.watch_extra_min_cost ?? FALLBACK_WATCH_EXTRA;
+}
 
 export const calcCampaignCost = (slots, taskType = 'subscribe', watchMinutes = 1) => {
   if (!slots || slots < 1) return 0;
-  let costPerSlot = SLOT_COSTS[taskType] || 15;
+  const costs = _getCosts();
+  let costPerSlot = costs[taskType] || 15;
   if (taskType === 'watch') {
     const extraMins = Math.max(0, watchMinutes - 1);
-    costPerSlot = SLOT_COSTS.watch + (extraMins * WATCH_COST_PER_EXTRA_MIN);
+    costPerSlot = costs.watch + (extraMins * _getWatchExtra());
   }
   return slots * costPerSlot;
 };
 
 export const getSlotCost = (taskType, watchMinutes = 1) => {
+  const costs = _getCosts();
   if (taskType === 'watch') {
     const extraMins = Math.max(0, watchMinutes - 1);
-    return SLOT_COSTS.watch + (extraMins * WATCH_COST_PER_EXTRA_MIN);
+    return costs.watch + (extraMins * _getWatchExtra());
   }
-  return SLOT_COSTS[taskType] || 15;
+  return costs[taskType] || 15;
 };
 
 export const formatDate = (dateStr) => {
@@ -38,16 +61,16 @@ export const formatDate = (dateStr) => {
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 };
 
-export const formatRelativeTime = (dateStr) => {
+export const formatRelativeTime = (dateStr, t) => {
   if (!dateStr) return '';
   const diff = Date.now() - new Date(dateStr).getTime();
   const mins = Math.floor(diff / 60000);
-  if (mins < 1) return 'just now';
-  if (mins < 60) return `${mins}m ago`;
+  if (mins < 1) return t ? t('time.justNow') : 'just now';
+  if (mins < 60) return t ? t('time.minutesAgo', { n: mins }) : `${mins}m ago`;
   const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
+  if (hrs < 24) return t ? t('time.hoursAgo', { n: hrs }) : `${hrs}h ago`;
   const days = Math.floor(hrs / 24);
-  return `${days}d ago`;
+  return t ? t('time.daysAgo', { n: days }) : `${days}d ago`;
 };
 
 export const extractChannelId = (url) => {

@@ -1,7 +1,8 @@
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { storageService } from '../services/storageService';
-import { api } from '../services/api';
+import { api, onSessionExpired } from '../services/api';
+import { retryPricing } from '../utils/helpers';
 
 const AuthContext = createContext(null);
 
@@ -26,6 +27,7 @@ export const AuthProvider = ({ children }) => {
           const fresh = await api.getMe();
           setUser(fresh);
           await storageService.saveUser(fresh);
+          retryPricing();
         }
       } catch {
         await storageService.clear();
@@ -46,6 +48,7 @@ export const AuthProvider = ({ children }) => {
       setToken(res.token);
       setUser(res.user);
       setYoutubeConnected(!!res.youtube_connected);
+      retryPricing();
     } catch (err) {
       await storageService.clear().catch(() => {});
       setToken(null);
@@ -61,6 +64,16 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setYoutubeConnected(false);
   };
+
+  // Listen for 401 session expiry from api.js — clear auth state silently
+  useEffect(() => {
+    const unsub = onSessionExpired(() => {
+      setToken(null);
+      setUser(null);
+      setYoutubeConnected(false);
+    });
+    return unsub;
+  }, []);
 
   // Persist youtubeConnected whenever it changes
   useEffect(() => {

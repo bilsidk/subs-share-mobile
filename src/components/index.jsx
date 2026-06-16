@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, spacing, radius } from '../theme';
+import { t } from '../utils/i18n';
 
 // ── Coin Badge ──────────────────────────────────────────────
 export const CoinBadge = ({ amount, size = 'md' }) => {
@@ -56,10 +57,10 @@ export class ErrorBoundary extends Component {
       return (
         <View style={styles.errorContainer}>
           <Text style={styles.errorEmoji}>💥</Text>
-          <Text style={styles.errorTitle}>Something went wrong</Text>
+          <Text style={styles.errorTitle}>{t('errorBoundary.title')}</Text>
           <Text style={styles.errorMessage}>{this.state.error.message}</Text>
           <TouchableOpacity style={styles.errorBtn} onPress={() => this.setState({ error: null })}>
-            <Text style={styles.errorBtnText}>Try Again</Text>
+            <Text style={styles.errorBtnText}>{t('common.retry')}</Text>
           </TouchableOpacity>
         </View>
       );

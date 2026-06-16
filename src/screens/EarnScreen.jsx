@@ -34,6 +34,7 @@ const EarnScreen = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
   const [startedAt, setStartedAt] = useState(null);
   const [countdown, setCountdown] = useState(TASK_COMPLETION_DELAY);
@@ -49,8 +50,8 @@ const EarnScreen = () => {
   const TASK_DESCRIPTIONS = useMemo(() => getTaskDescriptions(t), [t]);
 
   const loadTasks = async () => {
-    try { setTasks(await api.getAvailableTasks()); }
-    catch (_) { /* ignore */ }
+    try { setTasks(await api.getAvailableTasks()); setError(null); }
+    catch (e) { setError(e.message); }
     finally { setLoading(false); setRefreshing(false); }
   };
 
@@ -153,6 +154,9 @@ const EarnScreen = () => {
 
   return (
     <SafeAreaView style={styles.safe}>
+      {error && (
+        <View style={styles.errorBanner}><Text style={styles.errorText}>{error}</Text></View>
+      )}
       <View style={styles.warningBanner}>
         <Text style={styles.warningText}>{WARNINGS.earnScreenBanner}</Text>
       </View>
@@ -256,6 +260,8 @@ const styles = StyleSheet.create({
   warningInModalText: { fontSize: 11, color: '#EF476F', textAlign: 'center' },
   dismissBtn: { paddingVertical: 8 },
   dismissText: { fontSize: 13, color: '#555570' },
+  errorBanner: { backgroundColor: '#E53935', padding: 12, alignItems: 'center' },
+  errorText: { color: '#FFFFFF', fontSize: 13 },
 });
 
 export default EarnScreen;

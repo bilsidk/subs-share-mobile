@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Keychain from 'react-native-keychain';
 
 const KEYS = {
   TOKEN: '@subsshare_token',
@@ -8,11 +9,27 @@ const KEYS = {
 
 export const storageService = {
   async saveToken(token) {
-    await AsyncStorage.setItem(KEYS.TOKEN, token);
+    try {
+      await Keychain.setGenericPassword('token', token);
+      await AsyncStorage.removeItem(KEYS.TOKEN);
+    } catch {
+      await AsyncStorage.setItem(KEYS.TOKEN, token);
+    }
   },
 
   async getToken() {
-    return AsyncStorage.getItem(KEYS.TOKEN);
+    try {
+      const creds = await Keychain.getGenericPassword();
+      if (creds) return creds.password;
+    } catch { /* keychain not available */ }
+    const legacy = await AsyncStorage.getItem(KEYS.TOKEN);
+    if (legacy) {
+      try {
+        await Keychain.setGenericPassword('token', legacy);
+        await AsyncStorage.removeItem(KEYS.TOKEN);
+      } catch { /* migration best-effort */ }
+    }
+    return legacy;
   },
 
   async saveUser(user) {
@@ -33,9 +50,10 @@ export const storageService = {
     return raw === 'true';
   },
 
- async clear() {
-  await AsyncStorage.removeItem(KEYS.TOKEN);
-  await AsyncStorage.removeItem(KEYS.USER);
-  await AsyncStorage.removeItem(KEYS.YOUTUBE_CONNECTED);
-},
+  async clear() {
+    await AsyncStorage.multiRemove(Object.values(KEYS));
+    try {
+      await Keychain.resetGenericPassword();
+    } catch { /* keychain not available */ }
+  },
 };

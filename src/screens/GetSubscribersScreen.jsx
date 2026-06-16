@@ -51,7 +51,7 @@ const GetSubscribersScreen = () => {
       setChannels(chs);
       if (chs.length > 0 && !selectedChannelId) setSelectedChannelId(chs[0].id);
     }
-    catch (_) { /* ignore */ }
+    catch (e) { Alert.alert(t('common.error'), e.message); }
     finally { setLoadingChannels(false); }
   };
 

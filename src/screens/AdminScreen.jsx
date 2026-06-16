@@ -22,7 +22,7 @@ const SettingRow = ({ label, value, onSave, hint }) => {
   const [draft, setDraft] = useState(String(value));
   const handleSave = () => {
     const num = parseInt(draft, 10);
-    if (isNaN(num) || num < 0) { Alert.alert(t('common.error'), 'Enter a valid number'); return; }
+    if (isNaN(num) || num < 0) { Alert.alert(t('common.error'), t('admin.validNumber')); return; }
     onSave(num); setEditing(false);
   };
   return (
@@ -82,8 +82,8 @@ const AdminScreen = () => {
   const toggleMode = () => {
     const newMode = status?.api_mode === 'live' ? 'degraded' : 'live';
     Alert.alert(
-      `Switch to ${newMode}?`,
-      newMode === 'degraded' ? 'This disables YouTube API verification. All tasks fall back to honor mode.' : 'This re-enables YouTube API verification.',
+      newMode === 'degraded' ? t('admin.switchToDegraded') : t('admin.switchToLive'),
+      newMode === 'degraded' ? t('admin.degradedDesc') : t('admin.liveDesc'),
       [
         { text: t('common.cancel'), style: 'cancel' },
         { text: t('common.confirm'), onPress: async () => { try { await api.setAdminMode(newMode); setStatus(prev => ({ ...prev, api_mode: newMode })); } catch (e) { Alert.alert(t('common.error'), e.message); } } },
@@ -93,15 +93,15 @@ const AdminScreen = () => {
 
   const promoteUser = async () => {
     const email = promoteEmail.trim();
-    if (!email) return Alert.alert(t('common.error'), 'Enter an email address');
-    try { await api.promoteUser(email, 'premium'); Alert.alert('✅ Done', `${email} is now premium`); setPromoteEmail(''); }
+    if (!email) return Alert.alert(t('common.error'), t('admin.enterEmail'));
+    try { await api.promoteUser(email, 'premium'); Alert.alert(t('admin.premiumGranted'), t('admin.premiumGrantedMsg', { email })); setPromoteEmail(''); }
     catch (e) { Alert.alert(t('common.error'), e.message); }
   };
 
   const demoteUser = async () => {
     const email = demoteEmail.trim();
-    if (!email) return Alert.alert(t('common.error'), 'Enter an email address');
-    try { await api.promoteUser(email, 'user'); Alert.alert('✅ Done', `${email} is now a regular user`); setDemoteEmail(''); }
+    if (!email) return Alert.alert(t('common.error'), t('admin.enterEmail'));
+    try { await api.promoteUser(email, 'user'); Alert.alert(t('admin.premiumGranted'), t('admin.premiumRemovedMsg', { email })); setDemoteEmail(''); }
     catch (e) { Alert.alert(t('common.error'), e.message); }
   };
 
@@ -117,15 +117,15 @@ const AdminScreen = () => {
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); loadData(); }} tintColor={colors.primary} />}
       >
-        <Text style={styles.title}>⚙️ Admin Panel</Text>
-        {saving && <Text style={styles.savingText}>Saving...</Text>}
+        <Text style={styles.title}>{t('admin.panel')}</Text>
+        {saving && <Text style={styles.savingText}>{t('admin.saving')}</Text>}
 
-        <Section title="🔌 API Mode">
+        <Section title={t('admin.apiMode')}>
           <View style={styles.modeRow}>
             <View>
-              <Text style={styles.settingLabel}>YouTube Verification</Text>
+              <Text style={styles.settingLabel}>{t('admin.youtubeVerification')}</Text>
               <Text style={[styles.modeStatus, { color: isLive ? colors.success : colors.danger }]}>
-                {isLive ? '✅ Live — API active' : '⚠️ Degraded — honor mode'}
+                {isLive ? t('admin.liveActive') : t('admin.degradedHonor')}
               </Text>
               {status?.degraded_reason && <Text style={styles.settingHint}>{status.degraded_reason}</Text>}
             </View>
@@ -133,48 +133,48 @@ const AdminScreen = () => {
           </View>
         </Section>
 
-        <Section title="📊 Live Stats">
-          <StatRow label="Total Users" value={stats.users} />
-          <StatRow label="Premium Users" value={stats.premium_users} color={colors.gold} />
-          <StatRow label="Banned Users" value={stats.banned_users} color={colors.danger} />
-          <StatRow label="Active Campaigns" value={stats.active_tasks} color={colors.primary} />
-          <StatRow label="Verified Completions" value={stats.verified_completions} color={colors.success} />
-          <StatRow label="Pending Completions" value={stats.pending_completions} color={colors.warning} />
-          <StatRow label="Reclaimed Completions" value={stats.reclaimed_completions} color={colors.danger} />
-          <StatRow label="Total Coins in Circulation" value={stats.total_coins_in_circulation} color={colors.gold} />
+        <Section title={t('admin.liveStats')}>
+          <StatRow label={t('admin.totalUsers')} value={stats.users} />
+          <StatRow label={t('admin.premiumUsers')} value={stats.premium_users} color={colors.gold} />
+          <StatRow label={t('admin.bannedUsers')} value={stats.banned_users} color={colors.danger} />
+          <StatRow label={t('admin.activeCampaigns')} value={stats.active_tasks} color={colors.primary} />
+          <StatRow label={t('admin.verifiedCompletions')} value={stats.verified_completions} color={colors.success} />
+          <StatRow label={t('admin.pendingCompletions')} value={stats.pending_completions} color={colors.warning} />
+          <StatRow label={t('admin.reclaimedCompletions')} value={stats.reclaimed_completions} color={colors.danger} />
+          <StatRow label={t('admin.coinsInCirculation')} value={stats.total_coins_in_circulation} color={colors.gold} />
         </Section>
 
         {settings && (
-          <Section title="📅 Daily Task Limits">
-            <SettingRow label="Regular Users" value={settings.daily_limit_user} onSave={(v) => updateSetting('daily_limit_user', v)} hint="Tasks per day for regular users" />
-            <SettingRow label="Premium Users" value={settings.daily_limit_premium} onSave={(v) => updateSetting('daily_limit_premium', v)} hint="Tasks per day for premium users" />
+          <Section title={t('admin.dailyLimits')}>
+            <SettingRow label={t('admin.regularUsers')} value={settings.daily_limit_user} onSave={(v) => updateSetting('daily_limit_user', v)} hint={t('admin.tasksPerDay')} />
+            <SettingRow label={t('admin.premiumUsersLimit')} value={settings.daily_limit_premium} onSave={(v) => updateSetting('daily_limit_premium', v)} hint={t('admin.tasksPerDayPremium')} />
           </Section>
         )}
 
         {settings && (
-          <Section title="🪙 Coins Per Task">
-            <SettingRow label="Subscribe" value={settings.coins_subscribe} onSave={(v) => updateSetting('coins_subscribe', v)} hint="Fully verified by YouTube API" />
-            <SettingRow label="Like" value={settings.coins_like} onSave={(v) => updateSetting('coins_like', v)} hint="Fully verified by YouTube API" />
-            <SettingRow label="Like + Comment (base)" value={settings.coins_like_comment} onSave={(v) => updateSetting('coins_like_comment', v)} hint="Like is required, comment gives bonus" />
-            <SettingRow label="Comment Bonus" value={settings.comment_bonus} onSave={(v) => updateSetting('comment_bonus', v)} hint="Extra coins if comment is detected" />
-            <SettingRow label="Subscribe + Like" value={settings.coins_subscribe_like} onSave={(v) => updateSetting('coins_subscribe_like', v)} hint="Both verified by YouTube API" />
-            <SettingRow label="Watch Video" value={settings.coins_watch} onSave={(v) => updateSetting('coins_watch', v)} hint="Timer-based, honor system" />
+          <Section title={t('admin.coinsPerTask')}>
+            <SettingRow label={t('admin.subscribe')} value={settings.coins_subscribe} onSave={(v) => updateSetting('coins_subscribe', v)} hint={t('admin.verifiedByApi')} />
+            <SettingRow label={t('admin.like')} value={settings.coins_like} onSave={(v) => updateSetting('coins_like', v)} hint={t('admin.verifiedByApi')} />
+            <SettingRow label={t('admin.likeComment')} value={settings.coins_like_comment} onSave={(v) => updateSetting('coins_like_comment', v)} hint={t('admin.extraCoinsIfComment')} />
+            <SettingRow label={t('admin.commentBonus')} value={settings.comment_bonus} onSave={(v) => updateSetting('comment_bonus', v)} hint={t('admin.extraCoinsIfComment')} />
+            <SettingRow label={t('admin.subscribeLike')} value={settings.coins_subscribe_like} onSave={(v) => updateSetting('coins_subscribe_like', v)} hint={t('admin.bothVerifiedByApi')} />
+            <SettingRow label={t('admin.watchVideo')} value={settings.coins_watch} onSave={(v) => updateSetting('coins_watch', v)} hint={t('admin.timerBased')} />
           </Section>
         )}
 
         {settings && (
-          <Section title="💸 Campaign Economy">
-            <SettingRow label="House Margin" value={settings.house_margin ?? 3} onSave={(v) => updateSetting('house_margin', v)} hint="Extra coins added on top of earner reward — owner pays reward + margin" />
-            <SettingRow label="Max Active Campaigns" value={settings.max_campaigns_per_user} onSave={(v) => updateSetting('max_campaigns_per_user', v)} hint="Max simultaneous campaigns per regular user" />
-            <SettingRow label="Completion Delay (seconds)" value={settings.completion_delay_seconds} onSave={(v) => updateSetting('completion_delay_seconds', v)} hint="How long users must wait before claiming" />
+          <Section title={t('admin.campaignEconomy')}>
+            <SettingRow label={t('admin.houseMargin')} value={settings.house_margin ?? 3} onSave={(v) => updateSetting('house_margin', v)} hint={t('admin.houseMarginHint')} />
+            <SettingRow label={t('admin.maxActiveCampaigns')} value={settings.max_campaigns_per_user} onSave={(v) => updateSetting('max_campaigns_per_user', v)} hint={t('admin.maxActiveHint')} />
+            <SettingRow label={t('admin.completionDelay')} value={settings.completion_delay_seconds} onSave={(v) => updateSetting('completion_delay_seconds', v)} hint={t('admin.completionDelayHint')} />
           </Section>
         )}
 
-        <Section title="👥 User Management">
+        <Section title={t('admin.userManagement')}>
           <View style={styles.userActionRow}>
             <TextInput
               style={styles.userActionInput}
-              placeholder="email@example.com"
+              placeholder={t('admin.emailPlaceholder')}
               placeholderTextColor={colors.textMuted}
               value={promoteEmail}
               onChangeText={setPromoteEmail}
@@ -182,13 +182,13 @@ const AdminScreen = () => {
               keyboardType="email-address"
             />
             <TouchableOpacity style={styles.actionBtn} onPress={promoteUser}>
-              <Text style={styles.actionBtnText}>💎 Grant Premium</Text>
+              <Text style={styles.actionBtnText}>{t('admin.grantPremium')}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.userActionRow}>
             <TextInput
               style={styles.userActionInput}
-              placeholder="email@example.com"
+              placeholder={t('admin.emailPlaceholder')}
               placeholderTextColor={colors.textMuted}
               value={demoteEmail}
               onChangeText={setDemoteEmail}
@@ -196,7 +196,7 @@ const AdminScreen = () => {
               keyboardType="email-address"
             />
             <TouchableOpacity style={[styles.actionBtn, styles.actionBtnDanger]} onPress={demoteUser}>
-              <Text style={styles.actionBtnText}>⬇️ Remove Premium</Text>
+              <Text style={styles.actionBtnText}>{t('admin.removePremium')}</Text>
             </TouchableOpacity>
           </View>
         </Section>

@@ -24,17 +24,19 @@ const ProfileScreen = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [error, setError] = useState(null);
 
   const loadData = async () => {
     try {
       const [txRes, taskRes] = await Promise.all([api.getTransactions(), api.getMyTasks()]);
       setTransactions(txRes.transactions);
       setMyTasks(taskRes);
-    } catch (_) { /* ignore */ }
+      setError(null);
+    } catch (e) { setError(e.message); }
     finally { setLoading(false); setRefreshing(false); }
   };
 
-  useFocusEffect(useCallback(() => { refreshUser().catch(() => {}); loadData(); }, []));
+  useFocusEffect(useCallback(() => { refreshUser().catch(e => setError(e.message)); loadData(); }, []));
 
   const handleSignOut = () => {
     Alert.alert(t('profile.signOutTitle'), t('profile.signOutMsg'), [
@@ -86,10 +88,13 @@ const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={styles.safe}>
+      {error && (
+        <View style={styles.errorBanner}><Text style={styles.errorText}>{error}</Text></View>
+      )}
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); refreshUser().catch(() => {}); loadData(); }} tintColor={colors.primary} />}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); refreshUser().catch(e => setError(e.message)); loadData(); }} tintColor={colors.primary} />}
       >
         <View style={styles.profileCard}>
           {user?.avatar ? (
@@ -129,7 +134,7 @@ const ProfileScreen = () => {
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text style={styles.txDesc}>{translateTx(tx.description, t)}</Text>
-                  <Text style={styles.txDate}>{formatRelativeTime(tx.created_at)}</Text>
+                  <Text style={styles.txDate}>{formatRelativeTime(tx.created_at, t)}</Text>
                 </View>
                 <Text style={[styles.txAmount, { color: tx.type === 'spent' ? colors.danger : colors.success }]}>
                   {tx.type === 'spent' ? '-' : '+'}{tx.amount}
@@ -198,6 +203,8 @@ const styles = StyleSheet.create({
   signOutText: { fontSize: 15, fontWeight: '700', color: colors.danger },
   deleteBtn: { paddingVertical: spacing.sm, alignItems: 'center' },
   deleteText: { fontSize: 13, fontWeight: '600', color: colors.textMuted, textDecorationLine: 'underline' },
+  errorBanner: { backgroundColor: '#E53935', padding: spacing.sm, alignItems: 'center' },
+  errorText: { color: '#FFFFFF', fontSize: 13 },
 });
 
 export default ProfileScreen;

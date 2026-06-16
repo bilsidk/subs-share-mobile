@@ -8,6 +8,7 @@ import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { LoadingSpinner, EmptyState } from '../components';
 import { useTranslation } from '../hooks/useTranslation';
+import { getSlotCost } from '../utils/helpers';
 
 const MyCampaignsScreen = () => {
   const { refreshUser } = useAuth();
@@ -15,6 +16,8 @@ const MyCampaignsScreen = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [actionLoading, setActionLoading] = useState(null); // taskId being acted upon
+  const [error, setError] = useState(null);
 
   const STATUS_META = {
     active:    { label: t('campaigns.statusActive'),    color: '#06D6A0', emoji: '🟢' },
@@ -24,12 +27,24 @@ const MyCampaignsScreen = () => {
   };
 
   const loadTasks = async () => {
-    try { setTasks(await api.getMyTasks()); }
-    catch (_) { /* ignore */ }
+    try { setTasks(await api.getMyTasks()); setError(null); }
+    catch (e) { setError(e.message); }
     finally { setLoading(false); setRefreshing(false); }
   };
 
   useFocusEffect(useCallback(() => { loadTasks(); }, []));
+
+  const handleAction = async (taskId, action, ...args) => {
+    setActionLoading(taskId);
+    try {
+      await action(...args);
+      await loadTasks();
+    } catch (e) {
+      Alert.alert(t('common.error'), e.message);
+    } finally {
+      setActionLoading(null);
+    }
+  };
 
   const handlePause = (task) => {
     Alert.alert(
@@ -37,7 +52,7 @@ const MyCampaignsScreen = () => {
       t('campaigns.pauseMsg', { name: task.channel_name, slots: task.remaining_slots }),
       [
         { text: t('common.cancel'), style: 'cancel' },
-        { text: t('campaigns.pause'), onPress: async () => { try { await api.pauseCampaign(task.id); loadTasks(); } catch (e) { Alert.alert(t('common.error'), e.message); } } },
+        { text: t('campaigns.pause'), onPress: () => handleAction(task.id, api.pauseCampaign, task.id) },
       ]
     );
   };
@@ -48,17 +63,14 @@ const MyCampaignsScreen = () => {
       t('campaigns.resumeMsg', { name: task.channel_name, slots: task.remaining_slots }),
       [
         { text: t('common.cancel'), style: 'cancel' },
-        { text: t('campaigns.resume'), onPress: async () => { try { await api.resumeCampaign(task.id); loadTasks(); } catch (e) { Alert.alert(t('common.error'), e.message); } } },
+        { text: t('campaigns.resume'), onPress: () => handleAction(task.id, api.resumeCampaign, task.id) },
       ]
     );
   };
 
   const handleCancel = (task) => {
-    const slotValue = parseInt(task.reward, 10) || 10;
-    const refund = task.remaining_slots * slotValue;
     const filled = parseInt(task.completions_count || 0);
     const msg = t('campaigns.cancelMsg', { name: task.channel_name })
-      + (refund > 0 ? t('campaigns.cancelRefund', { coins: refund }) : t('campaigns.cancelNoRefund'))
       + (filled > 0 ? t('campaigns.cancelCompleted', { count: filled }) : '');
     Alert.alert(
       t('campaigns.cancelTitle'),
@@ -66,21 +78,18 @@ const MyCampaignsScreen = () => {
       [
         { text: t('campaigns.keepCampaign'), style: 'cancel' },
         {
-          text: refund > 0 ? t('campaigns.cancelConfirm', { coins: refund }) : t('campaigns.cancelConfirmFree'),
+          text: t('campaigns.cancelConfirm'),
           style: 'destructive',
-          onPress: async () => {
-            try {
-              const result = await api.cancelCampaign(task.id);
-              await refreshUser();
-              loadTasks();
-              Alert.alert(
-                t('campaigns.cancelled'),
-                result.refunded_coins > 0
-                  ? t('campaigns.refunded', { coins: result.refunded_coins, balance: result.new_balance })
-                  : t('campaigns.cancelConfirmFree')
-              );
-            } catch (e) { Alert.alert(t('common.error'), e.message); }
-          },
+          onPress: () => handleAction(task.id, async () => {
+            const result = await api.cancelCampaign(task.id);
+            await refreshUser();
+            Alert.alert(
+              t('campaigns.cancelled'),
+              result.refunded_coins > 0
+                ? t('campaigns.refunded', { coins: result.refunded_coins, balance: result.new_balance })
+                : t('campaigns.cancelConfirm')
+            );
+          }),
         },
       ]
     );
@@ -128,11 +137,11 @@ const MyCampaignsScreen = () => {
         </View>
 
         <View style={styles.controls}>
-          {item.can_pause   && <TouchableOpacity style={[styles.ctrl, styles.ctrlPause]}   onPress={() => handlePause(item)}><Text style={styles.ctrlText}>{t('campaigns.pause')}</Text></TouchableOpacity>}
-          {item.can_resume  && <TouchableOpacity style={[styles.ctrl, styles.ctrlResume]}  onPress={() => handleResume(item)}><Text style={styles.ctrlText}>{t('campaigns.resume')}</Text></TouchableOpacity>}
+          {item.can_pause   && <TouchableOpacity style={[styles.ctrl, styles.ctrlPause]}   onPress={() => handlePause(item)}   disabled={actionLoading === item.id}><Text style={styles.ctrlText}>{actionLoading === item.id ? '...' : t('campaigns.pause')}</Text></TouchableOpacity>}
+          {item.can_resume  && <TouchableOpacity style={[styles.ctrl, styles.ctrlResume]}  onPress={() => handleResume(item)}  disabled={actionLoading === item.id}><Text style={styles.ctrlText}>{actionLoading === item.id ? '...' : t('campaigns.resume')}</Text></TouchableOpacity>}
           {item.can_cancel  && (
-            <TouchableOpacity style={[styles.ctrl, styles.ctrlCancel]} onPress={() => handleCancel(item)}>
-              <Text style={styles.ctrlText}>{t('campaigns.cancel')}{item.remaining_slots > 0 ? ` (+${item.remaining_slots * (parseInt(item.reward, 10) || 10)}🪙)` : ''}</Text>
+            <TouchableOpacity style={[styles.ctrl, styles.ctrlCancel]} onPress={() => handleCancel(item)} disabled={actionLoading === item.id}>
+              <Text style={styles.ctrlText}>{actionLoading === item.id ? '...' : `${t('campaigns.cancel')}${item.remaining_slots > 0 ? ` (+${item.remaining_slots * getSlotCost(item.task_type, parseInt(item.watch_minutes, 10) || 1)}🪙)` : ''}`}</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -150,6 +159,9 @@ const MyCampaignsScreen = () => {
 
   return (
     <SafeAreaView style={styles.safe}>
+      {error && (
+        <View style={styles.errorBanner}><Text style={styles.errorText}>{error}</Text></View>
+      )}
       <View style={styles.header}>
         <Text style={styles.title}>{t('campaigns.title')}</Text>
         <Text style={styles.subtitle}>
@@ -196,6 +208,8 @@ const styles = StyleSheet.create({
   ctrlResume: { backgroundColor: 'rgba(6,214,160,0.1)',  borderColor: 'rgba(6,214,160,0.4)' },
   ctrlCancel: { backgroundColor: 'rgba(239,71,111,0.1)', borderColor: 'rgba(239,71,111,0.4)' },
   ctrlText: { fontSize: 13, fontWeight: '700', color: '#FFFFFF' },
+  errorBanner: { backgroundColor: '#E53935', padding: 12, alignItems: 'center' },
+  errorText: { color: '#FFFFFF', fontSize: 13 },
 });
 
 export default MyCampaignsScreen;

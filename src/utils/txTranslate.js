@@ -1,10 +1,9 @@
-/**
- * src/utils/txTranslate.js
- * Translates structured transaction description keys from the backend.
- * 
- * Key format: tx:key_name|param1:value1|param2:value2
- * Example: tx:task_completed|type:subscribe
- */
+import { I18nManager } from 'react-native';
+
+function wrapRTL(val) {
+  if (!I18nManager.isRTL || val == null) return val;
+  return `\u200E${val}\u200E`;
+}
 
 export function translateTx(description, t) {
   if (!description) return description;
@@ -39,18 +38,18 @@ export function translateTx(description, t) {
 
     case 'campaign_created':
       if (params.free === 'true') {
-        return t('tx.campaignCreatedFree', { type: taskTypeLabel(params.type), slots: params.slots });
+        return t('tx.campaignCreatedFree', { type: taskTypeLabel(params.type), slots: wrapRTL(params.slots) });
       }
-      return t('tx.campaignCreated', { type: taskTypeLabel(params.type), slots: params.slots, cost: params.cost });
+      return t('tx.campaignCreated', { type: taskTypeLabel(params.type), slots: wrapRTL(params.slots), cost: wrapRTL(params.cost) });
 
     case 'task_completed':
       return t('tx.taskCompleted', { type: taskTypeLabel(params.type) });
 
     case 'task_completed_comment':
-      return t('tx.taskCompletedComment', { type: taskTypeLabel(params.type), bonus: params.bonus });
+      return t('tx.taskCompletedComment', { type: taskTypeLabel(params.type), bonus: wrapRTL(params.bonus) });
 
     case 'campaign_cancelled':
-      return t('tx.campaignCancelled', { slots: params.slots, refund: params.refund });
+      return t('tx.campaignCancelled', { slots: wrapRTL(params.slots), refund: wrapRTL(params.refund) });
 
     case 'campaign_cancelled_free':
       return t('tx.campaignCancelledFree');

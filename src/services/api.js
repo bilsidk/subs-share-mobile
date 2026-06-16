@@ -82,6 +82,9 @@ export const api = {
   resumeCampaign: (taskId) => request('PATCH', `/tasks/${taskId}/resume`),
   cancelCampaign: (taskId) => request('DELETE', `/tasks/${taskId}`),
 
+  // Payments
+  getPricing: () => request('GET', '/payments/tiers'),
+
   // Transactions
   getTransactions: (page = 1) => request('GET', `/transactions?page=${encodeURIComponent(page)}`),
   getAdminStatus: () => request('GET', '/admin/status'),

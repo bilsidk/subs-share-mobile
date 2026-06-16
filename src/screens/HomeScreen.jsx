@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { translateTx } from '../utils/txTranslate';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
@@ -20,6 +20,7 @@ const HomeScreen = ({ navigation }) => {
   const [myTasks, setMyTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState(null);
 
   const loadData = async () => {
     try {
@@ -31,15 +32,18 @@ const HomeScreen = ({ navigation }) => {
       setChannels(chRes);
       setTransactions(txRes.transactions.slice(0, 5));
       setMyTasks(taskRes.filter(t => t.status === 'active'));
-    } catch (_) { /* ignore */
+    } catch (e) {
+      setError(e.message);
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
   };
 
-  useFocusEffect(useCallback(() => { refreshUser().catch(() => {}); loadData(); }, []));
-  const onRefresh = () => { setRefreshing(true); refreshUser().catch(() => {}); loadData(); };
+  useEffect(() => { if (error) { const tmr = setTimeout(() => setError(null), 5000); return () => clearTimeout(tmr); } }, [error]);
+
+  useFocusEffect(useCallback(() => { refreshUser().catch(e => setError(e.message)); loadData(); }, []));
+  const onRefresh = () => { setRefreshing(true); refreshUser().catch(e => setError(e.message)); loadData(); };
 
   if (loading) return <LoadingSpinner message={t('common.loading')} />;
 
@@ -48,6 +52,9 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safe}>
+      {error && (
+        <View style={styles.errorBanner}><Text style={styles.errorText}>{error}</Text></View>
+      )}
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.content}
@@ -122,7 +129,7 @@ const HomeScreen = ({ navigation }) => {
                 <View style={{ flex: 1 }}>
                   <Text style={styles.txDesc}>{translateTx(tx.description, t)}</Text>
 
-                  <Text style={styles.txDate}>{formatRelativeTime(tx.created_at)}</Text>
+                  <Text style={styles.txDate}>{formatRelativeTime(tx.created_at, t)}</Text>
                 </View>
                 <Text style={[styles.txAmount, { color: tx.type === 'spent' ? colors.danger : colors.success }]}>
                   {tx.type === 'spent' ? '-' : '+'}{tx.amount}
@@ -144,6 +151,8 @@ const styles = StyleSheet.create({
   greeting: { fontSize: 13, color: colors.textMuted, fontWeight: '500', textTransform: 'uppercase', letterSpacing: 1 },
   userName: { fontSize: 28, fontWeight: '800', color: colors.textPrimary, marginTop: 2 },
   avatar: { width: 48, height: 48, borderRadius: radius.full, borderWidth: 2, borderColor: colors.primary },
+  errorBanner: { backgroundColor: '#E53935', padding: spacing.sm, alignItems: 'center' },
+  errorText: { color: '#FFFFFF', fontSize: 13 },
   coinCard: { backgroundColor: colors.bgCard, borderRadius: radius.xl, padding: spacing.lg, alignItems: 'center', gap: spacing.sm, borderWidth: 1, borderColor: 'rgba(255,209,102,0.2)' },
   coinLabel: { fontSize: 11, fontWeight: '700', color: colors.textMuted, letterSpacing: 1.5, textTransform: 'uppercase' },
   coinHint: { fontSize: 12, color: colors.textMuted },
