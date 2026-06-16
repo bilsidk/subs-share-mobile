@@ -96,6 +96,7 @@ const EarnScreen = () => {
     const now = Date.now();
     startedAtRef.current = now;
     setStartedAt(now);
+    api.startTask(task.id).catch(() => {}); // server records the real start; client time is a fallback
     setActiveTask(task);
     setCountdown(TASK_COMPLETION_DELAY);
     setCanClaim(false);

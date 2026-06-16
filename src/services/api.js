@@ -3,6 +3,17 @@ import { storageService } from './storageService';
 
 const REQUEST_TIMEOUT = 15000;
 
+// Notify listeners when session expires (e.g., navigation to login)
+let _sessionExpiredListeners = [];
+export const onSessionExpired = (fn) => {
+  _sessionExpiredListeners.push(fn);
+  return () => { _sessionExpiredListeners = _sessionExpiredListeners.filter(l => l !== fn); };
+};
+const _notifySessionExpired = async () => {
+  await storageService.clear();
+  _sessionExpiredListeners.forEach(fn => fn());
+};
+
 const request = async (method, path, body = null) => {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
@@ -16,6 +27,15 @@ const request = async (method, path, body = null) => {
     if (body) options.body = JSON.stringify(body);
 
     const response = await fetch(`${API_BASE_URL}${path}`, options);
+
+    // Auto-logout on 401 — token expired or invalidated server-side
+    if (response.status === 401) {
+      await _notifySessionExpired();
+      const err = new Error('Session expired — please sign in again');
+      err.status = 401;
+      throw err;
+    }
+
     const text = await response.text();
     let data;
     try { data = text ? JSON.parse(text) : {}; }
@@ -53,6 +73,7 @@ export const api = {
   getAvailableTasks: (type) => request('GET', `/tasks${type ? `?type=${encodeURIComponent(type)}` : ''}`),
   getMyTasks: () => request('GET', '/tasks/my'),
   createTask: (data) => request('POST', '/tasks', data),
+  startTask: (taskId) => request('POST', `/tasks/${taskId}/start`), // server-stamps the start time
   verifyTask: async (taskId, startedAt, deviceId) =>
     request('POST', `/tasks/${taskId}/verify`, { started_at: startedAt, device_id: deviceId }),
 
