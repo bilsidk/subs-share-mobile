@@ -1,26 +1,34 @@
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { calcCampaignCost, extractChannelId } from '../utils/helpers';
+import { calcCampaignCost, calcWatchPricing, extractChannelId } from '../utils/helpers';
 import React, { useState, useCallback, useMemo } from 'react';
 import {
   View, Text, StyleSheet, TextInput, TouchableOpacity,
-  SafeAreaView, ScrollView, Alert, KeyboardAvoidingView, Platform,
+  SafeAreaView, ScrollView, KeyboardAvoidingView, Platform,
 } from 'react-native';
+import { Alert } from '../components/ThemedAlert';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { colors, spacing, radius } from '../theme';
+import { spacing, radius } from '../theme';
+import { useTheme, useThemedStyles } from '../context/ThemeContext';
 import { LoadingSpinner } from '../components';
+import ThemeToggle from '../components/ThemeToggle';
 import { getWarnings, getTaskDescriptions } from '../utils/warnings';
 import { useTranslation } from '../hooks/useTranslation';
 
 const SLOT_PRESETS  = [10, 25, 50, 100];
 const WATCH_PRESETS = [1, 2, 3, 5, 10];
 const REQUIRES_CHANNEL = ['subscribe', 'subscribe_like'];
+const FULL_LENGTH_CAP_MIN = 15; // "Full length" caps at 15 min — a longer video just requires 15, not the whole thing
 
 const GetSubscribersScreen = () => {
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const { user, refreshUser } = useAuth();
-  const { t } = useTranslation();
-  const WARNINGS = useMemo(() => getWarnings(t), [t]);
-  const TASK_DESCRIPTIONS = useMemo(() => getTaskDescriptions(t), [t]);
+  const { t, lang } = useTranslation();
+  // Depend on `lang` not `t` — `t` is a stable module ref; `[t]` freezes these at mount-time
+  // language until app restart (the "labels stayed French on live switch" bug).
+  const WARNINGS = useMemo(() => getWarnings(t), [lang]);
+  const TASK_DESCRIPTIONS = useMemo(() => getTaskDescriptions(t), [lang]);
   const navigation = useNavigation();
   const [channels, setChannels] = useState([]);
   const [selectedChannelId, setSelectedChannelId] = useState(null);
@@ -33,12 +41,32 @@ const GetSubscribersScreen = () => {
   const [subsWanted, setSubsWanted] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
   const [watchMinutes, setWatchMinutes] = useState('2');
+  const [fullLength, setFullLength] = useState(false); // "Full length" watch campaigns (spec 2026-07-11)
+  const [exampleIds, setExampleIds] = useState([]); // owner-selected comment templates (max 3)
+  const [disabledTypes, setDisabledTypes] = useState([]); // admin-disabled task types (hidden)
   const [creatingCampaign, setCreatingCampaign] = useState(false);
+
+  // Hide task types the admin has temporarily disabled; switch off one if selected.
+  useFocusEffect(useCallback(() => {
+    api.getClientConfig().then((c) => {
+      const dis = Array.isArray(c?.disabled_task_types) ? c.disabled_task_types : [];
+      setDisabledTypes(dis);
+      setTaskType((cur) => dis.includes(cur) ? (['subscribe', 'like', 'like_comment', 'subscribe_like', 'watch'].find((x) => !dis.includes(x)) || cur) : cur);
+    }).catch(() => {});
+  }, []));
+
+  const toggleExample = (id) => setExampleIds((cur) =>
+    cur.includes(id) ? cur.filter((x) => x !== id) : (cur.length >= 3 ? cur : [...cur, id]));
 
   const needsVideo = taskType !== 'subscribe';
   const needsChannel = REQUIRES_CHANNEL.includes(taskType);
   const isOwner = user?.role === 'owner';
-  const cost = calcCampaignCost(parseInt(subsWanted) || 0, taskType, parseInt(watchMinutes) || 1);
+  // Full length: the actual video duration decides the final minutes server-side (capped
+  // at 15) — until then, show the CAP as the live "up to" estimate so the price never
+  // understates what the owner might pay.
+  const effectiveWatchMinutes = fullLength ? FULL_LENGTH_CAP_MIN : (parseInt(watchMinutes) || 1);
+  const watchPreview = useMemo(() => calcWatchPricing(effectiveWatchMinutes), [effectiveWatchMinutes]);
+  const cost = calcCampaignCost(parseInt(subsWanted) || 0, taskType, effectiveWatchMinutes);
   const canAfford = isOwner || cost <= (user?.coins ?? 0);
   const hasChannel = channels.length > 0;
   const selectedChannel = channels.find(c => c.id === selectedChannelId) || channels[0];
@@ -57,7 +85,7 @@ const GetSubscribersScreen = () => {
 
   const handleAddChannel = async () => {
     if (!channelUrl.trim() || !channelName.trim())
-      return Alert.alert(t('common.error'), 'Please enter both channel name and URL');
+      return Alert.alert(t('common.error'), t('boost.enterBoth'));
     setAddingChannel(true);
     try {
       const ch = await api.addChannel({
@@ -83,18 +111,18 @@ const GetSubscribersScreen = () => {
     if (needsVideo && !videoUrl.trim()) return Alert.alert(t('boost.missingVideo'), t('boost.missingVideoMsg'));
     if (!canAfford) return Alert.alert(t('boost.insufficientCoins'), t('boost.insufficientMsg', { cost, balance: user?.coins }));
 
-    const mins = taskType === 'watch' ? parseInt(watchMinutes) || 2 : undefined;
+    const mins = taskType === 'watch' && !fullLength ? parseInt(watchMinutes) || 2 : undefined;
     const costMsg = isOwner ? t('boost.ownerFree') : `${cost} ${t('common.coins')}`;
 
     Alert.alert(
       t('boost.launchTitle'),
       t('boost.launchMsg', { type: TASK_DESCRIPTIONS[taskType].label, slots: n, cost: costMsg }) +
-      (taskType === 'watch' ? t('boost.watchMsg', { minutes: mins }) : '') +
+      (taskType === 'watch' ? (fullLength ? t('boost.watchMsgFullLength', { cap: FULL_LENGTH_CAP_MIN }) : t('boost.watchMsg', { minutes: mins })) : '') +
       t('boost.launchConfirm'),
       [
         { text: t('common.cancel'), style: 'cancel' },
         {
-          text: '🚀 Launch',
+          text: t('boost.launch'),
           onPress: async () => {
             setCreatingCampaign(true);
             try {
@@ -104,9 +132,11 @@ const GetSubscribersScreen = () => {
                 subscribers_wanted: n,
                 target_video_url: needsVideo ? videoUrl.trim() : undefined,
                 watch_minutes: mins,
+                full_length: taskType === 'watch' ? fullLength : undefined,
+                comment_example_ids: taskType === 'like_comment' ? exampleIds : undefined,
               });
               await refreshUser();
-              setSubsWanted(''); setVideoUrl('');
+              setSubsWanted(''); setVideoUrl(''); setExampleIds([]); setFullLength(false);
               Alert.alert(t('boost.campaignLive'), `${t('boost.slotsOpened', { slots: n })}\n\n${WARNINGS.campaignFairUse}`);
             } catch (e) {
               Alert.alert(t('boost.campaignError'), e.message || t('common.error'));
@@ -129,13 +159,14 @@ const GetSubscribersScreen = () => {
 
           {/* Header */}
           <View style={styles.header}>
-            <View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+              <ThemeToggle />
               <Text style={styles.title}>{t('boost.title')}</Text>
             </View>
             <View style={styles.headerRight}>
-              <View style={styles.balancePill}>
-                <Text style={styles.balanceText}>{isOwner ? `∞ ${t('common.unlimited')}` : `🪙 ${user?.coins ?? 0}`}</Text>
-              </View>
+              <TouchableOpacity style={styles.balancePill} activeOpacity={0.8} onPress={() => navigation.navigate('BuyCoins')}>
+                <Text style={styles.balanceText}>{isOwner ? `∞ ${t('common.unlimited')}` : `🪙 ${user?.coins ?? 0}  ＋`}</Text>
+              </TouchableOpacity>
               <TouchableOpacity style={styles.myCampaignsBtn} onPress={() => navigation.navigate('MyCampaigns')}>
                 <Text style={styles.myCampaignsBtnText}>{t('boost.myCampaigns')}</Text>
               </TouchableOpacity>
@@ -149,15 +180,15 @@ const GetSubscribersScreen = () => {
           {/* Step 1 - Task Type */}
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>{t('boost.step1')}</Text>
-            {Object.entries(TASK_DESCRIPTIONS).map(([type, meta]) => (
+            {Object.entries(TASK_DESCRIPTIONS).filter(([type]) => !disabledTypes.includes(type)).map(([type, meta]) => (
               <TouchableOpacity
                 key={type}
                 style={[styles.typeCard, taskType === type && styles.typeCardActive]}
-                onPress={() => { setTaskType(type); setVideoUrl(''); setSubsWanted(''); }}
+                onPress={() => { setTaskType(type); setVideoUrl(''); setSubsWanted(''); setFullLength(false); }}
               >
                 <Text style={{ fontSize: 22, width: 32 }}>{meta.emoji}</Text>
                 <View style={{ flex: 1 }}>
-                  <Text style={[styles.typeLabel, taskType === type && { color: '#6C63FF' }]}>{meta.label}</Text>
+                  <Text style={[styles.typeLabel, taskType === type && { color: colors.primary }]}>{meta.label}</Text>
                   <Text style={styles.typeVerified}>{meta.verifiedBy}</Text>
                 </View>
                 {REQUIRES_CHANNEL.includes(type) && (
@@ -194,8 +225,8 @@ const GetSubscribersScreen = () => {
                 </TouchableOpacity>
               ) : (
                 <View style={styles.addChannelForm}>
-                  <TextInput style={styles.input} placeholder={t('boost.addChannelName')} placeholderTextColor="#555570" value={channelName} onChangeText={setChannelName} />
-                  <TextInput style={styles.input} placeholder={t('boost.addChannelUrl')} placeholderTextColor="#555570" value={channelUrl} onChangeText={setChannelUrl} autoCapitalize="none" keyboardType="url" />
+                  <TextInput style={styles.input} placeholder={t('boost.addChannelName')} placeholderTextColor={colors.textMuted} value={channelName} onChangeText={setChannelName} />
+                  <TextInput style={styles.input} placeholder={t('boost.addChannelUrl')} placeholderTextColor={colors.textMuted} value={channelUrl} onChangeText={setChannelUrl} autoCapitalize="none" keyboardType="url" />
                   <View style={{ flexDirection: 'row', gap: 8 }}>
                     <TouchableOpacity style={[styles.btn, { flex: 1 }]} onPress={() => { setShowAddChannel(false); setChannelUrl(''); setChannelName(''); }}>
                       <Text style={styles.btnText}>{t('common.cancel')}</Text>
@@ -225,7 +256,7 @@ const GetSubscribersScreen = () => {
               <TextInput
                 style={styles.input}
                 placeholder={t('boost.videoPlaceholder')}
-                placeholderTextColor="#555570"
+                placeholderTextColor={colors.textMuted}
                 value={videoUrl}
                 onChangeText={setVideoUrl}
                 autoCapitalize="none"
@@ -234,18 +265,59 @@ const GetSubscribersScreen = () => {
               {taskType === 'watch' && (
                 <>
                   <Text style={styles.fieldLabel}>{t('boost.requiredWatchTime')}</Text>
-                  <View style={styles.presets}>
-                    {WATCH_PRESETS.map(m => (
-                      <TouchableOpacity key={m} style={[styles.preset, watchMinutes===String(m) && styles.presetActive]} onPress={() => setWatchMinutes(String(m))}>
-                        <Text style={[styles.presetText, watchMinutes===String(m) && styles.presetTextActive]}>{m}m</Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
+                  {!fullLength && (
+                    <View style={styles.presets}>
+                      {WATCH_PRESETS.map(m => (
+                        <TouchableOpacity key={m} style={[styles.preset, watchMinutes===String(m) && styles.presetActive]} onPress={() => setWatchMinutes(String(m))}>
+                          <Text style={[styles.presetText, watchMinutes===String(m) && styles.presetTextActive]}>{m}m</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  )}
+
+                  <TouchableOpacity
+                    style={styles.checkboxRow}
+                    onPress={() => setFullLength((v) => !v)}
+                    activeOpacity={0.7}
+                    accessibilityRole="checkbox"
+                    accessibilityState={{ checked: fullLength }}
+                  >
+                    <View style={[styles.checkbox, fullLength && styles.checkboxOn]}>
+                      {fullLength && <Text style={styles.checkboxMark}>✓</Text>}
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.checkboxLabel}>{t('boost.fullLength')}</Text>
+                      <Text style={styles.checkboxHint}>{t('boost.fullLengthHint', { cap: FULL_LENGTH_CAP_MIN })}</Text>
+                    </View>
+                  </TouchableOpacity>
+
                   <View style={styles.watchNote}>
-                    <Text style={styles.watchNoteText}>{t('boost.watchNote', { minutes: watchMinutes })}</Text>
+                    <Text style={styles.watchNoteText}>
+                      {fullLength
+                        ? t('boost.fullLengthPriceHint', { cost: watchPreview.cost, cap: FULL_LENGTH_CAP_MIN })
+                        : t('boost.watchNote', { minutes: watchMinutes })}
+                    </Text>
+                    <Text style={styles.watchTierHint}>{t('boost.watchTierHint', { earn: watchPreview.earn })}</Text>
                   </View>
                 </>
               )}
+            </View>
+          )}
+
+          {/* Comment example picker (like+comment only) — owner picks up to 3 */}
+          {taskType === 'like_comment' && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>{t('earn.pickCommentExamples')}</Text>
+              <View style={styles.exChips}>
+                {(Array.isArray(t('earn.commentExamples')) ? t('earn.commentExamples') : []).map((s, id) => {
+                  const on = exampleIds.includes(id);
+                  return (
+                    <TouchableOpacity key={id} style={[styles.exChip, on && styles.exChipOn]} onPress={() => toggleExample(id)} activeOpacity={0.7}>
+                      <Text style={[styles.exChipText, on && styles.exChipTextOn]} numberOfLines={2}>{on ? '✓ ' : ''}{s}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
             </View>
           )}
 
@@ -265,7 +337,7 @@ const GetSubscribersScreen = () => {
                     </TouchableOpacity>
                   ))}
                 </View>
-                <TextInput style={styles.input} placeholder={t('boost.customAmount')} placeholderTextColor="#555570" value={subsWanted} onChangeText={setSubsWanted} keyboardType="number-pad" />
+                <TextInput style={styles.input} placeholder={t('boost.customAmount')} placeholderTextColor={colors.textMuted} value={subsWanted} onChangeText={setSubsWanted} keyboardType="number-pad" />
 
                 {parseInt(subsWanted) > 0 && (
                   <View style={[styles.costCard, !canAfford && styles.costCardDanger]}>
@@ -273,10 +345,10 @@ const GetSubscribersScreen = () => {
                       <Text style={styles.costLabel}>{t('boost.cost')}</Text>
                       <Text style={styles.costValue}>{isOwner ? `${t('common.free')} ∞` : `${cost} 🪙`}</Text>
                     </View>
-                    <View style={{ width: 1, backgroundColor: '#2A2A3A' }} />
+                    <View style={{ width: 1, backgroundColor: colors.border }} />
                     <View style={{ alignItems: 'center' }}>
                       <Text style={styles.costLabel}>{t('boost.balance')}</Text>
-                      <Text style={[styles.costValue, { color: canAfford ? '#06D6A0' : '#EF476F' }]}>
+                      <Text style={[styles.costValue, { color: canAfford ? colors.success : colors.danger }]}>
                         {isOwner ? '∞' : `${user?.coins ?? 0} 🪙`}
                       </Text>
                     </View>
@@ -304,53 +376,65 @@ const GetSubscribersScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#0A0A0F' },
-  content: { padding: 16, gap: 16, paddingBottom: 80 },
+const makeStyles = (colors) => StyleSheet.create({
+  safe: { flex: 1, backgroundColor: colors.bg },
+  content: { padding: spacing.md, gap: spacing.lg, paddingBottom: 80 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
-  headerRight: { alignItems: 'flex-end', gap: 8 },
-  title: { fontSize: 26, fontWeight: '800', color: '#FFFFFF' },
-  balancePill: { backgroundColor: 'rgba(255,209,102,0.12)', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 99, borderWidth: 1, borderColor: 'rgba(255,209,102,0.3)' },
-  balanceText: { fontSize: 13, fontWeight: '700', color: '#FFD166' },
-  myCampaignsBtn: { backgroundColor: '#13131A', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 99, borderWidth: 1, borderColor: '#2A2A3A' },
-  myCampaignsBtnText: { fontSize: 12, color: '#9999BB', fontWeight: '600' },
-  noticeCard: { backgroundColor: 'rgba(108,99,255,0.08)', borderRadius: 12, padding: 12, borderWidth: 1, borderColor: 'rgba(108,99,255,0.2)' },
-  noticeText: { fontSize: 12, color: '#9999BB', lineHeight: 18 },
-  section: { gap: 10 },
-  sectionTitle: { fontSize: 13, fontWeight: '700', color: '#555570', textTransform: 'uppercase', letterSpacing: 1 },
-  fieldLabel: { fontSize: 13, color: '#9999BB', fontWeight: '500' },
-  input: { backgroundColor: '#1A1A24', borderRadius: 12, paddingHorizontal: 16, paddingVertical: 14, color: '#FFFFFF', fontSize: 15, borderWidth: 1, borderColor: '#2A2A3A' },
+  headerRight: { alignItems: 'flex-end', gap: spacing.sm },
+  title: { fontSize: 26, fontWeight: '800', color: colors.textPrimary },
+  balancePill: { backgroundColor: colors.bgCard, paddingHorizontal: 12, paddingVertical: 6, borderRadius: radius.full, borderWidth: 1, borderColor: colors.border },
+  balanceText: { fontSize: 13, fontWeight: '700', color: colors.gold },
+  myCampaignsBtn: { backgroundColor: colors.bgCard, paddingHorizontal: 12, paddingVertical: 6, borderRadius: radius.full, borderWidth: 1, borderColor: colors.border },
+  myCampaignsBtnText: { fontSize: 12, color: colors.textSecondary, fontWeight: '600' },
+  noticeCard: { backgroundColor: colors.bgCard, borderRadius: radius.md, padding: spacing.md, borderWidth: 1, borderColor: colors.border },
+  noticeText: { fontSize: 12, color: colors.textSecondary, lineHeight: 18 },
+  section: { gap: spacing.sm },
+  sectionTitle: { fontSize: 13, fontWeight: '700', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 1 },
+  fieldLabel: { fontSize: 13, color: colors.textSecondary, fontWeight: '500' },
+  input: { backgroundColor: colors.bgInput, borderRadius: 12, paddingHorizontal: 16, paddingVertical: 14, color: colors.textPrimary, fontSize: 15, borderWidth: 1, borderColor: colors.border },
   presets: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
-  preset: { flex: 1, paddingVertical: 14, borderRadius: 12, backgroundColor: '#13131A', alignItems: 'center', borderWidth: 1, borderColor: '#2A2A3A', minWidth: 50 },
-  presetActive: { backgroundColor: 'rgba(108,99,255,0.2)', borderColor: '#6C63FF' },
-  presetText: { fontSize: 14, fontWeight: '700', color: '#9999BB' },
-  presetTextActive: { color: '#6C63FF' },
-  watchNote: { backgroundColor: 'rgba(255,183,3,0.08)', borderRadius: 8, padding: 10, borderWidth: 1, borderColor: 'rgba(255,183,3,0.25)' },
-  watchNoteText: { fontSize: 12, color: '#FFB703' },
-  btn: { backgroundColor: '#1C1C26', paddingVertical: 16, borderRadius: 12, alignItems: 'center', borderWidth: 1, borderColor: '#2A2A3A' },
-  btnPrimary: { backgroundColor: '#6C63FF', borderColor: '#6C63FF' },
+  preset: { flex: 1, paddingVertical: 14, borderRadius: 12, backgroundColor: colors.bgCard, alignItems: 'center', borderWidth: 1, borderColor: colors.border, minWidth: 50 },
+  presetActive: { borderColor: colors.primary, borderWidth: 2 },
+  exChips: { gap: 8 },
+  exChip: { backgroundColor: colors.bgCard, borderRadius: 10, paddingVertical: 10, paddingHorizontal: 12, borderWidth: 1, borderColor: colors.border },
+  exChipOn: { borderColor: colors.primary, borderWidth: 2, backgroundColor: 'rgba(99,102,241,0.08)' },
+  exChipText: { fontSize: 13, color: colors.textSecondary },
+  exChipTextOn: { color: colors.textPrimary, fontWeight: '700' },
+  presetText: { fontSize: 14, fontWeight: '700', color: colors.textSecondary },
+  presetTextActive: { color: colors.primary },
+  watchNote: { backgroundColor: colors.bgCard, borderRadius: radius.sm, padding: 10, borderWidth: 1, borderColor: colors.border, gap: 4 },
+  watchNoteText: { fontSize: 12, color: colors.warning },
+  watchTierHint: { fontSize: 11, color: colors.textMuted, lineHeight: 15 },
+  checkboxRow: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.bgCard, borderRadius: radius.md, padding: 12, borderWidth: 1, borderColor: colors.border },
+  checkbox: { width: 22, height: 22, borderRadius: 6, borderWidth: 2, borderColor: colors.border, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.bgElevated },
+  checkboxOn: { backgroundColor: colors.primary, borderColor: colors.primary },
+  checkboxMark: { color: '#fff', fontSize: 13, fontWeight: '800' },
+  checkboxLabel: { fontSize: 14, fontWeight: '700', color: colors.textPrimary },
+  checkboxHint: { fontSize: 11, color: colors.textMuted, marginTop: 2 },
+  btn: { backgroundColor: colors.bgElevated, paddingVertical: 16, borderRadius: 12, alignItems: 'center', borderWidth: 1, borderColor: colors.border },
+  btnPrimary: { backgroundColor: colors.primary, borderColor: colors.primary },
   btnLoading: { opacity: 0.7 },
   btnDisabled: { opacity: 0.4 },
   btnText: { fontSize: 16, fontWeight: '800', color: '#FFFFFF' },
-  channelRow: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: '#13131A', borderRadius: 12, padding: 14, borderWidth: 1, borderColor: '#2A2A3A' },
-  channelRowSelected: { borderColor: 'rgba(6,214,160,0.5)', backgroundColor: 'rgba(6,214,160,0.05)' },
-  channelName: { fontSize: 15, fontWeight: '700', color: '#FFFFFF' },
-  channelUrl: { fontSize: 12, color: '#555570', marginTop: 2 },
-  addChannelBtn: { backgroundColor: '#13131A', borderRadius: 12, padding: 14, alignItems: 'center', borderWidth: 1, borderColor: '#2A2A3A', borderStyle: 'dashed' },
-  addChannelBtnText: { fontSize: 14, fontWeight: '600', color: '#6C63FF' },
-  addChannelForm: { gap: 10, backgroundColor: '#13131A', borderRadius: 12, padding: 14, borderWidth: 1, borderColor: '#2A2A3A' },
-  typeCard: { backgroundColor: '#13131A', borderRadius: 12, padding: 14, borderWidth: 1, borderColor: '#2A2A3A', flexDirection: 'row', alignItems: 'center', gap: 12 },
-  typeCardActive: { borderColor: '#6C63FF', backgroundColor: 'rgba(108,99,255,0.1)' },
-  typeLabel: { fontSize: 15, fontWeight: '700', color: '#9999BB' },
-  typeVerified: { fontSize: 10, color: '#555570', marginTop: 2 },
-  requiresChannelBadge: { fontSize: 10, color: '#555570', backgroundColor: '#1C1C26', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 99 },
-  costCard: { flexDirection: 'row', justifyContent: 'space-around', backgroundColor: '#13131A', borderRadius: 12, padding: 14, borderWidth: 1, borderColor: '#2A2A3A' },
-  costCardDanger: { borderColor: 'rgba(239,71,111,0.4)' },
-  costLabel: { fontSize: 11, color: '#555570', textTransform: 'uppercase', letterSpacing: 0.5 },
-  costValue: { fontSize: 20, fontWeight: '800', color: '#FFFFFF', marginTop: 2 },
-  insufficientText: { fontSize: 13, color: '#EF476F', textAlign: 'center' },
-  channelRequiredNote: { backgroundColor: 'rgba(108,99,255,0.08)', borderRadius: 12, padding: 16, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(108,99,255,0.2)' },
-  channelRequiredText: { fontSize: 14, color: '#9999BB', textAlign: 'center' },
+  channelRow: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: colors.bgCard, borderRadius: radius.md, padding: 14, borderWidth: 1, borderColor: colors.border },
+  channelRowSelected: { borderColor: colors.primary, borderWidth: 2 },
+  channelName: { fontSize: 15, fontWeight: '700', color: colors.textPrimary },
+  channelUrl: { fontSize: 12, color: colors.textMuted, marginTop: 2 },
+  addChannelBtn: { backgroundColor: colors.bgCard, borderRadius: 12, padding: 14, alignItems: 'center', borderWidth: 1, borderColor: colors.border, borderStyle: 'dashed' },
+  addChannelBtnText: { fontSize: 14, fontWeight: '600', color: colors.primary },
+  addChannelForm: { gap: 10, backgroundColor: colors.bgCard, borderRadius: 12, padding: 14, borderWidth: 1, borderColor: colors.border },
+  typeCard: { backgroundColor: colors.bgCard, borderRadius: radius.md, padding: 14, borderWidth: 1, borderColor: colors.border, flexDirection: 'row', alignItems: 'center', gap: 12 },
+  typeCardActive: { borderColor: colors.primary, borderWidth: 2 },
+  typeLabel: { fontSize: 15, fontWeight: '700', color: colors.textSecondary },
+  typeVerified: { fontSize: 10, color: colors.textMuted, marginTop: 2 },
+  requiresChannelBadge: { fontSize: 10, color: colors.textMuted, backgroundColor: colors.bgElevated, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 99 },
+  costCard: { flexDirection: 'row', justifyContent: 'space-around', backgroundColor: colors.bgCard, borderRadius: 12, padding: 14, borderWidth: 1, borderColor: colors.border },
+  costCardDanger: { borderColor: colors.danger },
+  costLabel: { fontSize: 11, color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 0.5 },
+  costValue: { fontSize: 20, fontWeight: '800', color: colors.textPrimary, marginTop: 2 },
+  insufficientText: { fontSize: 13, color: colors.danger, textAlign: 'center' },
+  channelRequiredNote: { backgroundColor: colors.bgCard, borderRadius: radius.md, padding: 16, alignItems: 'center', borderWidth: 1, borderColor: colors.border },
+  channelRequiredText: { fontSize: 14, color: colors.textSecondary, textAlign: 'center' },
 });
 
 export default GetSubscribersScreen;

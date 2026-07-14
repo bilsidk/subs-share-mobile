@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
-import { colors, spacing, radius } from '../theme';
+import { colors as staticColors, spacing, radius } from '../theme';
+import { useTheme, useThemedStyles } from '../context/ThemeContext';
 import { t } from '../utils/i18n';
 
 // ── Coin Badge ──────────────────────────────────────────────
 export const CoinBadge = ({ amount, size = 'md' }) => {
+  const styles = useThemedStyles(makeCoinBadgeStyles);
   const isLg = size === 'lg';
   return (
     <View style={[styles.coinBadge, isLg && styles.coinBadgeLg]}>
@@ -15,30 +17,40 @@ export const CoinBadge = ({ amount, size = 'md' }) => {
 };
 
 // ── Loading Spinner ──────────────────────────────────────────
-export const LoadingSpinner = ({ message }) => (
-  <View style={styles.loadingContainer}>
-    <ActivityIndicator size="large" color={colors.primary} />
-    {message && <Text style={styles.loadingText}>{message}</Text>}
-  </View>
-);
+export const LoadingSpinner = ({ message }) => {
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeLoadingStyles);
+  return (
+    <View style={styles.loadingContainer}>
+      <ActivityIndicator size="large" color={colors.primary} />
+      {message && <Text style={styles.loadingText}>{message}</Text>}
+    </View>
+  );
+};
 
 // ── Empty State ──────────────────────────────────────────────
-export const EmptyState = ({ emoji = '📭', title, subtitle }) => (
-  <View style={styles.emptyContainer}>
-    <Text style={styles.emptyEmoji}>{emoji}</Text>
-    <Text style={styles.emptyTitle}>{title}</Text>
-    {subtitle && <Text style={styles.emptySubtitle}>{subtitle}</Text>}
-  </View>
-);
+export const EmptyState = ({ emoji = '📭', title, subtitle }) => {
+  const styles = useThemedStyles(makeEmptyStyles);
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyEmoji}>{emoji}</Text>
+      <Text style={styles.emptyTitle}>{title}</Text>
+      {subtitle && <Text style={styles.emptySubtitle}>{subtitle}</Text>}
+    </View>
+  );
+};
 
 // ── Stat Card ────────────────────────────────────────────────
-export const StatCard = ({ label, value, emoji, accent }) => (
-  <View style={[styles.statCard, accent && { borderColor: accent, borderWidth: 1 }]}>
-    <Text style={styles.statEmoji}>{emoji}</Text>
-    <Text style={[styles.statValue, accent && { color: accent }]}>{value}</Text>
-    <Text style={styles.statLabel}>{label}</Text>
-  </View>
-);
+export const StatCard = ({ label, value, emoji, accent }) => {
+  const styles = useThemedStyles(makeStatCardStyles);
+  return (
+    <View style={[styles.statCard, accent && { borderColor: accent, borderWidth: 1 }]}>
+      <Text style={styles.statEmoji}>{emoji}</Text>
+      <Text style={[styles.statValue, accent && { color: accent }]}>{value}</Text>
+      <Text style={styles.statLabel}>{label}</Text>
+    </View>
+  );
+};
 
 // ── Error Boundary ───────────────────────────────────────────
 export class ErrorBoundary extends Component {
@@ -69,8 +81,8 @@ export class ErrorBoundary extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  // CoinBadge
+// CoinBadge
+const makeCoinBadgeStyles = (colors) => StyleSheet.create({
   coinBadge: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -91,8 +103,10 @@ const styles = StyleSheet.create({
   coinEmojLg: { fontSize: 22 },
   coinText: { fontSize: 14, fontWeight: '700', color: colors.gold },
   coinTextLg: { fontSize: 28, fontWeight: '800' },
+});
 
-  // LoadingSpinner
+// LoadingSpinner
+const makeLoadingStyles = (colors) => StyleSheet.create({
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -101,8 +115,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bg,
   },
   loadingText: { color: colors.textSecondary, fontSize: 14 },
+});
 
-  // EmptyState
+// EmptyState
+const makeEmptyStyles = (colors) => StyleSheet.create({
   emptyContainer: {
     alignItems: 'center',
     paddingVertical: spacing.xxl,
@@ -111,8 +127,10 @@ const styles = StyleSheet.create({
   emptyEmoji: { fontSize: 48 },
   emptyTitle: { fontSize: 18, fontWeight: '700', color: colors.textPrimary, textAlign: 'center' },
   emptySubtitle: { fontSize: 14, color: colors.textSecondary, textAlign: 'center', maxWidth: 260 },
+});
 
-  // StatCard
+// StatCard
+const makeStatCardStyles = (colors) => StyleSheet.create({
   statCard: {
     backgroundColor: colors.bgCard,
     borderRadius: radius.md,
@@ -126,17 +144,19 @@ const styles = StyleSheet.create({
   statEmoji: { fontSize: 24 },
   statValue: { fontSize: 22, fontWeight: '800', color: colors.textPrimary },
   statLabel: { fontSize: 11, color: colors.textMuted, fontWeight: '500', textTransform: 'uppercase', letterSpacing: 0.5 },
+});
 
-  // ErrorBoundary
+// ErrorBoundary (class component — cannot use hooks, uses static palette)
+const styles = StyleSheet.create({
   errorContainer: {
     flex: 1, justifyContent: 'center', alignItems: 'center',
-    backgroundColor: colors.bg, padding: spacing.lg, gap: spacing.md,
+    backgroundColor: staticColors.bg, padding: spacing.lg, gap: spacing.md,
   },
   errorEmoji: { fontSize: 48 },
-  errorTitle: { fontSize: 20, fontWeight: '800', color: colors.textPrimary, textAlign: 'center' },
-  errorMessage: { fontSize: 14, color: colors.textSecondary, textAlign: 'center', maxWidth: 300 },
+  errorTitle: { fontSize: 20, fontWeight: '800', color: staticColors.textPrimary, textAlign: 'center' },
+  errorMessage: { fontSize: 14, color: staticColors.textSecondary, textAlign: 'center', maxWidth: 300 },
   errorBtn: {
-    backgroundColor: colors.primary, paddingHorizontal: spacing.xl,
+    backgroundColor: staticColors.primary, paddingHorizontal: spacing.xl,
     paddingVertical: spacing.sm, borderRadius: radius.md, marginTop: spacing.sm,
   },
   errorBtnText: { fontSize: 15, fontWeight: '700', color: '#FFFFFF' },

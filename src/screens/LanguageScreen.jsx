@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, FlatList, TouchableOpacity,
-  SafeAreaView, Alert,
+  SafeAreaView,
 } from 'react-native';
+import { Alert } from '../components/ThemedAlert';
 import { useNavigation } from '@react-navigation/native';
 import { SUPPORTED_LANGUAGES, setLanguage, getCurrentLanguage } from '../utils/i18n';
 import { useTranslation } from '../hooks/useTranslation';
-import { colors, spacing, radius } from '../theme';
+import { spacing, radius } from '../theme';
+import { useThemedStyles } from '../context/ThemeContext';
 
 const LanguageScreen = () => {
   const { t } = useTranslation();
+  const styles = useThemedStyles(makeStyles);
   const navigation = useNavigation();
   const [selected, setSelected] = useState(getCurrentLanguage());
 
@@ -59,7 +62,7 @@ const LanguageScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.bg },
   list: { padding: spacing.lg, paddingBottom: 40 },
   header: { fontSize: 13, fontWeight: '700', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 1, marginBottom: spacing.md },

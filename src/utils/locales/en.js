@@ -16,7 +16,15 @@ export default {
     "unlimited": "Unlimited",
     "privacyPolicy": "Privacy Policy",
     "contactSupport": "Contact Support",
-    "termsOfService": "Terms of Service"
+    "termsOfService": "Terms of Service",
+    "by": "by",
+    "task": "Task"
+  },
+  "errors": {
+    "sessionExpired": "Session expired — please sign in again",
+    "serverResponse": "Unexpected server response",
+    "requestFailed": "Request failed",
+    "timeout": "Request timed out"
   },
   "tabs": {
     "home": "Home",
@@ -25,26 +33,53 @@ export default {
     "profile": "Profile",
     "admin": "Admin"
   },
+  "buy": {
+    "title": "Buy Coins",
+    "getCoins": "Buy Coins",
+    "yourBalance": "Your balance",
+    "subtitle": "Choose a coin pack. Payment is handled securely by Google Play.",
+    "buy": "Buy",
+    "bestValue": "BEST VALUE",
+    "popular": "POPULAR",
+    "bonus": "bonus",
+    "getsYou": "≈ {{subs}} subscribers or {{likes}} likes",
+    "successTitle": "🎉 Coins Added!",
+    "successMsg": "+{{coins}} coins have been added to your balance.",
+    "alreadyCredited": "This purchase was already credited to your account.",
+    "failed": "Purchase could not be completed. Please try again.",
+    "unavailable": "Coin packs are unavailable right now. Please try again later.",
+    "disclaimer": "Coins are for use inside SubsShare only and have no cash value. All purchases are final."
+  },
   "splash": {
     "tagline": "Grow together"
   },
   "login": {
-    "title": "Creator Hub",
+    "title": "SubsShare",
     "tagline": "Support creators.\nGrow together.",
     "feature1": "Complete tasks to earn rewards",
     "feature2": "Verified by YouTube — authentic tasks",
     "feature3": "Use rewards to grow your channel",
     "welcomeBonus": "🎁 Start with 50 free coins!",
+    "referralPlaceholder": "Referral code (optional)",
     "continueWithGoogle": "Continue with Google",
     "terms": "We request read-only YouTube access to verify your actions.",
     "signInFailed": "Sign in failed",
-    "noToken": "No ID token received from Google",
+    "permissionTitle": "YouTube access required",
+    "noToken": "SubsShare needs YouTube access to verify your subscribes and likes. On the Google screen, tap the YouTube permission to turn it ON — it's unchecked by default — then continue.",
+    "playServicesTitle": "Update Google Play Services",
+    "playServicesMsg": "SubsShare needs Google Play Services. Open the Play Store, update Google Play Services, then try again.",
+    "inProgressMsg": "Sign-in is already in progress — please wait a moment and try again.",
+    "networkTitle": "Connection problem",
+    "networkMsg": "We couldn't reach the server. Check your internet connection and try again.",
+    "configMsg": "Sign-in isn't set up correctly on this device. Please try again later or contact support.",
+    "genericMsg": "Something went wrong while signing in. Please try again in a moment.",
     "tryAgain": "Please try again"
   },
   "home": {
     "greeting": "Good day 👋",
-    "balance": "YOUR BALANCE",
+    "balance": "Coin balance",
     "coinHint": "Complete more tasks, earn more rewards",
+    "subsEstimate": "≈ {{n}} subscribers",
     "campaigns": "Campaigns",
     "pendingSubs": "Pending",
     "completed": "Completed",
@@ -76,7 +111,9 @@ export default {
     "inProgress": "in Progress",
     "keepActive": "Keep the action active while the timer runs",
     "tapToVerify": "Tap below — we'll verify with YouTube.",
+    "clawbackWarning": "⚠️ Keep your action active. If you undo it after earning, your coins are reclaimed automatically — and repeat offenders are banned.",
     "secondsRemaining": "s remaining",
+    "done": "✓ Done!",
     "commentBonus": "💬 Commented? You'll automatically get +4 bonus coins!",
     "warningModal": "⚠️ Reversing your {{action}} after the timer ends may affect your rewards.",
     "subscription": "action",
@@ -86,6 +123,34 @@ export default {
     "commentBonusEarned": "💬 Comment bonus",
     "noCommentDetected": "(No comment detected — like reward only)",
     "notDetectedYet": "Not Detected Yet",
+    "noChannelTitle": "YouTube Channel Needed",
+    "noChannelMessage": "You need a YouTube channel to comment. Create one on YouTube (it's free), then try again — or pick a like-only task.",
+    "commentsDisabledTitle": "Comments Turned Off",
+    "commentsDisabledMessage": "Comments are disabled on this video, so this task can't be completed. Try another task.",
+    "commentExamples": [
+      "This was really helpful — thanks for sharing!",
+      "Great video, I learned something new today.",
+      "Love how clearly you explained this.",
+      "First time here and I'm impressed — subscribed!",
+      "The editing is really clean, nice work.",
+      "This deserves way more views. Keep it up!",
+      "Exactly what I was looking for, appreciate it.",
+      "Your content keeps getting better every time.",
+      "Really enjoyed this — looking forward to more.",
+      "Underrated channel, glad I found it.",
+      "Thanks for the effort, it really shows.",
+      "Well done, this was genuinely worth watching."
+    ],
+    "commentExamplesTitle": "💬 What to comment",
+    "commentExamplesHint": "Write your OWN comment — at least {{min}} words. Use these as inspiration, don't copy them:",
+    "commentAiSuggestion": "Suggested for this video:",
+    "commentTooShortTitle": "Comment Too Short",
+    "commentTooShortMessage": "Write at least {{min}} words so your comment looks genuine, then claim again.",
+    "typeLimitTitle": "Daily Limit Reached",
+    "typeLimitMessage": "You've hit today's limit for this task type. Try a different one or come back tomorrow.",
+    "typeUnavailableTitle": "Temporarily Unavailable",
+    "typeUnavailableMessage": "This task type is turned off right now. Please try another one.",
+    "pickCommentExamples": "Pick up to 3 example comments to guide users (optional)",
     "reconnectNeeded": "Reconnect Needed",
     "reconnectMessage": "Please sign out and sign in again to grant YouTube access.",
     "tryAgainMessage": "Verification is busy. Wait a moment then tap Claim again.",
@@ -95,7 +160,31 @@ export default {
     "campaignPaused": "Campaign Paused",
     "campaignPausedMessage": "This campaign was paused by the owner. Try another task.",
     "campaignCancelled": "Campaign Cancelled",
-    "campaignCancelledMessage": "This campaign was cancelled. Try another task."
+    "campaignCancelledMessage": "This campaign was cancelled. Try another task.",
+    "campaignUnavailable": "Campaign Unavailable",
+    "campaignUnavailableMessage": "This campaign is no longer available. Try another task.",
+    "alreadyEarnedTitle": "Already Earned",
+    "alreadyEarnedMessage": "You've already earned coins for this channel or video.",
+    "watchLimitTitle": "Daily Limit Reached",
+    "watchLimitMessage": "You've reached today's watch-task limit. Come back tomorrow!",
+    "deviceRequiredTitle": "Update Needed",
+    "deviceRequiredMessage": "We couldn't identify your device. Please update to the latest version and try again.",
+    "notReadyTitle": "Almost there",
+    "notReadyMessage": "Just a few more seconds — the timer will let you claim shortly."
+  },
+  "referral": {
+    "invite": "Invite friends",
+    "title": "Invite friends",
+    "subtitle": "Share your code. When a friend joins, uses the app for 24 hours and completes 5 tasks, you get {{referrer}} coins and they get {{referee}}.",
+    "condition": "⏱️ Reward unlocks after your friend uses the app for 24 hours and completes at least 5 tasks — paid to both of you.",
+    "yourCode": "Your code",
+    "yourLink": "Your invite link",
+    "share": "Share my code",
+    "shareMessage": "Join me on SubsShare and grow your YouTube channel! Use my code {{code}} when you sign up and we both get bonus coins.",
+    "joined": "Friends joined",
+    "pending": "Pending",
+    "earned": "Coins earned",
+    "note": "Rewards are paid once your friend signs up with your code, uses the app for 24 hours, and completes at least 5 verified tasks."
   },
   "warnings": {
     "beforeSubscribe": {
@@ -110,7 +199,7 @@ export default {
     },
     "beforeLikeComment": {
       "title": "⚠️ Like + Comment Task",
-      "message": "To earn the maximum reward:\n\n1. 👍 Like the video (required — verified by YouTube)\n2. 💬 Leave a genuine comment (optional — earns +4 bonus coins)\n\nThe like alone is enough to claim — comment earns a bonus.",
+      "message": "To complete this task:\n\n1. 👍 Like the video (verified by YouTube)\n2. 💬 Leave a genuine comment of at least {{min}} words (required — write your own words; see the examples below)\n\nBoth are required and verified by YouTube.",
       "confirm": "I Understand — Open YouTube"
     },
     "beforeSubscribeLike": {
@@ -120,7 +209,7 @@ export default {
     },
     "beforeWatch": {
       "title": "⚠️ Watch Task",
-      "message": "Open the video and watch it for the required time.\n\n• Keep the YouTube app open while the timer runs\n• Return here when done to claim your reward\n• Watch tasks are spot-checked for fair play",
+      "message": "Open the video and watch it for the required time.\n\n• Keep the YouTube app open while the timer runs\n• Return here when done to claim your reward\n• Your watch time is verified by the timer",
       "confirm": "I Understand — Open YouTube"
     },
     "taskReminder": {
@@ -149,6 +238,11 @@ export default {
     "channelAddedMsg": "Your YouTube channel is registered.",
     "requiredWatchTime": "Required watch time (minutes)",
     "watchNote": "⚠️ Video must be at least {{minutes}} min long — validated on submit.",
+    "fullLength": "Full length",
+    "fullLengthHint": "Use the video's entire length (capped at {{cap}} min) instead of a fixed time.",
+    "fullLengthPriceHint": "Estimated cost (up to {{cap}} min): {{cost}} coins/slot — the final price depends on the actual video length.",
+    "watchTierHint": "Earner reward for this duration: {{earn}} coins. Reward per minute increases the longer someone stays.",
+    "watchMsgFullLength": "\nRequired watch: full video length (up to {{cap}} min)",
     "videoPlaceholder": "youtube.com/watch?v=...",
     "customAmount": "Or enter custom amount",
     "cost": "Cost",
@@ -157,6 +251,7 @@ export default {
     "addChannelFirst": "⬆️ Add your channel above to continue",
     "launching": "Launching...",
     "launch": "🚀 Launch Campaign",
+    "enterBoth": "Please enter both channel name and URL",
     "launchTitle": "Launch Campaign",
     "launchMsg": "Type: {{type}}\nSlots: {{slots}}\nCost: {{cost}}",
     "watchMsg": "\nRequired watch: {{minutes}} minute(s)",
@@ -203,6 +298,7 @@ export default {
     "cancelConfirm": "Cancel & Get {{coins}}🪙",
     "cancelConfirmFree": "Cancel",
     "cancelled": "✅ Campaign Cancelled",
+    "cancelledBody": "Your campaign has been cancelled.",
     "refunded": "{{coins}} coins have been returned to your balance.\nNew balance: {{balance}} coins",
     "noCampaigns": "No campaigns yet",
     "noCampaignsSubtitle": "Create your first campaign from the Promote tab"
@@ -235,7 +331,7 @@ export default {
     "verifiedByApi": "Verified by YouTube API",
     "likeVerified": "Like verified by API · Comment earns +4 bonus",
     "bothVerified": "Both verified by YouTube API",
-    "timerBased": "Timer-based · May be spot-checked"
+    "timerBased": "Verified by watch timer"
   },
   "transactions": {
     "earned": "Earned",
@@ -257,27 +353,63 @@ export default {
     "taskCompletedComment": "{{type}} — like ✅ + comment ✅ (+{{bonus}} bonus)",
     "campaignCancelled": "Campaign cancelled — {{slots}} slots refunded ({{refund}} coins)",
     "campaignCancelledFree": "Campaign cancelled",
-    "coinsReclaimed": "{{type}} — coins reclaimed"
+    "coinsReclaimed": "{{type}} — coins reclaimed",
+    "purchase": "💰 Purchased {{coins}} coins (${{usd}})",
+    "purchaseCoins": "💰 Purchased {{coins}} coins",
+    "campaignRefund": "↩️ Refund — {{refund}} coins",
+    "referralBonus": "🎁 Referral bonus",
+    "referralReversed": "⚠️ Referral reversed"
+  },
+  "watch": {
+    "keepWatching": "Keep watching…",
+    "paused": "Paused — the timer is paused",
+    "done": "Done! Claim your coins",
+    "claimed": "Claimed ✓",
+    "timerHint": "The timer only counts while the video is playing. Pausing or leaving the app pauses it.",
+    "claim": "Claim reward",
+    "watchMore": "Watch {{s}}s more",
+    "nextVideo": "Next video ▶",
+    "finish": "Finish",
+    "skipToNext": "Skip to next video",
+    "skip": "Skip",
+    "claimedTitle": "Coins earned! 🎉",
+    "claimedMsg": "+{{coins}} coins added to your balance.",
+    "notDoneTitle": "Almost there",
+    "noneTitle": "No watch tasks available right now",
+    "embedTitle": "Can't play here",
+    "embedMsg": "This creator disabled in-app playback. Open it in YouTube to watch, or skip to the next one.",
+    "openYoutube": "Open in YouTube",
+    "autoplay": "Auto play",
+    "stillTitle": "Still watching?",
+    "stillMsg": "Tap to keep watching and earning. Auto-play pauses when you step away.",
+    "stillMsgVideo": "Tap to resume this video and keep earning toward your reward.",
+    "continue": "Continue watching",
+    "noMoreTitle": "No more watch tasks",
+    "noMoreMsg": "You've completed every available watch task for now — check back later, or you may have hit today's watch limit."
   },
   "onboarding": {
     "skip": "Skip",
     "next": "Next",
     "getStarted": "🚀 Get Started — It's Free",
+    "you": "You",
+    "creators": "Creators",
+    "mockChannel": "A creator's channel",
+    "mockActive": "Active",
     "slide1": {
-      "title": "Grow Together",
-      "subtitle": "The fair way to grow your YouTube channel. Real engagement, verified by the YouTube API."
+      "title": "How SubsShare works",
+      "subtitle": "Support other creators to earn coins — then spend those coins so real creators grow your channel. A fair, two-way exchange."
     },
     "slide2": {
-      "title": "Complete Tasks, Earn Rewards",
-      "subtitle": "Support other creators by engaging with their content. Every action is verified and rewarded with coins instantly."
+      "title": "1. Earn coins",
+      "subtitle": "Subscribe, like, comment or watch other creators. Every action is verified by YouTube, then coins land in your wallet instantly."
     },
     "slide3": {
-      "title": "Grow Your Channel",
-      "subtitle": "Launch a campaign for your channel. Community members engage back, verified by the YouTube API."
+      "title": "2. Grow your channel",
+      "subtitle": "Spend your coins to launch a campaign under My Campaigns. Real creators then subscribe to and engage with your channel — and you track it all there."
     },
     "slide4": {
-      "title": "Start with 50 Free Coins!",
-      "subtitle": "Sign in with Google to get your welcome bonus. No credit card. No hidden fees. Just grow together."
+      "title": "Ready to grow?",
+      "subtitle": "Sign in to start with 50 free coins. Invite friends and you both earn bonus coins. No credit card, no hidden fees."
     }
   },
   "time": {
@@ -305,6 +437,28 @@ export default {
     "pendingCompletions": "Pending Completions",
     "reclaimedCompletions": "Reclaimed Completions",
     "coinsInCirculation": "Total Coins in Circulation",
+    "maxWatchPerDay": "Watch tasks per day",
+    "maxWatchPerDayHint": "Max watch tasks a user can do daily",
+    "dashboard": "📈 Dashboard",
+    "newToday": "New users today",
+    "activeWeek": "Active this week",
+    "earnedToday": "Coins earned today",
+    "spentToday": "Coins spent today",
+    "purchasesTotal": "Total purchases",
+    "slotsLeft": "slots left",
+    "taskTypeControls": "🎛️ Task Types (enable / disable)",
+    "type_subscribe": "Subscribe",
+    "type_like": "Like",
+    "type_like_comment": "Like + Comment",
+    "type_subscribe_like": "Subscribe + Like",
+    "type_watch": "Watch",
+    "typeEnabled": "Enabled — visible to users",
+    "typeDisabled": "Disabled — hidden & blocked",
+    "dailyCapByType": "🔢 Daily Cap Per Task Type",
+    "capHint": "Max per user per day (0 = unlimited)",
+    "maintenance": "🚧 Maintenance Banner",
+    "maintenancePlaceholder": "Leave empty for none. Text here shows as a banner to all users.",
+    "saveMaintenance": "Save Banner",
     "dailyLimits": "📅 Daily Task Limits",
     "regularUsers": "Regular Users",
     "tasksPerDay": "Tasks per day for regular users",
@@ -320,10 +474,12 @@ export default {
     "subscribeLike": "Subscribe + Like",
     "bothVerifiedByApi": "Both verified by YouTube API",
     "watchVideo": "Watch Video",
-    "timerBased": "Timer-based, honor system",
+    "timerBased": "Verified by watch timer",
     "campaignEconomy": "💸 Campaign Economy",
     "houseMargin": "House Margin",
     "houseMarginHint": "Extra coins added on top of earner reward — owner pays reward + margin",
+    "marginPct": "Margin %",
+    "marginPctHint": "Owner cost = ceil(earn × (1 + margin/100)), rounded up. Default 25%.",
     "maxActiveCampaigns": "Max Active Campaigns",
     "maxActiveHint": "Max simultaneous campaigns per regular user",
     "completionDelay": "Completion Delay (seconds)",

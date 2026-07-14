@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated, Image } from 'react-native';
-import { colors } from '../theme';
+import { useThemedStyles } from '../context/ThemeContext';
 import { useTranslation } from '../hooks/useTranslation';
 
 const SplashScreen = () => {
   const { t } = useTranslation();
+  const styles = useThemedStyles(makeStyles);
   const opacity = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(0.8)).current;
 
@@ -25,14 +26,14 @@ const SplashScreen = () => {
             resizeMode="contain"
           />
         </View>
-        <Text style={styles.title}>Creator Hub</Text>
+        <Text style={styles.title}>SubsShare</Text>
         <Text style={styles.subtitle}>{t('splash.tagline')}</Text>
       </Animated.View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg, justifyContent: 'center', alignItems: 'center' },
   content: { alignItems: 'center', gap: 12 },
   logoContainer: {

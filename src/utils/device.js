@@ -15,7 +15,10 @@ export async function getDeviceId() {
     for (let i = 0; i < raw.length; i++) {
       h = (Math.imul(31, h) + raw.charCodeAt(i)) | 0;
     }
-    _cached = `d_${(h >>> 0).toString(16)}`;
+    // Pad to a fixed 8 hex chars so the id is always 10 chars — the backend now
+    // rejects device_id shorter than 6 chars, and a small hash could otherwise
+    // produce e.g. "d_5".
+    _cached = `d_${(h >>> 0).toString(16).padStart(8, '0')}`;
     return _cached;
   } catch (e) {
     // Library not available — fall back to a persistent random ID stored in AsyncStorage.
@@ -31,7 +34,10 @@ export async function getDeviceId() {
       _cached = id;
       return _cached;
     } catch (_) {
-      return null;
+      // Last resort (AsyncStorage also unavailable): a stable-for-this-session id
+      // so verify always carries a device signal — the backend now requires one.
+      _cached = _cached || ('m_' + Date.now().toString(16) + Math.random().toString(16).slice(2, 10));
+      return _cached;
     }
   }
 }

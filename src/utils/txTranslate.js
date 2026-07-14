@@ -57,6 +57,21 @@ export function translateTx(description, t) {
     case 'coins_reclaimed':
       return t('tx.coinsReclaimed', { type: taskTypeLabel(params.type) });
 
+    case 'purchase':
+      return params.usd
+        ? t('tx.purchase', { coins: wrapRTL(params.coins), usd: wrapRTL(params.usd) })
+        : t('tx.purchaseCoins', { coins: wrapRTL(params.coins) });
+
+    case 'campaign_refund':
+      return t('tx.campaignRefund', { refund: wrapRTL(params.refund) });
+
+    case 'referral_referee':
+    case 'referral_referrer':
+      return t('tx.referralBonus');
+
+    case 'referral_reversed':
+      return t('tx.referralReversed');
+
     default:
       return description; // Unknown key — show raw
   }

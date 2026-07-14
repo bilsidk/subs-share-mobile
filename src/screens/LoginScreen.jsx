@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, SafeAreaView, Image, Linking } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, SafeAreaView, Image, Linking, TextInput } from 'react-native';
+import { Alert } from '../components/ThemedAlert';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useAuth } from '../context/AuthContext';
-import { colors, spacing, radius } from '../theme';
+import { spacing, radius } from '../theme';
+import { useTheme, useThemedStyles } from '../context/ThemeContext';
 import { GOOGLE_CLIENT_ID, PRIVACY_POLICY_URL } from '../utils/constants';
 import { useTranslation } from '../hooks/useTranslation';
+import { getReferrerCode } from '../services/installReferrer';
 
 GoogleSignin.configure({
   webClientId: GOOGLE_CLIENT_ID,
@@ -17,7 +20,20 @@ GoogleSignin.configure({
 const LoginScreen = () => {
   const { signIn } = useAuth();
   const { t } = useTranslation();
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const [loading, setLoading] = useState(false);
+  const [referralCode, setReferralCode] = useState('');
+
+  // If the app was installed from a referral link (Play Store &referrer=), auto-fill
+  // the code so the user doesn't type it. Only pre-fills when the field is empty.
+  useEffect(() => {
+    let active = true;
+    getReferrerCode().then((code) => {
+      if (active && code) setReferralCode((prev) => prev || code);
+    });
+    return () => { active = false; };
+  }, []);
 
  const handleGoogleSignIn = async () => {
   setLoading(true);
@@ -34,16 +50,27 @@ const LoginScreen = () => {
 
     let accessToken = null;
     try { const tokens = await GoogleSignin.getTokens(); accessToken = tokens.accessToken; } catch (_) {}
-    if (!idToken) { Alert.alert(t('common.error'), t('login.noToken')); return; }
-    await signIn({ idToken, serverAuthCode, accessToken });
+    // Missing idToken here almost always means the user un-ticked the YouTube
+    // permission on Google's consent screen. Tell them exactly how to fix it.
+    if (!idToken) { Alert.alert(t('login.permissionTitle'), t('login.noToken')); return; }
+    await signIn({ idToken, serverAuthCode, accessToken, referralCode: referralCode.trim().toUpperCase() || undefined });
     } catch (err) {
+      const msg = String(err?.message || '');
       if (err.code === statusCodes.SIGN_IN_CANCELLED) {
-      } else if (err.code === statusCodes.IN_PROGRESS) {
-        Alert.alert(t('login.signInFailed'));
+        // User backed out of the Google sheet — not an error, show nothing.
+      } else if (err.code === 'NO_YOUTUBE_ACCESS' || err.data?.code === 'NO_YOUTUBE_ACCESS' || /youtube/i.test(msg)) {
+        // Backend couldn't get YouTube access — the permission box was left unchecked.
+        Alert.alert(t('login.permissionTitle'), t('login.noToken'));
       } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        Alert.alert(t('login.signInFailed'));
+        Alert.alert(t('login.playServicesTitle'), t('login.playServicesMsg'));
+      } else if (err.code === statusCodes.IN_PROGRESS) {
+        Alert.alert(t('login.signInFailed'), t('login.inProgressMsg'));
+      } else if (/network|timed out|timeout|connection|unreachable|failed to fetch/i.test(msg)) {
+        Alert.alert(t('login.networkTitle'), t('login.networkMsg'));
+      } else if (err.code === 'DEVELOPER_ERROR' || /12500|developer_error/i.test(msg)) {
+        Alert.alert(t('login.signInFailed'), t('login.configMsg'));
       } else {
-        Alert.alert(t('login.signInFailed'), err.message || t('login.tryAgain'));
+        Alert.alert(t('login.signInFailed'), t('login.genericMsg'));
       }
     } finally {
       setLoading(false);
@@ -78,6 +105,17 @@ const LoginScreen = () => {
 
         <View style={styles.footer}>
           <Text style={styles.welcomeBonus}>{t('login.welcomeBonus')}</Text>
+          <TextInput
+            style={styles.referralInput}
+            value={referralCode}
+            onChangeText={(v) => setReferralCode(v.toUpperCase())}
+            placeholder={t('login.referralPlaceholder')}
+            placeholderTextColor={colors.textMuted}
+            autoCapitalize="characters"
+            autoCorrect={false}
+            maxLength={12}
+            editable={!loading}
+          />
           <TouchableOpacity
             style={[styles.googleBtn, loading && styles.googleBtnLoading]}
             onPress={handleGoogleSignIn}
@@ -101,7 +139,7 @@ const LoginScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.bg },
   container: { flex: 1, paddingHorizontal: spacing.xl, justifyContent: 'space-between', paddingVertical: spacing.xl },
   hero: { alignItems: 'center', gap: spacing.md, paddingTop: spacing.xl },
@@ -115,6 +153,7 @@ const styles = StyleSheet.create({
   featureText: { fontSize: 15, color: colors.textSecondary, flex: 1, lineHeight: 22 },
   footer: { gap: spacing.md, alignItems: 'center' },
   welcomeBonus: { fontSize: 14, color: colors.gold, fontWeight: '600', backgroundColor: 'rgba(255,209,102,0.1)', paddingHorizontal: spacing.md, paddingVertical: spacing.xs, borderRadius: radius.full, borderWidth: 1, borderColor: 'rgba(255,209,102,0.25)' },
+  referralInput: { width: '100%', backgroundColor: colors.bgCard, borderWidth: 1, borderColor: colors.border, borderRadius: radius.md, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, color: colors.textPrimary, fontSize: 14, textAlign: 'center', letterSpacing: 2 },
   googleBtn: { width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, backgroundColor: '#FFFFFF', paddingVertical: spacing.md, borderRadius: radius.md, height: 54 },
   googleBtnLoading: { opacity: 0.8 },
   googleIcon: { fontSize: 18, fontWeight: '800', color: '#4285F4' },

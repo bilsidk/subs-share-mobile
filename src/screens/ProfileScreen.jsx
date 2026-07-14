@@ -4,12 +4,15 @@ import { translateTx } from '../utils/txTranslate';
 
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, Alert, Image, RefreshControl, Linking,
+  SafeAreaView, Image, RefreshControl, Linking,
 } from 'react-native';
+import { Alert } from '../components/ThemedAlert';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
-import { colors, spacing, radius } from '../theme';
+import { spacing, radius } from '../theme';
+import { useTheme, useThemedStyles } from '../context/ThemeContext';
 import { StatCard, LoadingSpinner } from '../components';
+import ThemeToggle from '../components/ThemeToggle';
 import { formatDate, formatRelativeTime } from '../utils/helpers';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL, SUPPORT_EMAIL } from '../utils/constants';
@@ -18,6 +21,8 @@ import { useTranslation } from '../hooks/useTranslation';
 const ProfileScreen = () => {
   const { user, refreshUser, signOut } = useAuth();
   const { t } = useTranslation();
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const navigation = useNavigation();
   const [transactions, setTransactions] = useState([]);
   const [myTasks, setMyTasks] = useState([]);
@@ -112,12 +117,24 @@ const ProfileScreen = () => {
             <Text style={styles.coinAmount}>{user?.coins ?? 0}</Text>
             <Text style={styles.coinLabel}>{t('common.coins')}</Text>
           </View>
+          <TouchableOpacity style={styles.buyCoinsBtn} onPress={() => navigation.navigate('BuyCoins')}>
+            <Text style={styles.buyCoinsText}>🪙 {t('buy.getCoins')}</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.statsRow}>
-          <StatCard emoji="💰" label={t('profile.earned')} value={totalEarned} accent={colors.gold} />
-          <StatCard emoji="💸" label={t('profile.spent')} value={totalSpent} accent={colors.danger} />
-          <StatCard emoji="🎯" label={t('profile.done')} value={completedCampaigns} accent={colors.success} />
+          <View style={styles.statTile}>
+            <Text style={styles.statValue}>{totalEarned}</Text>
+            <Text style={styles.statLabel}>{t('profile.earned')}</Text>
+          </View>
+          <View style={styles.statTile}>
+            <Text style={styles.statValue}>{totalSpent}</Text>
+            <Text style={styles.statLabel}>{t('profile.spent')}</Text>
+          </View>
+          <View style={styles.statTile}>
+            <Text style={styles.statValue}>{completedCampaigns}</Text>
+            <Text style={styles.statLabel}>{t('profile.done')}</Text>
+          </View>
         </View>
 
         <View style={styles.section}>
@@ -144,6 +161,10 @@ const ProfileScreen = () => {
           )}
         </View>
 
+        <TouchableOpacity style={styles.languageBtn} onPress={() => navigation.navigate('Referral')}>
+          <Text style={styles.languageBtnText}>🎁 {t('referral.invite')}</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.languageBtn} onPress={() => navigation.navigate('Language')}>
           <Text style={styles.languageBtnText}>🌐 {t('language.title')}</Text>
         </TouchableOpacity>
@@ -168,14 +189,15 @@ const ProfileScreen = () => {
           <Text style={styles.deleteText}>{deleting ? t('profile.deleting') : t('profile.deleteAccount')}</Text>
         </TouchableOpacity>
       </ScrollView>
+      <ThemeToggle style={{ position: 'absolute', top: 12, right: 14, zIndex: 20 }} />
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.bg },
   content: { padding: spacing.lg, gap: spacing.lg, paddingBottom: 80 },
-  languageBtn: { backgroundColor: colors.bgCard, paddingVertical: spacing.md, borderRadius: radius.md, alignItems: 'center', borderWidth: 1, borderColor: colors.border },
+  languageBtn: { flexDirection: 'row', backgroundColor: colors.bgCard, paddingVertical: spacing.md, paddingHorizontal: spacing.lg, borderRadius: radius.md, alignItems: 'center', borderWidth: 1, borderColor: colors.border },
   languageBtnText: { fontSize: 15, fontWeight: '600', color: colors.textPrimary },
   profileCard: { backgroundColor: colors.bgCard, borderRadius: radius.xl, padding: spacing.xl, alignItems: 'center', gap: spacing.sm, borderWidth: 1, borderColor: colors.border },
   avatar: { width: 80, height: 80, borderRadius: radius.full, marginBottom: spacing.sm },
@@ -184,11 +206,16 @@ const styles = StyleSheet.create({
   name: { fontSize: 22, fontWeight: '800', color: colors.textPrimary },
   email: { fontSize: 14, color: colors.textSecondary },
   joined: { fontSize: 12, color: colors.textMuted },
-  coinDisplay: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: spacing.sm, backgroundColor: 'rgba(255,209,102,0.1)', paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, borderRadius: radius.full, borderWidth: 1, borderColor: 'rgba(255,209,102,0.3)' },
+  coinDisplay: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: spacing.md, backgroundColor: colors.bgElevated, paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, borderRadius: radius.full, borderWidth: 1, borderColor: colors.border },
   coinEmoji: { fontSize: 22 },
-  coinAmount: { fontSize: 28, fontWeight: '900', color: colors.gold },
-  coinLabel: { fontSize: 14, color: colors.gold, fontWeight: '600' },
+  coinAmount: { fontSize: 28, fontWeight: '800', color: colors.gold },
+  coinLabel: { fontSize: 14, color: colors.textSecondary, fontWeight: '600' },
+  buyCoinsBtn: { marginTop: spacing.md, height: 46, justifyContent: 'center', backgroundColor: colors.primary, paddingHorizontal: spacing.xl, borderRadius: radius.md },
+  buyCoinsText: { color: '#fff', fontWeight: '800', fontSize: 15 },
   statsRow: { flexDirection: 'row', gap: spacing.sm },
+  statTile: { flex: 1, backgroundColor: colors.bgCard, borderRadius: radius.lg, padding: spacing.md, gap: 4, alignItems: 'flex-start', borderWidth: 1, borderColor: colors.border },
+  statValue: { fontSize: 20, fontWeight: '800', color: colors.textPrimary },
+  statLabel: { fontSize: 11, color: colors.textSecondary },
   section: { gap: spacing.sm },
   sectionTitle: { fontSize: 13, fontWeight: '700', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 1 },
   txRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: colors.bgCard, borderRadius: radius.md, padding: spacing.md, borderWidth: 1, borderColor: colors.border },

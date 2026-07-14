@@ -23,42 +23,66 @@ export const formatCoins = (amount) => {
 };
 
 const FALLBACK_COSTS = {
-  subscribe: 15, like: 9, like_comment: 13, subscribe_like: 20, watch: 7,
+  subscribe: 15, like: 9, like_comment: 17, subscribe_like: 20,
 };
-const FALLBACK_WATCH_EXTRA = 1;
 
 function _getCosts() {
   return _pricing?.slot_costs ?? FALLBACK_COSTS;
 }
 
-function _getWatchExtra() {
-  return _pricing?.watch_extra_min_cost ?? FALLBACK_WATCH_EXTRA;
-}
+// ── Watch task tiered reward (Economy & Watch Redesign 2026-07-11) ─────────────
+// Escalating per-minute EARN (web/base): min 1 = 2 · min 2-10 = +1/min · min 11-20 =
+// +2/min · min 21+ = +3/min (10min→11, 20min→31, 30min→61). Margin 25%: owner
+// slot_cost = ceil(earn × 1.25). MOBILE pays a flat ±1 nudge on top (watch is exempt
+// from the %-based nudge — see backend src/lib/platform.js mobileCampaignCost/
+// mobileEarnPayout for task_type 'watch', unchanged by this redesign).
+// Client-side ESTIMATE for display only — POST /tasks computes + locks the real
+// slot_cost server-side at creation (source of truth, see TD-002).
+const WATCH_MARGIN_PCT = 0.25;
+const WATCH_MOBILE_FLAT = 1;
+
+export const calcWatchBaseEarn = (minutes) => {
+  const m = Math.max(1, Math.min(60, parseInt(minutes, 10) || 1));
+  let earn = 2; // minute 1
+  for (let i = 2; i <= m; i++) earn += i <= 10 ? 1 : i <= 20 ? 2 : 3;
+  return earn;
+};
+
+export const calcWatchPricing = (minutes) => {
+  const baseEarn = calcWatchBaseEarn(minutes);
+  const baseCost = Math.ceil(baseEarn * (1 + WATCH_MARGIN_PCT));
+  return {
+    earn: baseEarn > WATCH_MOBILE_FLAT ? baseEarn - WATCH_MOBILE_FLAT : baseEarn,
+    cost: baseCost + WATCH_MOBILE_FLAT,
+  };
+};
 
 export const calcCampaignCost = (slots, taskType = 'subscribe', watchMinutes = 1) => {
   if (!slots || slots < 1) return 0;
+  if (taskType === 'watch') return slots * calcWatchPricing(watchMinutes).cost;
   const costs = _getCosts();
-  let costPerSlot = costs[taskType] || 15;
-  if (taskType === 'watch') {
-    const extraMins = Math.max(0, watchMinutes - 1);
-    costPerSlot = costs.watch + (extraMins * _getWatchExtra());
-  }
+  const costPerSlot = costs[taskType] || 15;
   return slots * costPerSlot;
 };
 
 export const getSlotCost = (taskType, watchMinutes = 1) => {
+  if (taskType === 'watch') return calcWatchPricing(watchMinutes).cost;
   const costs = _getCosts();
-  if (taskType === 'watch') {
-    const extraMins = Math.max(0, watchMinutes - 1);
-    return costs.watch + (extraMins * _getWatchExtra());
-  }
   return costs[taskType] || 15;
 };
 
 export const formatDate = (dateStr) => {
   if (!dateStr) return '';
   const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const opts = { month: 'short', day: 'numeric', year: 'numeric' };
+  // Format in the user's current language; fall back to en-US if the JS engine's
+  // Intl support doesn't handle the locale (Hermes Intl coverage varies).
+  try {
+    const { getCurrentLanguage } = require('./i18n');
+    return date.toLocaleDateString(getCurrentLanguage(), opts);
+  } catch (_) {
+    return date.toLocaleDateString('en-US', opts);
+  }
 };
 
 export const formatRelativeTime = (dateStr, t) => {

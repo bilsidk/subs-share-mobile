@@ -1,16 +1,21 @@
 import React, { useState, useCallback } from 'react';
 import {
   View, Text, StyleSheet, FlatList, TouchableOpacity,
-  SafeAreaView, Alert, RefreshControl,
+  SafeAreaView, RefreshControl,
 } from 'react-native';
+import { Alert } from '../components/ThemedAlert';
 import { useFocusEffect } from '@react-navigation/native';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { spacing, radius } from '../theme';
 import { LoadingSpinner, EmptyState } from '../components';
+import { useTheme, useThemedStyles } from '../context/ThemeContext';
 import { useTranslation } from '../hooks/useTranslation';
 import { getSlotCost } from '../utils/helpers';
 
 const MyCampaignsScreen = () => {
+  const { colors } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const { refreshUser } = useAuth();
   const { t } = useTranslation();
   const [tasks, setTasks] = useState([]);
@@ -20,10 +25,10 @@ const MyCampaignsScreen = () => {
   const [error, setError] = useState(null);
 
   const STATUS_META = {
-    active:    { label: t('campaigns.statusActive'),    color: '#06D6A0', emoji: '🟢' },
-    paused:    { label: t('campaigns.statusPaused'),    color: '#FFB703', emoji: '⏸️' },
-    completed: { label: t('campaigns.statusCompleted'), color: '#6C63FF', emoji: '✅' },
-    cancelled: { label: t('campaigns.statusCancelled'), color: '#555570', emoji: '❌' },
+    active:    { label: t('campaigns.statusActive'),    color: colors.success, emoji: '🟢' },
+    paused:    { label: t('campaigns.statusPaused'),    color: colors.warning, emoji: '⏸️' },
+    completed: { label: t('campaigns.statusCompleted'), color: colors.primary, emoji: '✅' },
+    cancelled: { label: t('campaigns.statusCancelled'), color: colors.textMuted, emoji: '❌' },
   };
 
   const loadTasks = async () => {
@@ -87,7 +92,7 @@ const MyCampaignsScreen = () => {
               t('campaigns.cancelled'),
               result.refunded_coins > 0
                 ? t('campaigns.refunded', { coins: result.refunded_coins, balance: result.new_balance })
-                : t('campaigns.cancelConfirm')
+                : t('campaigns.cancelledBody')
             );
           }),
         },
@@ -137,11 +142,11 @@ const MyCampaignsScreen = () => {
         </View>
 
         <View style={styles.controls}>
-          {item.can_pause   && <TouchableOpacity style={[styles.ctrl, styles.ctrlPause]}   onPress={() => handlePause(item)}   disabled={actionLoading === item.id}><Text style={styles.ctrlText}>{actionLoading === item.id ? '...' : t('campaigns.pause')}</Text></TouchableOpacity>}
-          {item.can_resume  && <TouchableOpacity style={[styles.ctrl, styles.ctrlResume]}  onPress={() => handleResume(item)}  disabled={actionLoading === item.id}><Text style={styles.ctrlText}>{actionLoading === item.id ? '...' : t('campaigns.resume')}</Text></TouchableOpacity>}
+          {item.can_pause   && <TouchableOpacity style={[styles.ctrl, styles.ctrlPause]}   onPress={() => handlePause(item)}   disabled={actionLoading === item.id}><Text style={[styles.ctrlText, { color: colors.warning }]}>{actionLoading === item.id ? '...' : t('campaigns.pause')}</Text></TouchableOpacity>}
+          {item.can_resume  && <TouchableOpacity style={[styles.ctrl, styles.ctrlResume]}  onPress={() => handleResume(item)}  disabled={actionLoading === item.id}><Text style={[styles.ctrlText, { color: colors.success }]}>{actionLoading === item.id ? '...' : t('campaigns.resume')}</Text></TouchableOpacity>}
           {item.can_cancel  && (
             <TouchableOpacity style={[styles.ctrl, styles.ctrlCancel]} onPress={() => handleCancel(item)} disabled={actionLoading === item.id}>
-              <Text style={styles.ctrlText}>{actionLoading === item.id ? '...' : `${t('campaigns.cancel')}${item.remaining_slots > 0 ? ` (+${item.remaining_slots * getSlotCost(item.task_type, parseInt(item.watch_minutes, 10) || 1)}🪙)` : ''}`}</Text>
+              <Text style={[styles.ctrlText, { color: colors.danger }]}>{actionLoading === item.id ? '...' : `${t('campaigns.cancel')}${item.remaining_slots > 0 ? ` (+${item.remaining_slots * getSlotCost(item.task_type, parseInt(item.watch_minutes, 10) || 1)}🪙)` : ''}`}</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -173,7 +178,7 @@ const MyCampaignsScreen = () => {
         keyExtractor={item => item.id.toString()}
         renderItem={renderTask}
         contentContainerStyle={styles.list}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); loadTasks(); }} tintColor="#6C63FF" />}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); loadTasks(); }} tintColor={colors.primary} />}
         ListEmptyComponent={<EmptyState emoji="📋" title={t('campaigns.noCampaigns')} subtitle={t('campaigns.noCampaignsSubtitle')} />}
         showsVerticalScrollIndicator={false}
       />
@@ -181,33 +186,33 @@ const MyCampaignsScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#0A0A0F' },
+const makeStyles = (colors) => StyleSheet.create({
+  safe: { flex: 1, backgroundColor: colors.bg },
   header: { paddingHorizontal: 16, paddingTop: 16, paddingBottom: 8 },
-  title: { fontSize: 26, fontWeight: '800', color: '#FFFFFF' },
-  subtitle: { fontSize: 12, color: '#555570', marginTop: 2 },
+  title: { fontSize: 26, fontWeight: '800', color: colors.textPrimary },
+  subtitle: { fontSize: 12, color: colors.textMuted, marginTop: 2 },
   list: { paddingHorizontal: 16, paddingBottom: 80 },
-  card: { backgroundColor: '#13131A', borderRadius: 16, padding: 14, marginBottom: 12, borderWidth: 1, borderColor: '#2A2A3A', gap: 12 },
+  card: { backgroundColor: colors.bgCard, borderRadius: radius.lg, padding: spacing.md, marginBottom: spacing.md, borderWidth: 1, borderColor: colors.border, gap: spacing.md },
   cardHeader: { flexDirection: 'row', alignItems: 'flex-start', gap: 8 },
-  channelName: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
-  taskType: { fontSize: 12, color: '#555570', marginTop: 2, textTransform: 'capitalize' },
+  channelName: { fontSize: 16, fontWeight: '700', color: colors.textPrimary },
+  taskType: { fontSize: 12, color: colors.textMuted, marginTop: 2, textTransform: 'capitalize' },
   statusBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 99, borderWidth: 1 },
   statusText: { fontSize: 11, fontWeight: '700' },
   progressSection: { gap: 6 },
-  progressLabel: { fontSize: 12, color: '#9999BB' },
-  progressPct: { fontSize: 12, fontWeight: '700', color: '#FFFFFF' },
-  progressTrack: { height: 6, backgroundColor: '#1C1C26', borderRadius: 99, overflow: 'hidden' },
+  progressLabel: { fontSize: 12, color: colors.textSecondary },
+  progressPct: { fontSize: 12, fontWeight: '700', color: colors.textPrimary },
+  progressTrack: { height: 6, backgroundColor: colors.bgElevated, borderRadius: 99, overflow: 'hidden' },
   progressFill: { height: '100%', borderRadius: 99 },
   statsRow: { flexDirection: 'row', justifyContent: 'space-around' },
   stat: { alignItems: 'center', gap: 2 },
-  statValue: { fontSize: 15, fontWeight: '700', color: '#FFFFFF' },
-  statLabel: { fontSize: 10, color: '#555570', textTransform: 'uppercase', letterSpacing: 0.5 },
-  controls: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
-  ctrl: { flex: 1, paddingVertical: 10, borderRadius: 10, alignItems: 'center', borderWidth: 1, minWidth: 90 },
-  ctrlPause:  { backgroundColor: 'rgba(255,183,3,0.1)',  borderColor: 'rgba(255,183,3,0.4)' },
-  ctrlResume: { backgroundColor: 'rgba(6,214,160,0.1)',  borderColor: 'rgba(6,214,160,0.4)' },
-  ctrlCancel: { backgroundColor: 'rgba(239,71,111,0.1)', borderColor: 'rgba(239,71,111,0.4)' },
-  ctrlText: { fontSize: 13, fontWeight: '700', color: '#FFFFFF' },
+  statValue: { fontSize: 15, fontWeight: '700', color: colors.textPrimary },
+  statLabel: { fontSize: 10, color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 0.5 },
+  controls: { flexDirection: 'row', gap: spacing.sm, flexWrap: 'wrap' },
+  ctrl: { flex: 1, paddingVertical: 10, borderRadius: radius.md, alignItems: 'center', borderWidth: 1, minWidth: 90, backgroundColor: colors.bgElevated },
+  ctrlPause:  { borderColor: colors.warning },
+  ctrlResume: { borderColor: colors.success },
+  ctrlCancel: { borderColor: colors.danger },
+  ctrlText: { fontSize: 13, fontWeight: '700', color: colors.textPrimary },
   errorBanner: { backgroundColor: '#E53935', padding: 12, alignItems: 'center' },
   errorText: { color: '#FFFFFF', fontSize: 13 },
 });

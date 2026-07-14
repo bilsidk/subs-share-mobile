@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { colors, spacing, radius } from '../theme';
+import { spacing, radius } from '../theme';
+import { useThemedStyles } from '../context/ThemeContext';
 import { useTranslation } from '../hooks/useTranslation';
 
 const TaskCard = ({ task, onPress, disabled }) => {
   const { t } = useTranslation();
+  const styles = useThemedStyles(makeStyles);
   return (
     <TouchableOpacity
       style={[styles.card, disabled && styles.cardDisabled]}
@@ -24,10 +26,9 @@ const TaskCard = ({ task, onPress, disabled }) => {
 
       <View style={styles.mid}>
         <Text style={styles.channelName} numberOfLines={1}>{task.channel_name}</Text>
-        <Text style={styles.ownerName} numberOfLines={1}>by {task.owner_name}</Text>
-        <View style={styles.slots}>
-          <Text style={styles.slotsText}>🎯 {task.remaining_slots} {t('earn.slotsLeft')}</Text>
-        </View>
+        <Text style={styles.ownerName} numberOfLines={1}>{t('common.by')} {task.owner_name}</Text>
+        {/* Slots-left is intentionally NOT shown to earners — only the owner sees it
+            (My Campaigns / Admin). Keeps campaign capacity private. */}
       </View>
 
       <View style={styles.right}>
@@ -46,8 +47,8 @@ const TaskCard = ({ task, onPress, disabled }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  card: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#13131A', borderRadius: radius.lg, padding: spacing.md, marginBottom: spacing.sm, borderWidth: 1, borderColor: '#2A2A3A', gap: spacing.sm },
+const makeStyles = (colors) => StyleSheet.create({
+  card: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.bgCard, borderRadius: radius.lg, padding: spacing.md, marginBottom: spacing.sm, borderWidth: 1, borderColor: colors.border, gap: spacing.sm },
   cardDisabled: { opacity: 0.5 },
   left: {},
   avatar: { width: 48, height: 48, borderRadius: radius.full, backgroundColor: colors.bgElevated },

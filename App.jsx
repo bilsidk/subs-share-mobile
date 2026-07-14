@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar, View } from 'react-native';
+import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 import { AuthProvider } from './src/context/AuthContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { ErrorBoundary } from './src/components';
+import { ThemedAlertHost } from './src/components/ThemedAlert';
+import AnnouncementModal from './src/components/AnnouncementModal';
 import { initI18n } from './src/utils/i18n';
 import { loadPricing } from './src/utils/helpers';
 import * as Sentry from '@sentry/react-native';
@@ -18,15 +22,26 @@ export default Sentry.wrap(function App() {
   useEffect(() => {
     Promise.all([initI18n(), loadPricing()]).then(() => setI18nReady(true));
   }, []);
-  if (!i18nReady) return <View style={{ flex: 1, backgroundColor: '#0A0A0F' }} />;
+  if (!i18nReady) return <View style={{ flex: 1, backgroundColor: '#0B0B12' }} />;
   return (
     <ErrorBoundary>
-      <AuthProvider>
-        <NavigationContainer>
-          <StatusBar barStyle="light-content" backgroundColor="#0A0A0F" />
-          <AppNavigator />
-        </NavigationContainer>
-      </AuthProvider>
+      <SafeAreaProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <NavigationContainer>
+              <ThemedStatusBar />
+              <AppNavigator />
+              <AnnouncementModal />
+              <ThemedAlertHost />
+            </NavigationContainer>
+          </AuthProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
     </ErrorBoundary>
   );
 });
+
+function ThemedStatusBar() {
+  const { mode, colors } = useTheme();
+  return <StatusBar barStyle={mode === 'dark' ? 'light-content' : 'dark-content'} backgroundColor={colors.bg} />;
+}

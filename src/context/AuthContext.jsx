@@ -26,10 +26,17 @@ export const AuthProvider = ({ children }) => {
           await storageService.saveUser(fresh);
           retryPricing();
         }
-      } catch {
-        await storageService.clear();
-        setToken(null);
-        setUser(null);
+      } catch (err) {
+        // Only a genuine auth rejection should drop the session. A network or
+        // timeout error at launch (airplane mode, backend hiccup) must NOT log the
+        // user out — keep the cached token/user so the app works offline. A real
+        // 401 is also handled by the onSessionExpired listener below.
+        if (err?.status === 401 || err?.data?.code === 'YOUTUBE_REAUTH') {
+          await storageService.clear();
+          setToken(null);
+          setUser(null);
+        }
+        // otherwise: keep the cached session already set above.
       } finally {
         setLoading(false);
       }
@@ -37,9 +44,9 @@ export const AuthProvider = ({ children }) => {
     restore();
   }, []);
 
-  const signIn = async ({ idToken, serverAuthCode, accessToken }) => {
+  const signIn = async ({ idToken, serverAuthCode, accessToken, referralCode }) => {
     try {
-      const res = await api.googleSignIn({ idToken, serverAuthCode, accessToken });
+      const res = await api.googleSignIn({ idToken, serverAuthCode, accessToken, referralCode });
       await storageService.saveToken(res.token);
       await storageService.saveUser(res.user);
       setToken(res.token);
@@ -54,7 +61,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signOut = async () => {
-    await storageService.clear();
+    // Never let a storage error trap the user in a signed-in state — always clear.
+    try { await storageService.clear(); } catch { /* ignore */ }
     setToken(null);
     setUser(null);
   };

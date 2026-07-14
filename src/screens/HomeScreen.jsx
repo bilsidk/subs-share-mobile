@@ -7,14 +7,18 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
-import { colors, spacing, radius } from '../theme';
+import { spacing, radius } from '../theme';
+import { useTheme, useThemedStyles } from '../context/ThemeContext';
 import { CoinBadge, StatCard, LoadingSpinner } from '../components';
+import ThemeToggle from '../components/ThemeToggle';
 import { formatRelativeTime } from '../utils/helpers';
 import { useTranslation } from '../hooks/useTranslation';
 
 const HomeScreen = ({ navigation }) => {
   const { user, refreshUser } = useAuth();
   const { t } = useTranslation();
+  const { colors, mode, toggleTheme } = useTheme();
+  const styles = useThemedStyles(makeStyles);
   const [channels, setChannels] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [myTasks, setMyTasks] = useState([]);
@@ -66,19 +70,39 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.greeting}>{t('home.greeting')}</Text>
             <Text style={styles.userName}>{user?.name?.split(' ')[0]}</Text>
           </View>
-          {user?.avatar && <Image source={{ uri: user.avatar }} style={styles.avatar} />}
+          <View style={styles.headerRight}>
+            <ThemeToggle />
+            {user?.avatar && <Image source={{ uri: user.avatar }} style={styles.avatar} />}
+          </View>
         </View>
 
-        <View style={styles.coinCard}>
-          <Text style={styles.coinLabel}>{t('home.balance')}</Text>
-          <CoinBadge amount={user?.coins ?? 0} size="lg" />
-          <Text style={styles.coinHint}>{t('home.coinHint')}</Text>
+        <View style={styles.heroCard}>
+          <Text style={styles.heroLabel}>{t('home.balance')}</Text>
+          <View style={styles.heroBalanceRow}>
+            <Text style={styles.heroCoin}>🪙</Text>
+            <Text style={styles.heroBalance}>{(user?.coins ?? 0).toLocaleString()}</Text>
+          </View>
+          <View style={styles.heroActionRow}>
+            <TouchableOpacity style={styles.heroBuyBtn} activeOpacity={0.85} onPress={() => navigation.navigate('BuyCoins')}>
+              <Text style={styles.heroBuyText}>{t('buy.getCoins')}</Text>
+            </TouchableOpacity>
+            <Text style={styles.heroHint}>{t('home.subsEstimate', { n: Math.floor((user?.coins ?? 0) / 15) })}</Text>
+          </View>
         </View>
 
         <View style={styles.statsRow}>
-          <StatCard emoji="📣" label={t('home.campaigns')} value={activeCampaigns} accent={colors.primary} />
-          <StatCard emoji="⏳" label={t('home.pendingSubs')} value={pendingSubs} accent={colors.gold} />
-          <StatCard emoji="✅" label={t('home.completed')} value={user?.tasks_completed ?? 0} accent={colors.success} />
+          <TouchableOpacity style={styles.statTile} activeOpacity={0.8} onPress={() => navigation.navigate('MyCampaigns')}>
+            <Text style={styles.statValue}>{activeCampaigns}</Text>
+            <Text style={styles.statLabel}>{t('home.campaigns')}</Text>
+          </TouchableOpacity>
+          <View style={styles.statTile}>
+            <Text style={styles.statValue}>{pendingSubs}</Text>
+            <Text style={styles.statLabel}>{t('home.pendingSubs')}</Text>
+          </View>
+          <View style={styles.statTile}>
+            <Text style={styles.statValue}>{user?.tasks_completed ?? 0}</Text>
+            <Text style={styles.statLabel}>{t('home.completed')}</Text>
+          </View>
         </View>
 
         <View style={styles.section}>
@@ -105,7 +129,7 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>{t('home.myChannel')}</Text>
             {channels.map(ch => (
-              <View key={ch.id} style={styles.channelCard}>
+              <TouchableOpacity key={ch.id} style={styles.channelCard} activeOpacity={0.8} onPress={() => navigation.navigate('MyCampaigns')}>
                 <View style={styles.channelIcon}><Text style={{ fontSize: 20 }}>📺</Text></View>
                 <View style={{ flex: 1 }}>
                   <Text style={styles.channelName}>{ch.channel_name}</Text>
@@ -113,7 +137,8 @@ const HomeScreen = ({ navigation }) => {
                     {ch.active_campaigns} {ch.active_campaigns !== 1 ? t('home.activeCampaigns') : t('home.activeCampaign')} · {ch.pending_subscribers} {t('home.subsPending')}
                   </Text>
                 </View>
-              </View>
+                <Text style={styles.channelChevron}>›</Text>
+              </TouchableOpacity>
             ))}
           </View>
         )}
@@ -143,11 +168,14 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.bg },
   scroll: { flex: 1 },
   content: { padding: spacing.lg, gap: spacing.lg, paddingBottom: spacing.xxl },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  headerRight: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  themeToggle: { width: 40, height: 40, borderRadius: radius.full, backgroundColor: colors.bgCard, borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center' },
+  themeToggleIcon: { fontSize: 18 },
   greeting: { fontSize: 13, color: colors.textMuted, fontWeight: '500', textTransform: 'uppercase', letterSpacing: 1 },
   userName: { fontSize: 28, fontWeight: '800', color: colors.textPrimary, marginTop: 2 },
   avatar: { width: 48, height: 48, borderRadius: radius.full, borderWidth: 2, borderColor: colors.primary },
@@ -156,6 +184,20 @@ const styles = StyleSheet.create({
   coinCard: { backgroundColor: colors.bgCard, borderRadius: radius.xl, padding: spacing.lg, alignItems: 'center', gap: spacing.sm, borderWidth: 1, borderColor: 'rgba(255,209,102,0.2)' },
   coinLabel: { fontSize: 11, fontWeight: '700', color: colors.textMuted, letterSpacing: 1.5, textTransform: 'uppercase' },
   coinHint: { fontSize: 12, color: colors.textMuted },
+  buyPill: { marginTop: spacing.xs, backgroundColor: colors.primary, paddingHorizontal: spacing.lg, paddingVertical: 6, borderRadius: radius.full },
+  buyPillText: { color: '#fff', fontWeight: '800', fontSize: 13 },
+  heroCard: { backgroundColor: colors.bgCard, borderRadius: radius.xl, padding: spacing.lg, gap: spacing.md, borderWidth: 1, borderColor: colors.border },
+  heroLabel: { fontSize: 12, fontWeight: '600', color: colors.textSecondary, letterSpacing: 0.6, textTransform: 'uppercase' },
+  heroBalanceRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  heroCoin: { fontSize: 30 },
+  heroBalance: { fontSize: 38, fontWeight: '800', color: colors.gold, letterSpacing: -0.5 },
+  heroActionRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  heroBuyBtn: { flex: 1, height: 46, borderRadius: radius.md, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center' },
+  heroBuyText: { color: '#fff', fontWeight: '800', fontSize: 14 },
+  heroHint: { fontSize: 12, color: colors.textMuted },
+  statTile: { flex: 1, backgroundColor: colors.bgCard, borderRadius: radius.lg, padding: spacing.md, gap: 4, borderWidth: 1, borderColor: colors.border },
+  statValue: { fontSize: 20, fontWeight: '800', color: colors.textPrimary },
+  statLabel: { fontSize: 11, color: colors.textSecondary },
   statsRow: { flexDirection: 'row', gap: spacing.sm },
   section: { gap: spacing.sm },
   sectionTitle: { fontSize: 13, fontWeight: '700', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 1 },
@@ -167,6 +209,7 @@ const styles = StyleSheet.create({
   channelIcon: { width: 44, height: 44, borderRadius: radius.md, backgroundColor: 'rgba(255,0,0,0.1)', justifyContent: 'center', alignItems: 'center' },
   channelName: { fontSize: 15, fontWeight: '700', color: colors.textPrimary },
   channelMeta: { fontSize: 12, color: colors.textSecondary, marginTop: 2 },
+  channelChevron: { fontSize: 26, color: colors.textMuted, marginLeft: spacing.sm },
   txRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.sm, borderBottomWidth: 1, borderBottomColor: colors.border },
   txEmoji: { fontSize: 20 },
   txDesc: { fontSize: 14, color: colors.textPrimary, fontWeight: '500' },

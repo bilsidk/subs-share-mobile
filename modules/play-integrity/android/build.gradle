@@ -1,0 +1,44 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+group = 'expo.modules.playintegrity'
+version = '0.1.0'
+
+// Pull in the Expo modules build helpers (core deps + the 'release' publication
+// component that Expo autolinking expects). Same pattern as the bundled modules.
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+useDefaultAndroidSdkVersions()
+
+android {
+  namespace = "expo.modules.playintegrity"
+  defaultConfig {
+    versionCode = 1
+    versionName = "0.1.0"
+  }
+  lintOptions {
+    abortOnError = false
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+kotlin {
+  compilerOptions {
+    jvmTarget.set(JvmTarget.JVM_17)
+  }
+}
+
+dependencies {
+  // Google Play Integrity API (classic request → server decodes the token).
+  implementation "com.google.android.play:integrity:1.4.0"
+  // Google Play Install Referrer (reads the &referrer= from the install link).
+  implementation "com.android.installreferrer:installreferrer:2.2"
+}

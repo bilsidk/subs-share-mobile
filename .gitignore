@@ -84,3 +84,7 @@ yarn-error.log
 
 # Backup files
 *.backup
+# Expo
+.expo
+dist/
+web-build/

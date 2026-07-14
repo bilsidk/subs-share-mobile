@@ -1,4 +1,7 @@
 {
   "name": "SubsShare",
-  "displayName": "SubsShare"
+  "displayName": "SubsShare",
+  "plugins": [
+    "expo-iap"
+  ]
 }
