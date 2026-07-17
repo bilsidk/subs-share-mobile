@@ -2,6 +2,13 @@
  * Unit tests for the coin-economy helpers.
  * These are pure functions (no native modules), so they run fast and reliably.
  *
+ * Watch task pricing uses tiered rewards (Economy & Watch Redesign 2026-07-11):
+ * - minute 1: base 2 coins
+ * - minutes 2-10: +1/min
+ * - minutes 11-20: +2/min
+ * - minutes 21+: +3/min
+ * - slot_cost = ceil(baseEarn × 1.25) + mobile_flat(1)
+ *
  * @format
  */
 
@@ -29,9 +36,9 @@ describe('calcCampaignCost', () => {
     expect(calcCampaignCost(2, 'totally_unknown')).toBe(30); // 2 * 15
   });
 
-  it('adds a per-minute surcharge for watch campaigns', () => {
-    expect(calcCampaignCost(5, 'watch', 1)).toBe(35); // 5 * 7
-    expect(calcCampaignCost(5, 'watch', 3)).toBe(45); // 5 * (7 + 2)
+  it('adds a per-minute surcharge for watch campaigns (tiered)', () => {
+    expect(calcCampaignCost(5, 'watch', 1)).toBe(20);  // 5 * 4
+    expect(calcCampaignCost(5, 'watch', 3)).toBe(30);  // 5 * 6
   });
 });
 
@@ -41,9 +48,9 @@ describe('getSlotCost', () => {
     expect(getSlotCost('like')).toBe(9);
   });
 
-  it('scales watch cost with extra minutes', () => {
-    expect(getSlotCost('watch', 1)).toBe(7);
-    expect(getSlotCost('watch', 4)).toBe(10); // 7 + 3
+  it('scales watch cost with tiered minutes (economy redesign)', () => {
+    expect(getSlotCost('watch', 1)).toBe(4);   // ceil(2*1.25)+1
+    expect(getSlotCost('watch', 4)).toBe(8);   // ceil(5*1.25)+1
   });
 });
 
